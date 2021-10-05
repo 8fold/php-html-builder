@@ -1,0 +1,34 @@
+{
+  "name": "vendor/project",
+  "description": "",
+  "type": "library",
+  "license": "MIT",
+  "authors": [],
+  "require": {
+    "php": "^7.4||^8.0"
+  },
+  "require-dev": {
+    "squizlabs/php_codesniffer": "^3.6",
+    "phpstan/phpstan": "^0.12",
+    "pestphp/pest": "^1.20"
+  },
+  "autoload": {
+    "psr-4": {
+    }
+  },
+  "autoload-dev": {
+    "psr-4": {
+    }
+  },
+  "config": {
+    "preferred-install": "dist"
+  },
+  "prefer-stable": true,
+  "scripts": {
+    "prod": "@production",
+    "production": ["@style", "@stan", "@test"],
+    "style": "./vendor/bin/phpcs --standard=phpcs.xml -p ./src",
+    "stan": "./vendor/bin/phpstan analyze",
+    "test": "./vendor/bin/pest"
+  }
+}
