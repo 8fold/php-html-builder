@@ -74,6 +74,13 @@ Output:
 See [8fold XML Builder](https://github.com/8fold/php-xml-builder#readme) for
 details.
 
+## Usage (advanced)
+
+TODO
+
+HTML Builder has the ability to help create valid HTML documents based on the
+HTML specification.
+
 ## Other
 
 {links or descriptions or license, versioning, and governance}

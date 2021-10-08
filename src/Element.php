@@ -13,7 +13,7 @@ class Element extends XMLElement
      * element. To change the order, extend the Element class and override
      * this constant.
      */
-    const ORDERED = [
+    public const ORDERED = [
         "is",
         "role",
         "id",
@@ -148,7 +148,7 @@ class Element extends XMLElement
         }
 
         foreach ($otherAttributes as $prop => $content) {
-            $b[] = $prop . '="' . $content .'"';
+            $b[] = $prop . '="' . $content . '"';
 
         }
 
@@ -159,5 +159,4 @@ class Element extends XMLElement
 
         return ' ' . implode(' ', $b);
     }
-
 }

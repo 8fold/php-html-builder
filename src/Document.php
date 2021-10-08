@@ -4,23 +4,30 @@ declare(strict_types=1);
 
 namespace Eightfold\HTMLBuilder;
 
+use Eightfold\XMLBuilder\Comment;
 use Eightfold\HTMLBuilder\Element;
 
 class Document
 {
-    private $title   = '';
-    private $lang    = 'en';
-    private $charset = 'utf-8';
+    private string $title   = '';
+    private string $lang    = 'en';
+    private string $charset = 'utf-8';
 
-    private $head = [];
-    private $body = [];
+    /**
+     * @var array<Element|Comment>
+     */
+    private array $head = [];
+
+    /**
+     * @var array<Element|Comment>
+     */
+    private array $body = [];
 
     public static function create(
         string $title,
         string $lang = 'en',
         string $charset = 'utf-8'
-    ): Document
-    {
+    ): Document {
         return new static($title, $lang, $charset);
     }
 
@@ -28,22 +35,27 @@ class Document
         string $title,
         string $lang = 'en',
         string $charset = 'utf-8'
-    )
-    {
+    ) {
         $this->title   = $title;
         $this->lang    = $lang;
         $this->charset = $charset;
     }
 
     // TODO: PHP8 - Element|Comment
-    public function head(...$content)
+    /**
+     * @param  Element|Comment $content [description]
+     */
+    public function head(...$content): Document
     {
         $this->head = $content;
         return $this;
     }
 
     // TODO: PHP8 - Element|Comment
-    public function body(...$content)
+    /**
+     * @param Element|Comment $content [description]
+     */
+    public function body(...$content): Document
     {
         $this->body = $content;
         return $this;
@@ -82,11 +94,17 @@ class Document
         return 'charset ' . $this->charset;
     }
 
+    /**
+     * @return array<Element|Comment> $content [description]
+     */
     private function headContent(): array
     {
         return $this->head;
     }
 
+    /**
+     * @return array<Element|Comment> $content [description]
+     */
     private function bodyContent(): array
     {
         return $this->body;
