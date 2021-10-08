@@ -55,6 +55,20 @@ Output (formatted):
 
 Further examples can be found in the `tests` folder with an example extension.
 
+A note on attributes: If a property is not in the ordered list, and the value of
+the property is the same as the name of the property, HTML Builder will presume
+it's a boolean value and will truncate the definition in the HTML.
+
+```php
+Element::input()->omitEndTag()->props("required required");
+```
+
+Output:
+
+```html
+<input required>
+```
+
 ## Details
 
 See [8fold XML Builder](https://github.com/8fold/php-xml-builder#readme) for
