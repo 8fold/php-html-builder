@@ -10,6 +10,8 @@ HTML extends and is a specific implementation of XML.
 
 ## Usage (basic)
 
+Warning: Users of this library are responsible for sanitizing content.
+
 By default, HTML Builder can quickly output an HTML string with consistent
 ordering of attributes for elements. The default order can be found in the
 [`Element`](https://github.com/8fold/php-html-builder/blob/main/src/Element.php)
