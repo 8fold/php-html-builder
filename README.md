@@ -25,7 +25,7 @@ Document::create('title')
       ->omitEndTag()->props('rel stylesheet', 'href style.css'),
     Element::script()->props('src script.js')
   )->body(
-  	Element::p('paragraph content')
+    Element::p('paragraph content')
   )
 ```
 
