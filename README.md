@@ -6,14 +6,16 @@ HTML extends and is a specific implementation of XML.
 
 ## Installation
 
-{how does one install the product}
+`composer require 8fold/php-html-builder`
 
 ## Usage (basic)
 
 By default, HTML Builder can quickly output an HTML string with consistent
 ordering of attributes for elements. The default order can be found in the
-`Element` class, which can be overridden, if you would prefer a different
-ordering. This helps create and enforce a consistent HTML pattern.
+[`Element`](https://github.com/8fold/php-html-builder/blob/main/src/Element.php)
+class, which can be overridden, if you prefer a different ordering. This helps
+create and maintain a consistent HTML pattern. Further, this pattern can be
+changed without updating templates or other code.
 
 ```php
 use Eightfold\HTMLBuilder\Document;
@@ -53,9 +55,11 @@ Output (formatted):
 </html>
 ```
 
-Further examples can be found in the `tests` folder with an example extension.
+Further examples can be found in the
+[`tests`](https://github.com/8fold/php-html-builder/tree/main/tests) folder with
+an example extension.
 
-A note on attributes: If a property is not in the ordered list, and the value of
+A note on properties: If a property is not in the ordered list, and the value of
 the property is the same as the name of the property, HTML Builder will presume
 it's a boolean value and will truncate the definition in the HTML output.
 
@@ -83,4 +87,8 @@ HTML specification.
 
 ## Other
 
-{links or descriptions or license, versioning, and governance}
+- [Code of Conduct](https://github.com/8fold/php-html-builder/blob/master/.github/CODE_OF_CONDUCT.md)
+- [Contributing](https://github.com/8fold/php-html-builder/blob/master/.github/CONTRIBUTING.md)
+- [Governance](https://github.com/8fold/php-html-builder/blob/master/.github/GOVERNANCE.md)
+- [Versioning](https://github.com/8fold/php-html-builder/blob/master/.github/VERSIONING.md)
+- [Security](https://github.com/8fold/php-html-builder/blob/master/.github/SECURITY.md)
