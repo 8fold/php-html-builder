@@ -57,7 +57,7 @@ Further examples can be found in the `tests` folder with an example extension.
 
 A note on attributes: If a property is not in the ordered list, and the value of
 the property is the same as the name of the property, HTML Builder will presume
-it's a boolean value and will truncate the definition in the HTML.
+it's a boolean value and will truncate the definition in the HTML output.
 
 ```php
 Element::input()->omitEndTag()->props("required required");
