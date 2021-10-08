@@ -1,9 +1,14 @@
 {
-  "name": "vendor/project",
-  "description": "",
+  "name": "8fold/php-html-builder",
+  "description": "A library for building HTML document and element strings.",
   "type": "library",
   "license": "MIT",
-  "authors": [],
+  "authors": [
+    {
+      "name": "Josh Bruce",
+      "email": "josh@8fold.pro"
+    }
+  ],
   "require": {
     "php": "^7.4||^8.0",
     "8fold/php-xml-builder": "^0.5"
