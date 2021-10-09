@@ -4,20 +4,20 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "2ebbcd15cebe5effb39d988808566b97",
+    "content-hash": "dc5e6b820a43c2eb6cc8425a56681f50",
     "packages": [
         {
             "name": "8fold/php-xml-builder",
-            "version": "0.5.3",
+            "version": "0.6.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/8fold/php-xml-builder.git",
-                "reference": "a06b7d10934148dcc3589e936bb2148befa88410"
+                "reference": "26b50c2b628e45b00a27e4286791f9953e5760c1"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/8fold/php-xml-builder/zipball/a06b7d10934148dcc3589e936bb2148befa88410",
-                "reference": "a06b7d10934148dcc3589e936bb2148befa88410",
+                "url": "https://api.github.com/repos/8fold/php-xml-builder/zipball/26b50c2b628e45b00a27e4286791f9953e5760c1",
+                "reference": "26b50c2b628e45b00a27e4286791f9953e5760c1",
                 "shasum": ""
             },
             "require": {
@@ -45,10 +45,10 @@
                     "email": "josh@8fold.pro"
                 }
             ],
-            "description": "A library for building XML strings.",
+            "description": "A library for building XML document and element strings.",
             "support": {
                 "issues": "https://github.com/8fold/php-xml-builder/issues",
-                "source": "https://github.com/8fold/php-xml-builder/tree/0.5.3"
+                "source": "https://github.com/8fold/php-xml-builder/tree/0.6.0"
             },
             "funding": [
                 {
@@ -60,7 +60,7 @@
                     "type": "github"
                 }
             ],
-            "time": "2021-10-08T00:40:01+00:00"
+            "time": "2021-10-09T01:55:37+00:00"
         }
     ],
     "packages-dev": [

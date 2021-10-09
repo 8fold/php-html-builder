@@ -5,8 +5,9 @@ declare(strict_types=1);
 namespace Eightfold\HTMLBuilder;
 
 use Eightfold\XMLBuilder\Element as XMLElement;
+use Eightfold\XMLBuilder\Contracts\Buildable;
 
-class Element extends XMLElement
+class Element extends XMLElement implements Buildable
 {
     /**
      * The following attributes will be placed in this order if used in an

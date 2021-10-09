@@ -5,9 +5,10 @@ declare(strict_types=1);
 namespace Eightfold\HTMLBuilder;
 
 use Eightfold\XMLBuilder\Comment;
+use Eightfold\XMLBuilder\Contracts\Buildable;
 use Eightfold\HTMLBuilder\Element;
 
-class Document
+class Document implements Buildable
 {
     private string $title   = '';
     private string $lang    = 'en';
