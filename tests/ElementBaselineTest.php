@@ -2,6 +2,15 @@
 
 use Eightfold\HTMLBuilder\Element;
 
+test('Element can have empty props', function() {
+    expect(
+        (string) Element::a('link')->props('')
+    )->toBe(<<<html
+        <a>link</a>
+        html
+    );
+});
+
 test('Element has ordered properties', function() {
     expect(
         Element::a('link')

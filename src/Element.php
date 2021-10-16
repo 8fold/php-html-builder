@@ -60,7 +60,6 @@ class Element extends XMLElement implements Buildable
     {
         if (count($this->properties()) === 0) {
             return '';
-
         }
 
         $orderedAttributes = array_fill_keys(static::ORDERED, "");
@@ -69,7 +68,11 @@ class Element extends XMLElement implements Buildable
 
         $build = [];
         foreach ($this->properties() as $property) {
-            list($attr, $content) = explode(" ", $property, 2);
+            if (strlen($property) === 0) {
+                continue;
+            }
+
+            list($attr, $content) = explode(' ', $property, 2);
 
             if (strlen($content) > 0) {
                 if (array_key_exists($attr, $orderedAttributes)) {
@@ -158,6 +161,9 @@ class Element extends XMLElement implements Buildable
 
         }
 
+        if (count($b) === 0) {
+            return '';
+        }
         return ' ' . implode(' ', $b);
     }
 }

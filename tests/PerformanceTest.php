@@ -33,7 +33,7 @@ test('Document is speedy', function() {
         ->head(...$head)
         ->body(...$body);
 
-    $end = memory_get_usage();
+    $end = hrtime(true);
 
     expect($result)->toBe(<<<doc
         <!doctype html>
@@ -65,8 +65,6 @@ test('Document is speedy', function() {
         doc
     );
 
-    $end = hrtime(true);
-
     $elapsed = $end - $start;
     $ms      = $elapsed/1e+6;
 
@@ -74,7 +72,7 @@ test('Document is speedy', function() {
 });
 
 test('Document is small', function() {
-    $start = memory_get_usage();;
+    $start = memory_get_usage();
 
     $head = [];
     for ($i = 0; $i < 10; $i++) {
