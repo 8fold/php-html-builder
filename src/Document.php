@@ -54,7 +54,7 @@ class Document implements Buildable
 
     // TODO: PHP8 - Element|Comment
     /**
-     * @param Element|Comment $content [description]
+     * @param Element|Comment|string $content [description]
      */
     public function body(...$content): Document
     {

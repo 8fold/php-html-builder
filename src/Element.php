@@ -148,17 +148,14 @@ class Element extends XMLElement implements Buildable
         $b = [];
         foreach ($orderedAttributes as $prop => $content) {
             $b[] = $prop . '="' . $content . '"';
-
         }
 
         foreach ($otherAttributes as $prop => $content) {
             $b[] = $prop . '="' . $content . '"';
-
         }
 
         foreach ($booleanAttributes as $prop => $content) {
             $b[] = $prop;
-
         }
 
         if (count($b) === 0) {
