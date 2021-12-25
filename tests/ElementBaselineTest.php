@@ -1,41 +1,70 @@
 <?php
+declare(strict_types=1);
+
+namespace Eightfold\HTMLBuilder\Tests;
+
+use PHPUnit\Framework\TestCase;
 
 use Eightfold\HTMLBuilder\Element;
 
-test('Element can have empty props', function() {
-    expect(
-        (string) Element::a('link')->props('')
-    )->toBe(<<<html
-        <a>link</a>
-        html
-    );
-});
+class ElementBaselineTest extends TestCase
+{
+    /**
+     * @test
+     */
+    public function can_have_empty_props(): void // phpcs:ignore
+    {
+        $expected = <<<html
+            <a>link</a>
+            html;
 
-test('Element has ordered properties', function() {
-    expect(
-        Element::a('link')
+        $result = (string) Element::a('link')->props('');
+
+        $this->assertSame($expected, $result);
+    }
+
+    /**
+     * @test
+     */
+    public function has_ordered_properties(): void // phpcs:ignore
+    {
+        $expected = <<<html
+            <a id="unique" class="some-style" href="https://8fold.pro" data-testing="test" required>link</a>
+            html;
+
+        $result = Element::a('link')
             ->props(
                 'required required',
                 'href https://8fold.pro',
                 'class some-style',
                 'id unique',
                 'data-testing test'
-            )->build()
-    )->toBe(
-        '<a id="unique" class="some-style" href="https://8fold.pro" data-testing="test" required>link</a>'
-    );
-});
+            )->build();
 
-test('Element has correct self-closing string', function() {
-    expect(
-        Element::tag()->omitEndTag()->build()
-    )->toBe(
-        '<tag>'
-    );
-});
+        $this->assertSame($expected, $result);
+    }
 
-test('Element exists', function() {
-    $this->assertTrue(
-        class_exists(Element::class)
-    );
-});
+    /**
+     * @test
+     */
+    public function has_correct_selfclosing_string(): void // phpcs:ignore
+    {
+        $expected = <<<html
+            <tag>
+            html;
+
+        $result = Element::tag()->omitEndTag()->build();
+
+        $this->assertSame($expected, $result);
+    }
+
+    /**
+     * @test
+     */
+    public function element_exists(): void // phpcs:ignore
+    {
+        $this->assertTrue(
+            class_exists(Element::class)
+        );
+    }
+}

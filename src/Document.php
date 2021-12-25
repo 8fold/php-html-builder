@@ -20,7 +20,7 @@ class Document implements Buildable
     private array $head = [];
 
     /**
-     * @var array<Element|Comment>
+     * @var array<Element|Comment|string>
      */
     private array $body = [];
 
@@ -44,9 +44,9 @@ class Document implements Buildable
 
     // TODO: PHP8 - Element|Comment
     /**
-     * @param  Element|Comment $content [description]
+     * @param  Element|Comment $content
      */
-    public function head(...$content): Document
+    public function head(Element|Comment ...$content): Document
     {
         $this->head = $content;
         return $this;
@@ -54,9 +54,9 @@ class Document implements Buildable
 
     // TODO: PHP8 - Element|Comment
     /**
-     * @param Element|Comment|string $content [description]
+     * @param Element|Comment|string $content
      */
-    public function body(...$content): Document
+    public function body(Element|Comment|string ...$content): Document
     {
         $this->body = $content;
         return $this;
@@ -96,7 +96,7 @@ class Document implements Buildable
     }
 
     /**
-     * @return array<Element|Comment> $content [description]
+     * @return array<Element|Comment> $content
      */
     private function headContent(): array
     {
@@ -104,7 +104,7 @@ class Document implements Buildable
     }
 
     /**
-     * @return array<Element|Comment> $content [description]
+     * @return array<Element|Comment|string> $content
      */
     private function bodyContent(): array
     {
