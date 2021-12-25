@@ -14,7 +14,7 @@ class DocumentBaselineTest extends TestCase
     /**
      * @test
      */
-    public function document_is_stringable(): void // phpcs:ignore
+    public function is_stringable(): void // phpcs:ignore
     {
         $expected = <<<html
             <!doctype html>
@@ -36,7 +36,7 @@ class DocumentBaselineTest extends TestCase
     /**
      * @test
      */
-    public function document_can_have_body(): void // phpcs:ignore
+    public function can_have_body(): void // phpcs:ignore
     {
         $expected = <<<html
             <!doctype html>
@@ -58,7 +58,7 @@ class DocumentBaselineTest extends TestCase
     /**
      * @test
      */
-    public function document_can_have_head(): void // phpcs:ignore
+    public function can_have_head(): void // phpcs:ignore
     {
         $expected = <<<html
             <!doctype html>
@@ -78,7 +78,7 @@ class DocumentBaselineTest extends TestCase
     /**
      * @test
      */
-    public function document_can_change_lang_and_char_set(): void // phpcs:ignore
+    public function can_change_lang_and_char_set(): void // phpcs:ignore
     {
         $expected = <<<html
             <!doctype html>
@@ -93,7 +93,7 @@ class DocumentBaselineTest extends TestCase
     /**
      * @test
      */
-    public function document_has_baseline(): void // phpcs:ignore
+    public function has_baseline(): void // phpcs:ignore
     {
         $expected = <<<html
             <!doctype html>
@@ -108,7 +108,7 @@ class DocumentBaselineTest extends TestCase
     /**
      * @test
      */
-    public function document_class_exists(): void // phpcs:ignore
+    public function class_exists(): void // phpcs:ignore
     {
         $this->assertTrue(
             class_exists(Document::class)
