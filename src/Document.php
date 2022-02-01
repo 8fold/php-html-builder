@@ -4,23 +4,21 @@ declare(strict_types=1);
 
 namespace Eightfold\HTMLBuilder;
 
+use Stringable;
+
 use Eightfold\XMLBuilder\Comment;
 use Eightfold\XMLBuilder\Contracts\Buildable;
 use Eightfold\HTMLBuilder\Element;
 
 class Document implements Buildable
 {
-    private string $title   = '';
-    private string $lang    = 'en';
-    private string $charset = 'utf-8';
-
     /**
-     * @var array<Element|Comment>
+     * @var array<string|Stringable>
      */
     private array $head = [];
 
     /**
-     * @var array<Element|Comment|string>
+     * @var array<string|Stringable>
      */
     private array $body = [];
 
@@ -32,31 +30,20 @@ class Document implements Buildable
         return new static($title, $lang, $charset);
     }
 
-    final public function __construct(
-        string $title,
-        string $lang = 'en',
-        string $charset = 'utf-8'
+    final private function __construct(
+        private string $title,
+        private string $lang = 'en',
+        private string $charset = 'utf-8'
     ) {
-        $this->title   = $title;
-        $this->lang    = $lang;
-        $this->charset = $charset;
     }
 
-    // TODO: PHP8 - Element|Comment
-    /**
-     * @param  Element|Comment $content
-     */
-    public function head(Element|Comment ...$content): Document
+    public function head(string|Stringable ...$content): Document
     {
         $this->head = $content;
         return $this;
     }
 
-    // TODO: PHP8 - Element|Comment
-    /**
-     * @param Element|Comment|string $content
-     */
-    public function body(Element|Comment|string ...$content): Document
+    public function body(string|Stringable ...$content): Document
     {
         $this->body = $content;
         return $this;
@@ -96,7 +83,7 @@ class Document implements Buildable
     }
 
     /**
-     * @return array<Element|Comment> $content
+     * @return array<string|Stringable>
      */
     private function headContent(): array
     {
@@ -104,7 +91,7 @@ class Document implements Buildable
     }
 
     /**
-     * @return array<Element|Comment|string> $content
+     * @return array<string|Stringable>
      */
     private function bodyContent(): array
     {
