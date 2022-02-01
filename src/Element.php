@@ -4,10 +4,11 @@ declare(strict_types=1);
 
 namespace Eightfold\HTMLBuilder;
 
-use Eightfold\XMLBuilder\Element as XMLElement;
-use Eightfold\XMLBuilder\Contracts\Buildable;
+use Stringable;
 
-class Element extends XMLElement implements Buildable
+use Eightfold\XMLBuilder\Element as XMLElement;
+
+class Element extends XMLElement implements Stringable
 {
     /**
      * The following attributes will be placed in this order if used in an
