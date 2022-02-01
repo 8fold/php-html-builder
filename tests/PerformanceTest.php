@@ -81,6 +81,6 @@ class PerformanceTest extends TestCase
         $used = $end - $start;
         $kb   = round($used/1024.2);
 
-        $this->assertLessThan(40, $kb);
+        $this->assertLessThan(65, $kb);
     }
 }
