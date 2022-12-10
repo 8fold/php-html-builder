@@ -104,14 +104,4 @@ class DocumentBaselineTest extends TestCase
 
         $this->assertSame($expected, $result);
     }
-
-    /**
-     * @test
-     */
-    public function class_exists(): void // phpcs:ignore
-    {
-        $this->assertTrue(
-            class_exists(Document::class)
-        );
-    }
 }

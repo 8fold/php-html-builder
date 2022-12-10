@@ -57,14 +57,4 @@ class ElementBaselineTest extends TestCase
 
         $this->assertSame($expected, $result);
     }
-
-    /**
-     * @test
-     */
-    public function element_exists(): void // phpcs:ignore
-    {
-        $this->assertTrue(
-            class_exists(Element::class)
-        );
-    }
 }
