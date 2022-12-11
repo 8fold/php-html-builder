@@ -1,4 +1,4 @@
-name: PHP 8.1
+name: PHP 8.2
 
 on:
   push:
@@ -16,7 +16,7 @@ jobs:
       - name: Setup PHP Action
         uses: shivammathur/setup-php@2.15.0
         with:
-          php-version: '8.1'
+          php-version: '8.2'
 
       - name: Validate composer.json and composer.lock
         run: composer validate
