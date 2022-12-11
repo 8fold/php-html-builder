@@ -127,19 +127,19 @@ class Favicons implements Buildable
             Element::link()->omitEndTag()->props(
                 'rel apple-touch-icon',
                 'sizes 180x180',
-                'href ' . $this->path() .'/apple-touch-icon.png'
+                'href ' . $this->path() . '/apple-touch-icon.png'
             ),
             Element::link()->omitEndTag()->props(
                 'rel icon',
                 'type image/png',
                 'sizes 32x32',
-                'href ' . $this->path() .'/favicon-32x32.png'
+                'href ' . $this->path() . '/favicon-32x32.png'
             ),
             Element::link()->omitEndTag()->props(
                 'rel icon',
                 'type image/png',
                 'sizes 16x16',
-                'href ' . $this->path() .'/favicon-16x16.png'
+                'href ' . $this->path() . '/favicon-16x16.png'
             ),
             Element::link()->omitEndTag()->props(
                 'rel manifest',
