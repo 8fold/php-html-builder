@@ -5,15 +5,10 @@ namespace Eightfold\HTMLBuilder;
 
 use Stringable;
 
-use Eightfold\XMLBuilder\Contracts\Buildable;
-use Eightfold\XMLBuilder\Implementations\Buildable as BuildableImp;
-
 use Eightfold\HTMLBuilder\Element;
 
-class Document implements Buildable
+class Document implements Stringable
 {
-    use BuildableImp;
-
     /**
      * @var array<string|Stringable>
      */
@@ -54,14 +49,15 @@ class Document implements Buildable
     public function __toString(): string
     {
         $doctype = '<!doctype html>' . "\n";
-        return $doctype . Element::html(
+        $html = (string) Element::html(
             Element::head(
                 Element::title($this->title()),
                 Element::meta()->omitEndTag()->props($this->charset()),
                 ...$this->headContent()
             ),
             Element::body(...$this->bodyContent())
-        )->props($this->lang())->build();
+        )->props($this->lang());
+        return $doctype . $html;
     }
 
     private function title(): string

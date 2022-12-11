@@ -4,20 +4,20 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "c947d8e6a9d83a5901fde433b192b1d2",
+    "content-hash": "dc6343ad7a810126408d6ead837d1274",
     "packages": [
         {
             "name": "8fold/php-xml-builder",
-            "version": "1.4.0",
+            "version": "2.0.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/8fold/php-xml-builder.git",
-                "reference": "69800b791a2b331f603a1680a33f8a082a44309f"
+                "reference": "a1feffe8d91e3ed3bf532c9b2ba13c5a8c2abfcb"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/8fold/php-xml-builder/zipball/69800b791a2b331f603a1680a33f8a082a44309f",
-                "reference": "69800b791a2b331f603a1680a33f8a082a44309f",
+                "url": "https://api.github.com/repos/8fold/php-xml-builder/zipball/a1feffe8d91e3ed3bf532c9b2ba13c5a8c2abfcb",
+                "reference": "a1feffe8d91e3ed3bf532c9b2ba13c5a8c2abfcb",
                 "shasum": ""
             },
             "require": {
@@ -47,7 +47,7 @@
             "description": "A library for building XML document and element strings.",
             "support": {
                 "issues": "https://github.com/8fold/php-xml-builder/issues",
-                "source": "https://github.com/8fold/php-xml-builder/tree/1.4.0"
+                "source": "https://github.com/8fold/php-xml-builder/tree/2.0.0"
             },
             "funding": [
                 {
@@ -59,7 +59,7 @@
                     "type": "github"
                 }
             ],
-            "time": "2022-12-05T00:11:28+00:00"
+            "time": "2022-12-11T03:40:44+00:00"
         }
     ],
     "packages-dev": [
