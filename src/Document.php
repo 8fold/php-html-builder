@@ -1,17 +1,19 @@
 <?php
-
 declare(strict_types=1);
 
 namespace Eightfold\HTMLBuilder;
 
 use Stringable;
 
-use Eightfold\XMLBuilder\Comment;
 use Eightfold\XMLBuilder\Contracts\Buildable;
+use Eightfold\XMLBuilder\Implementations\Buildable as BuildableImp;
+
 use Eightfold\HTMLBuilder\Element;
 
 class Document implements Buildable
 {
+    use BuildableImp;
+
     /**
      * @var array<string|Stringable>
      */
@@ -32,8 +34,8 @@ class Document implements Buildable
 
     final private function __construct(
         private string $title,
-        private string $lang = 'en',
-        private string $charset = 'utf-8'
+        private string $lang,
+        private string $charset
     ) {
     }
 
@@ -49,7 +51,7 @@ class Document implements Buildable
         return $this;
     }
 
-    public function build(): string
+    public function __toString(): string
     {
         $doctype = '<!doctype html>' . "\n";
         return $doctype . Element::html(
@@ -60,11 +62,6 @@ class Document implements Buildable
             ),
             Element::body(...$this->bodyContent())
         )->props($this->lang())->build();
-    }
-
-    public function __toString(): string
-    {
-        return $this->build();
     }
 
     private function title(): string

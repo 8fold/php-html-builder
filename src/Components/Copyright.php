@@ -13,11 +13,11 @@ class Copyright implements Buildable
 {
     use BuildableImp;
 
-    private $useCopyrightSymbol = true;
+    private bool $useCopyrightSymbol = true;
 
-    private $spellOutCopyright = false;
+    private bool $spellOutCopyright = false;
 
-    private $scope = '';
+    private string $scope = '';
 
     public static function create(
         string $holder,
