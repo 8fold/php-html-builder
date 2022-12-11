@@ -21,8 +21,7 @@ class DocumentBaselineTest extends TestCase
             <html lang="fr"><head><title>title</title><meta charset="ascii"><link rel="stylesheet" href="style.css"><script src="script.js"></script></head><body><p>paragraph content</p></body></html>
             html;
 
-        $result = (string) Document::create('title', 'fr', 'ascii')
-            ->head(
+        $result = (string) Document::create('title', 'fr', 'ascii')->head(
                 Element::link()
                     ->omitEndTag()->props('rel stylesheet', 'href style.css'),
                 Element::script()->props('src script.js')
@@ -43,14 +42,13 @@ class DocumentBaselineTest extends TestCase
             <html lang="fr"><head><title>title</title><meta charset="ascii"><link rel="stylesheet" href="style.css"><script src="script.js"></script></head><body><p>paragraph content</p></body></html>
             html;
 
-        $result = Document::create('title', 'fr', 'ascii')
-            ->head(
+        $result = (string) Document::create('title', 'fr', 'ascii')->head(
                 Element::link()
                     ->omitEndTag()->props('rel stylesheet', 'href style.css'),
                 Element::script()->props('src script.js')
             )->body(
                 Element::p('paragraph content')
-            )->build();
+            );
 
         $this->assertSame($expected, $result);
     }
@@ -65,12 +63,11 @@ class DocumentBaselineTest extends TestCase
             <html lang="fr"><head><title>title</title><meta charset="ascii"><link rel="stylesheet" href="style.css"><script src="script.js"></script></head><body></body></html>
             html;
 
-        $result = Document::create('title', 'fr', 'ascii')
-            ->head(
+        $result = (string) Document::create('title', 'fr', 'ascii')->head(
                 Element::link()
                     ->omitEndTag()->props('rel stylesheet', 'href style.css'),
                 Element::script()->props('src script.js')
-            )->build();
+            );
 
         $this->assertSame($expected, $result);
     }
@@ -85,7 +82,7 @@ class DocumentBaselineTest extends TestCase
             <html lang="fr"><head><title>title</title><meta charset="ascii"></head><body></body></html>
             html;
 
-        $result = Document::create('title', 'fr', 'ascii')->build();
+        $result = (string) Document::create('title', 'fr', 'ascii');
 
         $this->assertSame($expected, $result);
     }
@@ -100,7 +97,7 @@ class DocumentBaselineTest extends TestCase
             <html lang="en"><head><title>title</title><meta charset="utf-8"></head><body></body></html>
             html;
 
-        $result = Document::create('title')->build();
+        $result = (string) Document::create('title');
 
         $this->assertSame($expected, $result);
     }

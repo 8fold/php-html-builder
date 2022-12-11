@@ -3,16 +3,12 @@ declare(strict_types=1);
 
 namespace Eightfold\HTMLBuilder\Components;
 
-use Eightfold\XMLBuilder\Contracts\Buildable;
-
-use Eightfold\XMLBuilder\Implementations\Buildable as BuildableImp;
+use Stringable;
 
 use Eightfold\HTMLBuilder\Element;
 
-class Copyright implements Buildable
+class Copyright implements Stringable
 {
-    use BuildableImp;
-
     private bool $useCopyrightSymbol = true;
 
     private bool $spellOutCopyright = false;

@@ -32,14 +32,13 @@ class ElementBaselineTest extends TestCase
             <a id="unique" class="some-style" href="https://8fold.pro" data-testing="test" required>link</a>
             html;
 
-        $result = Element::a('link')
-            ->props(
+        $result = (string) Element::a('link')->props(
                 'required required',
                 'href https://8fold.pro',
                 'class some-style',
                 'id unique',
                 'data-testing test'
-            )->build();
+            );
 
         $this->assertSame($expected, $result);
     }
@@ -53,7 +52,7 @@ class ElementBaselineTest extends TestCase
             <tag>
             html;
 
-        $result = Element::tag()->omitEndTag()->build();
+        $result = (string) Element::tag()->omitEndTag();
 
         $this->assertSame($expected, $result);
     }

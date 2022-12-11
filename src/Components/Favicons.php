@@ -3,11 +3,9 @@ declare(strict_types=1);
 
 namespace Eightfold\HTMLBuilder\Components;
 
-use Eightfold\XMLBuilder\Contracts\Buildable;
+use Stringable;
 
 use Eightfold\XMLBuilder\Concatenate;
-
-use Eightfold\XMLBuilder\Implementations\Buildable as BuildableImp;
 
 use Eightfold\HTMLBuilder\Element;
 
@@ -17,10 +15,8 @@ use Eightfold\HTMLBuilder\Components\FaviconMetroColors;
  * We use https://realfavicongenerator.net to generate favicon-related assets.
  * We presume the names of these assets will not be changed.
  */
-class Favicons implements Buildable
+class Favicons implements Stringable
 {
-    use BuildableImp;
-
     private string $appName = '';
 
     private bool $metroUsesWhite;
