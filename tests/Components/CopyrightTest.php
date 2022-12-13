@@ -68,8 +68,6 @@ class CopyrightTest extends TestCase
 
     /**
      * @test
-     *
-     * @group focus
      */
     public function can_include_copyright(): void
     {
