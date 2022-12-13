@@ -21,7 +21,7 @@ class Favicons implements Stringable
 
     private bool $metroUsesWhite;
 
-    private FaviconMetroColors $metroTileColor = FaviconMetroColors::DarkOrange;
+    private FaviconMetroColors|string $metroTileColor = FaviconMetroColors::DarkOrange;
 
     private string $safariThemeColor = '#5bbad5';
 
@@ -70,7 +70,7 @@ class Favicons implements Stringable
     }
 
     public function withMetro(
-        FaviconMetroColors $tileColor = FaviconMetroColors::DarkOrange,
+        FaviconMetroColors|string $tileColor = FaviconMetroColors::DarkOrange,
         bool $useWhite = false
     ): self {
         $this->metroTileColor = $tileColor;
@@ -96,6 +96,14 @@ class Favicons implements Stringable
             return false;
         }
         return $this->metroUsesWhite;
+    }
+
+    private function metroTileColor(): string
+    {
+        if (is_string($this->metroTileColor)) {
+            return $this->metroTileColor;
+        }
+        return $this->metroTileColor->value;
     }
 
     public function withSafariThemeColor(string $color): self
@@ -135,7 +143,7 @@ class Favicons implements Stringable
             ),
             Element::meta()->omitEndTag()->props(
                 'name msapplication-TileColor',
-                'content ' . $this->metroTileColor->value
+                'content ' . $this->metroTileColor()
             ),
             Element::meta()->omitEndTag()->props(
                 'name theme-color',
