@@ -99,5 +99,18 @@ class FaviconsTest extends TestCase
             $expected,
             $result . "\n"
         );
+
+        $expected = file_get_contents(
+            __DIR__ . '/favicons-windows-metro-tile-color-white.xml'
+        );
+
+        $result = (string) Favicons::create()->withMetro(
+            '#ffffff'
+        );
+
+        $this->assertSame(
+            $expected,
+            $result . "\n"
+        );
     }
 }
