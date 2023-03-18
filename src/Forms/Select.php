@@ -9,14 +9,19 @@ use Eightfold\HTMLBuilder\Element;
 
 class Select implements Stringable
 {
+    /**
+     * @var string[]
+     */
     private array $wrapperProperties = [];
 
     private bool $dropdown = true;
 
-    private bool $radio = false;
-
     private bool $checkbox = false;
 
+    /**
+     * @param array<string, string> $options
+     * @param string|string[] $selected
+     */
     public static function create(
         string|Stringable $label,
         string|Stringable $name,
@@ -26,6 +31,10 @@ class Select implements Stringable
         return new self($label, $name, $options, $selected);
     }
 
+    /**
+     * @param array<string, string> $options
+     * @param string|string[] $selected
+     */
     final private function __construct(
         private readonly string|Stringable $label,
         private readonly string|Stringable $name,
@@ -43,16 +52,12 @@ class Select implements Stringable
     public function dropdown(): self
     {
         $this->dropdown = true;
-
-        $this->radio    = false;
         $this->checkbox = false;
         return $this;
     }
 
     public function radio(): self
     {
-        $this->radio = true;
-
         $this->dropdown = false;
         $this->checkbox = false;
         return $this;
@@ -61,23 +66,26 @@ class Select implements Stringable
     public function checkbox(): self
     {
         $this->checkbox = true;
-
-        $this->radio    = false;
         $this->dropdown = false;
         return $this;
     }
 
     private function hasSelected(): bool
     {
-        if (is_string($this->selected) and strlen($this->selected) > 0) {
+        $selected = $this->selected();
+        if (is_string($selected) and strlen($selected) > 0) {
             return true;
 
-        } elseif (count($this->selected) > 0) {
+        } elseif (is_array($selected) and count($selected) > 0) {
             return true;
+
         }
         return false;
     }
 
+    /**
+     * @return string|string[]
+     */
     private function selected(): string|array
     {
         if ($this->checkbox) {
@@ -87,7 +95,7 @@ class Select implements Stringable
             return [$this->selected];
         }
 
-        if (is_array($this->selected)) {
+        if (is_array($this->selected) and count($this->selected) > 0) {
             return $this->selected[0];
         }
         return $this->selected;
@@ -99,7 +107,7 @@ class Select implements Stringable
             return false;
         }
 
-        if ($this->checkbox) {
+        if (is_array($this->selected())) {
             return in_array($value, $this->selected());
         }
         return $value === $this->selected();
