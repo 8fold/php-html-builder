@@ -118,4 +118,25 @@ class SelectTest extends TestCase
 
         $this->assertSame($expected, $result);
     }
+
+    /**
+     * @test
+     */
+    public function error_is_selected_value_always_string(): void // phpcs:ignore
+    {
+        $expected = <<<html
+        <div><label for="select">Select your option</label><select id="select" name="select"><option value="0">display</option></select></div>
+        html;
+
+        // Even with strict types, number-based keys become integers
+        $result = (string) Select::create(
+            'Select your option',
+            'select',
+            [
+                '0' => 'display'
+            ]
+        );
+
+        $this->assertSame($expected, $result);
+    }
 }

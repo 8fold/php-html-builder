@@ -125,6 +125,7 @@ class Select implements Stringable
     {
         $elements = [];
         foreach ($this->options as $value => $content) {
+            $value  = strval($value);
             $option = Element::option($content)->props('value ' . $value);
             if ($this->isSelected($value)) {
                 $option = $option->prop('selected selected');
@@ -150,6 +151,7 @@ class Select implements Stringable
             $type = 'checkbox';
         }
         foreach ($this->options as $value => $content) {
+            $value = strval($value);
             $id    = $this->name . '-' . $value;
             $label = Element::label($content)->props('for ' . $id);
             $input = Element::input()->omitEndTag()->props(
