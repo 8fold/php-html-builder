@@ -20,7 +20,7 @@ class Document implements Stringable
     private array $body = [];
 
     public static function create(
-        string $title,
+        string|Stringable $title,
         string $lang = 'en',
         string $charset = 'utf-8'
     ): Document {
@@ -28,7 +28,7 @@ class Document implements Stringable
     }
 
     final private function __construct(
-        private string $title,
+        private string|Stringable $title,
         private string $lang,
         private string $charset
     ) {
@@ -48,10 +48,18 @@ class Document implements Stringable
 
     public function __toString(): string
     {
+        $pageTitle = $this->title();
+        if (
+            is_string($pageTitle) and
+            str_starts_with($pageTitle, '<title>') === false
+        ) {
+            $pageTitle = Element::title($this->title());
+        }
+
         $doctype = '<!doctype html>' . "\n";
         $html = (string) Element::html(
             Element::head(
-                Element::title($this->title()),
+                $pageTitle,
                 Element::meta()->omitEndTag()->props($this->charset()),
                 ...$this->headContent()
             ),
@@ -60,7 +68,7 @@ class Document implements Stringable
         return $doctype . $html;
     }
 
-    private function title(): string
+    private function title(): string|Stringable
     {
         return $this->title;
     }

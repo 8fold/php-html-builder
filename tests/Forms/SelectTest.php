@@ -5,11 +5,6 @@ namespace Eightfold\HTMLBuilder\Tests;
 
 use PHPUnit\Framework\TestCase;
 
-// use Eightfold\HTMLBuilder\Tests\Extensions\ElementExtension;
-
-// use Eightfold\XMLBuilder\Comment;
-
-// use Eightfold\HTMLBuilder\Document;
 use Eightfold\HTMLBuilder\Forms\Select;
 
 class SelectTest extends TestCase
