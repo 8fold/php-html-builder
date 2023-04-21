@@ -9,8 +9,30 @@ use Eightfold\HTMLBuilder\Document;
 
 use Eightfold\HTMLBuilder\Element;
 
+use Eightfold\HTMLBuilder\Components\PageTitle;
+
 class DocumentBaselineTest extends TestCase
 {
+    /**
+     * @test
+     */
+    public function can_use_page_title(): void // phpcs:ignore
+    {
+        $expected = <<<html
+        <!doctype html>
+        <html lang="en"><head><title>Second | First</title><meta charset="utf-8"></head><body></body></html>
+        html;
+
+        $result = (string) Document::create(
+            PageTitle::create(['Second', 'First'])
+        );
+
+        $this->assertSame(
+            $expected,
+            $result
+        );
+    }
+
     /**
      * @test
      */
