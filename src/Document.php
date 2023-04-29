@@ -19,6 +19,11 @@ class Document implements Stringable
      */
     private array $body = [];
 
+    /**
+     * @var array<string>
+     */
+    private array $bodyProps = [];
+
     public static function create(
         string|Stringable $title,
         string $lang = 'en',
@@ -46,6 +51,12 @@ class Document implements Stringable
         return $this;
     }
 
+    public function bodyProps(string ...$props): Document
+    {
+        $this->bodyProps = $props;
+        return $this;
+    }
+
     public function __toString(): string
     {
         $pageTitle = $this->title();
@@ -63,7 +74,7 @@ class Document implements Stringable
                 Element::meta()->omitEndTag()->props($this->charset()),
                 ...$this->headContent()
             ),
-            Element::body(...$this->bodyContent())
+            Element::body(...$this->bodyContent())->props(...$this->bodyProps)
         )->props($this->lang());
         return $doctype . $html;
     }
