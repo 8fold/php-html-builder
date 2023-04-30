@@ -32,7 +32,7 @@ class Select implements Stringable
     }
 
     /**
-     * @param array<string, string> $options
+     * @param array<string|int, string> $options
      * @param string|string[] $selected
      */
     final private function __construct(
@@ -43,9 +43,9 @@ class Select implements Stringable
     ) {
     }
 
-    public function wrapperProps(string ...$propperties): self
+    public function wrapperProps(string ...$properties): self
     {
-        $this->wrapperProperties = $propperties;
+        $this->wrapperProperties = $properties;
         return $this;
     }
 
