@@ -19,7 +19,7 @@ class Select implements Stringable
     private bool $checkbox = false;
 
     /**
-     * @param array<string, string> $options
+     * @param array<string|int, string> $options
      * @param string|string[] $selected
      */
     public static function create(
