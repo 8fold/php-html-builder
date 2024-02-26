@@ -100,7 +100,7 @@ Things worth noting (as rough interpretations):
 1. PHP being used as a template engine has a negligible impact on speed.
 2. Using `require_once` without PSR-4 autoloading decreases speed by roughly 1.5 milliseconds; however, once the code is made available, very little additional cost seems to be present.
 3. Using PSR-4 decreases speed by roughly 6 milliseconds; however, ensures everything is present and available.
-4. Using PHP HTML Build Document and Element resulted in 1 kilobyte in packet size. (Increased processing time in milliseconds most likely offset by decreased download time.)
+4. Using PHP HTML Builder Document and Element resulted in 1 kilobyte in packet size. (Increased processing time in milliseconds most likely offset by decreased download time.)
 
 ## Details
 
