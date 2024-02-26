@@ -75,17 +75,36 @@ Output:
 <input required>
 ```
 
+## Performance
+
+The `/comparisons` folder can be used to run performance tests locally to compare the same output using:
+
+1. straight HTML,
+2. standard PHP,
+3. PHP HTML Builder alongside standard PHP (the Element class),
+4. PHP HTML Builder only (the Document class), and
+5. PHP HTML Builder only using PSR-4 autoloading.
+
+These results are from February 26th, 2024:
+
+|Configuration |Average time in milliseconds |Median time in milliseconds |
+|:---|---:|---:|
+|1 |0.0399683 |0.0017415 |
+|2 |0.0953241 |0.0160480 |
+|3 |1.6026525 |1.4603320 |
+|4 |1.7849769 |1.7918970 |
+|5 |8.9957415 |8.8755520 |
+
+Things worth noting (as rough interpretations):
+
+1. PHP being used as a template engine has a negligible impact on speed.
+2. Using `require_once` without PSR-4 autoloading decreases speed by roughly 1 millisecond; however, once the code is made available, very little additional cost seems to be present.
+3. Using PSR-4 decreases speed by roughly 6 milliseconds; however, ensures everything is present and available.
+
 ## Details
 
-See [8fold XML Builder](https://github.com/8fold/php-xml-builder#readme) for
+See [8fold XML Builder](https://github.com/8fold/php-xml-builder#readme) for more
 details.
-
-## Usage (advanced)
-
-TODO
-
-HTML Builder has the ability to help create valid HTML documents based on the
-HTML specification.
 
 ## Other
 
