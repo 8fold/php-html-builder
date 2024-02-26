@@ -98,7 +98,7 @@ These results are from February 26th, 2024:
 Things worth noting (as rough interpretations):
 
 1. PHP being used as a template engine has a negligible impact on speed.
-2. Using `require_once` without PSR-4 autoloading decreases speed by roughly 1 millisecond; however, once the code is made available, very little additional cost seems to be present.
+2. Using `require_once` without PSR-4 autoloading decreases speed by roughly 1.5 milliseconds; however, once the code is made available, very little additional cost seems to be present.
 3. Using PSR-4 decreases speed by roughly 6 milliseconds; however, ensures everything is present and available.
 
 ## Details
