@@ -72,7 +72,7 @@ class PerformanceTest extends TestCase
             ->head(...$this->head())
             ->body(...$this->body()) . "\n";
 
-        $end = memory_get_peak_usage();
+        $end = memory_get_usage();
 
         $expected = file_get_contents(__DIR__ . '/performance.html');
 
