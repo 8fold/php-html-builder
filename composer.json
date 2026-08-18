@@ -37,6 +37,6 @@
     "production": ["@style", "@stan", "@test"],
     "style": "./vendor/bin/phpcs --standard=phpcs.xml -p ./src",
     "stan": "./vendor/bin/phpstan analyze",
-    "test": "./vendor/bin/phpunit"
+    "test": "./vendor/bin/phpunit --display-all-issues"
   }
 }

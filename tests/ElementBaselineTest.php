@@ -3,15 +3,14 @@ declare(strict_types=1);
 
 namespace Eightfold\HTMLBuilder\Tests;
 
+use PHPUnit\Framework\Attributes\Test;
 use PHPUnit\Framework\TestCase;
 
 use Eightfold\HTMLBuilder\Element;
 
 class ElementBaselineTest extends TestCase
 {
-    /**
-     * @test
-     */
+    #[Test]
     public function can_have_empty_props(): void // phpcs:ignore
     {
         $expected = <<<html
@@ -23,9 +22,7 @@ class ElementBaselineTest extends TestCase
         $this->assertSame($expected, $result);
     }
 
-    /**
-     * @test
-     */
+    #[Test]
     public function has_ordered_properties(): void // phpcs:ignore
     {
         $expected = <<<html
@@ -43,9 +40,7 @@ class ElementBaselineTest extends TestCase
         $this->assertSame($expected, $result);
     }
 
-    /**
-     * @test
-     */
+    #[Test]
     public function has_correct_selfclosing_string(): void // phpcs:ignore
     {
         $expected = <<<html

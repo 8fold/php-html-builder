@@ -3,15 +3,14 @@ declare(strict_types=1);
 
 namespace Eightfold\HTMLBuilder\Tests;
 
+use PHPUnit\Framework\Attributes\Test;
 use PHPUnit\Framework\TestCase;
 
 use Eightfold\HTMLBuilder\Forms\Select;
 
 class SelectTest extends TestCase
 {
-    /**
-     * @test
-     */
+    #[Test]
     public function can_be_checkboxes(): void // phpcs: ignore
     {
         $expected = <<<html
@@ -31,9 +30,7 @@ class SelectTest extends TestCase
         $this->assertSame($expected, $result);
     }
 
-    /**
-     * @test
-     */
+    #[Test]
     public function can_be_radio_buttons(): void // phpcs: ignore
     {
         $expected = <<<html
@@ -52,9 +49,7 @@ class SelectTest extends TestCase
         $this->assertSame($expected, $result);
     }
 
-    /**
-     * @test
-     */
+    #[Test]
     public function can_add_properties_to_wrapper(): void // phpcs: ignore
     {
         $expected = <<<html
@@ -72,9 +67,7 @@ class SelectTest extends TestCase
         $this->assertSame($expected, $result);
     }
 
-    /**
-     * @test
-     */
+    #[Test]
     public function can_preselect_option(): void // phpcs:ignore
     {
         $expected = <<<html
@@ -94,9 +87,7 @@ class SelectTest extends TestCase
         $this->assertSame($expected, $result);
     }
 
-    /**
-     * @test
-     */
+    #[Test]
     public function is_expected_base(): void // phpcs:ignore
     {
         $expected = <<<html
@@ -114,9 +105,7 @@ class SelectTest extends TestCase
         $this->assertSame($expected, $result);
     }
 
-    /**
-     * @test
-     */
+    #[Test]
     public function error_is_selected_value_always_string(): void // phpcs:ignore
     {
         $expected = <<<html

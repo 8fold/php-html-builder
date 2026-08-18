@@ -3,15 +3,14 @@ declare(strict_types=1);
 
 namespace Eightfold\HTMLBuilder\Tests;
 
+use PHPUnit\Framework\Attributes\Test;
 use PHPUnit\Framework\TestCase;
 
 use Eightfold\HTMLBuilder\Tests\Extensions\ElementExtension;
 
 class ElementExtensionBaselineTest extends TestCase
 {
-    /**
-     * @test
-     */
+    #[Test]
     public function has_ordered_properties(): void // phpcs:ignore
     {
         $exptected = <<<html
