@@ -3,15 +3,14 @@ declare(strict_types=1);
 
 namespace Eightfold\HTMLBuilder\Tests\Components;
 
+use PHPUnit\Framework\Attributes\Test;
 use PHPUnit\Framework\TestCase;
 
 use Eightfold\HTMLBuilder\Components\Copyright;
 
 class CopyrightTest extends TestCase
 {
-    /**
-     * @test
-     */
+    #[Test]
     public function can_use_default(): void
     {
         $expected = '<p>© ' . date('Y') . ' Dr. Copyright</p>';
@@ -24,9 +23,7 @@ class CopyrightTest extends TestCase
         );
     }
 
-    /**
-     * @test
-     */
+    #[Test]
     public function can_use_bare_string(): void
     {
         $expected = '© ' . date('Y') . ' Dr. Copyright';
@@ -51,9 +48,7 @@ class CopyrightTest extends TestCase
         );
     }
 
-    /**
-     * @test
-     */
+    #[Test]
     public function can_have_year_range(): void
     {
         $expected = '<p>© 2020–' . date('Y') . ' Dr. Copyright</p>';
@@ -66,9 +61,7 @@ class CopyrightTest extends TestCase
         );
     }
 
-    /**
-     * @test
-     */
+    #[Test]
     public function can_include_copyright(): void
     {
         $expected = '<p>Copyright ' . date('Y') . ' Dr. Copyright</p>';
@@ -92,9 +85,7 @@ class CopyrightTest extends TestCase
         );
     }
 
-    /**
-     * @test
-     */
+    #[Test]
     public function can_modify_reservations(): void
     {
         $expected = '<p>© ' . date('Y') . ' Dr. Copyright. All rights reserved.</p>';

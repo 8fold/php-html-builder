@@ -3,6 +3,7 @@ declare(strict_types=1);
 
 namespace Eightfold\HTMLBuilder\Tests\Components;
 
+use PHPUnit\Framework\Attributes\Test;
 use PHPUnit\Framework\TestCase;
 
 use Eightfold\HTMLBuilder\Components\Favicons;
@@ -11,9 +12,7 @@ use Eightfold\HTMLBuilder\Components\FaviconMetroColors;
 
 class FaviconsTest extends TestCase
 {
-    /**
-     * @test
-     */
+    #[Test]
     public function can_use_default(): void
     {
         $expected = file_get_contents(__DIR__ . '/favicons-default.xml');
@@ -26,9 +25,7 @@ class FaviconsTest extends TestCase
         );
     }
 
-    /**
-     * @test
-     */
+    #[Test]
     public function can_set_theme_color(): void
     {
         $expected = file_get_contents(__DIR__ . '/favicons-theme-color.xml');
@@ -43,9 +40,7 @@ class FaviconsTest extends TestCase
         );
     }
 
-    /**
-     * @test
-     */
+    #[Test]
     public function can_use_subfolder(): void
     {
         $expected = file_get_contents(__DIR__ . '/favicons-subfolder.xml');
@@ -58,9 +53,7 @@ class FaviconsTest extends TestCase
         );
     }
 
-    /**
-     * @test
-     */
+    #[Test]
     public function can_use_custom_app_name(): void
     {
         $expected = file_get_contents(__DIR__ . '/favicons-app-name.xml');
@@ -73,9 +66,7 @@ class FaviconsTest extends TestCase
         );
     }
 
-    /**
-     * @test
-     */
+    #[Test]
     public function can_use_windows_metro_settings(): void
     {
         $expected = file_get_contents(__DIR__ . '/favicons-windows-metro.xml');

@@ -3,6 +3,7 @@ declare(strict_types=1);
 
 namespace Eightfold\HTMLBuilder\Tests;
 
+use PHPUnit\Framework\Attributes\Test;
 use PHPUnit\Framework\TestCase;
 
 use Eightfold\HTMLBuilder\Document;
@@ -13,9 +14,7 @@ use Eightfold\HTMLBuilder\Components\PageTitle;
 
 class DocumentBaselineTest extends TestCase
 {
-    /**
-     * @test
-     */
+    #[Test]
     public function can_add_properties_to_body_element(): void // phpcs:ignore
     {
         $expected = <<<html
@@ -33,9 +32,7 @@ class DocumentBaselineTest extends TestCase
         );
     }
 
-    /**
-     * @test
-     */
+    #[Test]
     public function can_use_page_title(): void // phpcs:ignore
     {
         $expected = <<<html
@@ -53,9 +50,7 @@ class DocumentBaselineTest extends TestCase
         );
     }
 
-    /**
-     * @test
-     */
+    #[Test]
     public function is_stringable(): void // phpcs:ignore
     {
         $expected = <<<html
@@ -74,9 +69,7 @@ class DocumentBaselineTest extends TestCase
         $this->assertSame($expected, $result);
     }
 
-    /**
-     * @test
-     */
+    #[Test]
     public function can_have_body(): void // phpcs:ignore
     {
         $expected = <<<html
@@ -95,9 +88,7 @@ class DocumentBaselineTest extends TestCase
         $this->assertSame($expected, $result);
     }
 
-    /**
-     * @test
-     */
+    #[Test]
     public function can_have_head(): void // phpcs:ignore
     {
         $expected = <<<html
@@ -114,9 +105,7 @@ class DocumentBaselineTest extends TestCase
         $this->assertSame($expected, $result);
     }
 
-    /**
-     * @test
-     */
+    #[Test]
     public function can_change_lang_and_char_set(): void // phpcs:ignore
     {
         $expected = <<<html
@@ -129,9 +118,7 @@ class DocumentBaselineTest extends TestCase
         $this->assertSame($expected, $result);
     }
 
-    /**
-     * @test
-     */
+    #[Test]
     public function has_baseline(): void // phpcs:ignore
     {
         $expected = <<<html

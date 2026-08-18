@@ -3,6 +3,7 @@ declare(strict_types=1);
 
 namespace Eightfold\HTMLBuilder\Tests;
 
+use PHPUnit\Framework\Attributes\Test;
 use PHPUnit\Framework\TestCase;
 
 use Eightfold\HTMLBuilder\Tests\Extensions\ElementExtension;
@@ -38,9 +39,7 @@ class PerformanceTest extends TestCase
         return $body;
     }
 
-    /**
-     * @test
-     */
+    #[Test]
     public function document_is_speedy(): void // phpcs:ignore
     {
         $start = hrtime(true);
@@ -61,9 +60,7 @@ class PerformanceTest extends TestCase
         $this->assertLessThan(1.5, $ms);
     }
 
-    /**
-     * @test
-     */
+    #[Test]
     public function document_is_small(): void // phpcs:ignore
     {
         $start = memory_get_usage();
