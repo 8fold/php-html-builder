@@ -4,29 +4,29 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "b3bbb064a2da123fe70d0b902b9861bf",
+    "content-hash": "1fdad98a22607378979754195f90c90a",
     "packages": [
         {
             "name": "8fold/php-xml-builder",
-            "version": "2.0.0",
+            "version": "3.0.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/8fold/php-xml-builder.git",
-                "reference": "a1feffe8d91e3ed3bf532c9b2ba13c5a8c2abfcb"
+                "reference": "405b8bf73c538f7073a7064ecf3eb458519f4c4d"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/8fold/php-xml-builder/zipball/a1feffe8d91e3ed3bf532c9b2ba13c5a8c2abfcb",
-                "reference": "a1feffe8d91e3ed3bf532c9b2ba13c5a8c2abfcb",
+                "url": "https://api.github.com/repos/8fold/php-xml-builder/zipball/405b8bf73c538f7073a7064ecf3eb458519f4c4d",
+                "reference": "405b8bf73c538f7073a7064ecf3eb458519f4c4d",
                 "shasum": ""
             },
             "require": {
-                "php": "^8.0"
+                "php": "^8.4"
             },
             "require-dev": {
-                "phpstan/phpstan": "^1.9",
-                "phpunit/phpunit": "^9.5",
-                "squizlabs/php_codesniffer": "^3.7"
+                "phpstan/phpstan": "^2.2",
+                "phpunit/phpunit": "^13.2",
+                "squizlabs/php_codesniffer": "^4.0"
             },
             "type": "library",
             "autoload": {
@@ -47,7 +47,7 @@
             "description": "A library for building XML document and element strings.",
             "support": {
                 "issues": "https://github.com/8fold/php-xml-builder/issues",
-                "source": "https://github.com/8fold/php-xml-builder/tree/2.0.0"
+                "source": "https://github.com/8fold/php-xml-builder/tree/3.0.0"
             },
             "funding": [
                 {
@@ -59,7 +59,7 @@
                     "type": "github"
                 }
             ],
-            "time": "2022-12-11T03:40:44+00:00"
+            "time": "2026-08-18T23:47:45+00:00"
         }
     ],
     "packages-dev": [
