@@ -86,64 +86,13 @@ class Element extends XMLElement implements Stringable
 
                 }
             }
-
-            // Logic from previous implementation using php-html-spec to
-            // query and validate.
-            //
-            // if (array_key_exists($attr, $orderedAttributes)) {
-            //     $orderedAttributes[$attr] = $content;
-
-            // } elseif ($index->hasComponentNamed($attr) and
-            //     $a = $index->componentNamed($attr)
-            // ) {
-            //     if ($a->isEvent()) {
-            //         $eventAttributes[$attr] = $content;
-
-            //     } elseif ($a->isData()) {
-            //         $dataAttributes[$attr] = $content;
-
-            //     } elseif ($a->isGlobal()) {
-            //         $globalAttributes[$attr] = $content;
-
-            //     } elseif ($a->isOther()) {
-            //         $otherAttributes[$attr] = $content;
-
-            //     } elseif ($a->isBoolean()) {
-            //         $booleanAttributes[$attr] = $content;
-
-            //     }
-
-            // } else {
-            //     $otherAttributes[$attr] = $content;
-
-            // }
         }
 
         $orderedAttributes = array_filter($orderedAttributes, fn($c) => strlen($c) > 0);
 
-        // $eventAttributes = array_filter($eventAttributes);
-        // ksort($eventAttributes);
-
-        // $dataAttributes = array_filter($dataAttributes);
-        // ksort($eventAttributes);
-
-        // $globalAttributes = array_filter($globalAttributes);
-        // ksort($globalAttributes);
-
-        // $otherAttributes = array_filter($otherAttributes, fn($c) => strlen($c) > 0);
         ksort($otherAttributes);
 
-        // $booleanAttributes = array_filter($booleanAttributes);
         ksort($booleanAttributes);
-
-        // $merged = array_merge(
-        //     $orderedAttributes,
-        //     // $eventAttributes,
-        //     // $dataAttributes,
-        //     // $globalAttributes,
-        //     $otherAttributes,
-        //     $booleanAttributes
-        // );
 
         $b = [];
         foreach ($orderedAttributes as $prop => $content) {
