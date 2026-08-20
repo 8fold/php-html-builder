@@ -3,7 +3,7 @@
     <li>Launch browser to the root address</li>
     <li>Click link of page to be tested</li>
     <li>Note displayed render time in milliseconds</li>
-    <li>Refresh browser 11 times; making not of render times (should result in 12 times)</li>
+    <li>Refresh browser 11 times; making note of render times (should result in 12 times)</li>
     <li>Calculate average and median</li>
 </ol>
 <dl>
