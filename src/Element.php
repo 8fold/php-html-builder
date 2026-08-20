@@ -58,58 +58,48 @@ class Element extends XMLElement implements Stringable
 
     protected function propertiesString(): string
     {
-        if (count($this->properties()) === 0) {
+        if ($this->properties() === []) {
             return '';
         }
 
-        $orderedAttributes = array_fill_keys(static::ORDERED, "");
-        $otherAttributes   = [];
-        $booleanAttributes = [];
+        $ordered = [];
+        $other = [];
+        $boolean = [];
 
-        $build = [];
         foreach ($this->properties() as $property) {
-            if (strlen($property) === 0) {
+            [$attr, $value] = array_pad(explode(' ', $property, 2), 2, '');
+
+            if ($value === '') {
                 continue;
             }
 
-            list($attr, $content) = explode(' ', $property, 2);
-
-            if (strlen($content) > 0) {
-                if (array_key_exists($attr, $orderedAttributes)) {
-                    $orderedAttributes[$attr] = $content;
-
-                } elseif ($attr === $content) {
-                    $booleanAttributes[$attr] = $content;
-
-                } else {
-                    $otherAttributes[$attr] = $content;
-
-                }
+            if (in_array($attr, self::ORDERED, true)) {
+                $ordered[$attr] = $value;
+            } elseif ($attr === $value) {
+                $boolean[$attr] = true;
+            } else {
+                $other[$attr] = $value;
             }
         }
 
-        $orderedAttributes = array_filter($orderedAttributes, fn($c) => strlen($c) > 0);
+        $parts = [];
 
-        ksort($otherAttributes);
-
-        ksort($booleanAttributes);
-
-        $b = [];
-        foreach ($orderedAttributes as $prop => $content) {
-            $b[] = $prop . '="' . $content . '"';
+        foreach (self::ORDERED as $attr) {
+            if (isset($ordered[$attr])) {
+                $parts[] = $attr . '="' . $ordered[$attr] . '"';
+            }
         }
 
-        foreach ($otherAttributes as $prop => $content) {
-            $b[] = $prop . '="' . $content . '"';
+        ksort($other);
+        foreach ($other as $attr => $value) {
+            $parts[] = $attr . '="' . $value . '"';
         }
 
-        foreach ($booleanAttributes as $prop => $content) {
-            $b[] = $prop;
+        ksort($boolean);
+        foreach (array_keys($boolean) as $attr) {
+            $parts[] = $attr;
         }
 
-        if (count($b) === 0) {
-            return '';
-        }
-        return ' ' . implode(' ', $b);
+        return $parts === [] ? '' : ' ' . implode(' ', $parts);
     }
 }
