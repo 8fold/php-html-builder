@@ -56,12 +56,19 @@ class Element implements Stringable
         return new static($name, $content);
     }
 
+    /**
+     * @param  array<string|Stringable>  $content
+     */
     public static function __callStatic(string $name, array $content = []): static
     {
         return new static($name, $content);
     }
 
-    private function __construct(
+    /**
+     * @param  array<string|Stringable>  $content
+     * @param  string[]  $properties
+     */
+    final private function __construct(
         private string $name,
         private array $content = [],
         private array $properties = [],
