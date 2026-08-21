@@ -57,7 +57,7 @@ class Document implements Stringable
         return $this;
     }
 
-    public function __toString(): string
+    public function toString(): string
     {
         $pageTitle = $this->title();
         if (
@@ -77,6 +77,11 @@ class Document implements Stringable
             Element::body(...$this->bodyContent())->props(...$this->bodyProps)
         )->props($this->lang());
         return $doctype . $html;
+    }
+
+    public function __toString(): string
+    {
+        return $this->toString();
     }
 
     private function title(): string|Stringable
