@@ -7,6 +7,8 @@ use Stringable;
 
 use Eightfold\HTMLBuilder\Element;
 
+use Eightfold\HTMLBuilder\Forms\SelectType;
+
 class Select implements Stringable
 {
     /**
@@ -14,9 +16,7 @@ class Select implements Stringable
      */
     private array $wrapperProperties = [];
 
-    private bool $dropdown = true;
-
-    private bool $checkbox = false;
+    private SelectType $type = SelectType::Dropdown;
 
     /**
      * @param array<string|int, string> $options
@@ -51,22 +51,19 @@ class Select implements Stringable
 
     public function dropdown(): self
     {
-        $this->dropdown = true;
-        $this->checkbox = false;
+        $this->type = SelectType::Dropdown;
         return $this;
     }
 
     public function radio(): self
     {
-        $this->dropdown = false;
-        $this->checkbox = false;
+        $this->type = SelectType::Radio;
         return $this;
     }
 
     public function checkbox(): self
     {
-        $this->checkbox = true;
-        $this->dropdown = false;
+        $this->type = SelectType::Checkbox;
         return $this;
     }
 
@@ -88,7 +85,7 @@ class Select implements Stringable
      */
     private function selected(): string|array
     {
-        if ($this->checkbox) {
+        if ($this->type === SelectType::Checkbox) {
             if (is_array($this->selected)) {
                 return $this->selected;
             }
@@ -115,7 +112,7 @@ class Select implements Stringable
 
     public function __toString(): string
     {
-        if ($this->dropdown) {
+        if ($this->type === SelectType::Dropdown) {
             return (string) $this->selectDropdown();
         }
         return (string) $this->selectOther();
@@ -146,16 +143,16 @@ class Select implements Stringable
     private function selectOther(): Element
     {
         $elements = [];
-        $type = 'radio';
-        if ($this->checkbox) {
-            $type = 'checkbox';
-        }
+        $type = $this->type === SelectType::Checkbox ? 'checkbox' : 'radio';
         foreach ($this->options as $value => $content) {
             $value = (string) $value;
             $id    = $this->name . '-' . $value;
             $label = Element::label($content)->props('for ' . $id);
             $input = Element::input()->omitEndTag()->props(
                 'id ' . $id,
+                ($this->type === SelectType::Checkbox)
+                    ? 'name ' . $this->name . '[]'
+                    : 'name ' . $this->name,
                 'type ' . $type,
                 'value ' . $value
             );
