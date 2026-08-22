@@ -14,7 +14,7 @@ class SelectTest extends TestCase
     public function can_be_checkboxes(): void // phpcs: ignore
     {
         $expected = <<<html
-        <fieldset><legend>Select your option</legend><div><input id="select-value" type="checkbox" value="value" checked><label for="select-value">display</label></div><div><input id="select-value2" type="checkbox" value="value2" checked><label for="select-value2">display2</label></div></fieldset>
+        <fieldset><legend>Select your option</legend><div><input id="select-value" name="select[]" type="checkbox" value="value" checked><label for="select-value">display</label></div><div><input id="select-value2" name="select[]" type="checkbox" value="value2" checked><label for="select-value2">display2</label></div></fieldset>
         html;
 
         $result = (string) Select::create(
@@ -34,7 +34,7 @@ class SelectTest extends TestCase
     public function can_be_radio_buttons(): void // phpcs: ignore
     {
         $expected = <<<html
-        <fieldset><legend>Select your option</legend><div><input id="select-value" type="radio" value="value" checked><label for="select-value">display</label></div></fieldset>
+        <fieldset><legend>Select your option</legend><div><input id="select-value" name="select" type="radio" value="value" checked><label for="select-value">display</label></div></fieldset>
         html;
 
         $result = (string) Select::create(
@@ -45,6 +45,43 @@ class SelectTest extends TestCase
             ],
             'value'
         )->radio();
+
+        $this->assertSame($expected, $result);
+    }
+
+    #[Test]
+    public function dropdown_mode_is_explicit(): void // phpcs: ignore
+    {
+        $expected = <<<html
+        <div><label for="select">Select your option</label><select id="select" name="select"><option value="value">display</option></select></div>
+        html;
+
+        $result = (string) Select::create(
+            'Select your option',
+            'select',
+            [
+                'value' => 'display'
+            ]
+        )->radio()->dropdown();
+
+        $this->assertSame($expected, $result);
+    }
+
+    #[Test]
+    public function checkbox_mode_is_explicit(): void // phpcs: ignore
+    {
+        $expected = <<<html
+        <fieldset><legend>Select your option</legend><div><input id="select-value" name="select[]" type="checkbox" value="value" checked><label for="select-value">display</label></div></fieldset>
+        html;
+
+        $result = (string) Select::create(
+            'Select your option',
+            'select',
+            [
+                'value' => 'display'
+            ],
+            'value'
+        )->radio()->checkbox();
 
         $this->assertSame($expected, $result);
     }
