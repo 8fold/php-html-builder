@@ -4,64 +4,8 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "1fdad98a22607378979754195f90c90a",
-    "packages": [
-        {
-            "name": "8fold/php-xml-builder",
-            "version": "3.0.0",
-            "source": {
-                "type": "git",
-                "url": "https://github.com/8fold/php-xml-builder.git",
-                "reference": "405b8bf73c538f7073a7064ecf3eb458519f4c4d"
-            },
-            "dist": {
-                "type": "zip",
-                "url": "https://api.github.com/repos/8fold/php-xml-builder/zipball/405b8bf73c538f7073a7064ecf3eb458519f4c4d",
-                "reference": "405b8bf73c538f7073a7064ecf3eb458519f4c4d",
-                "shasum": ""
-            },
-            "require": {
-                "php": "^8.4"
-            },
-            "require-dev": {
-                "phpstan/phpstan": "^2.2",
-                "phpunit/phpunit": "^13.2",
-                "squizlabs/php_codesniffer": "^4.0"
-            },
-            "type": "library",
-            "autoload": {
-                "psr-4": {
-                    "Eightfold\\XMLBuilder\\": "./src"
-                }
-            },
-            "notification-url": "https://packagist.org/downloads/",
-            "license": [
-                "MIT"
-            ],
-            "authors": [
-                {
-                    "name": "Josh Bruce",
-                    "email": "josh@8fold.pro"
-                }
-            ],
-            "description": "A library for building XML document and element strings.",
-            "support": {
-                "issues": "https://github.com/8fold/php-xml-builder/issues",
-                "source": "https://github.com/8fold/php-xml-builder/tree/3.0.0"
-            },
-            "funding": [
-                {
-                    "url": "https://github.com/8fold",
-                    "type": "github"
-                },
-                {
-                    "url": "https://github.com/joshbruce",
-                    "type": "github"
-                }
-            ],
-            "time": "2026-08-18T23:47:45+00:00"
-        }
-    ],
+    "content-hash": "b0dda89cb77a498539df68b41a4d0ad1",
+    "packages": [],
     "packages-dev": [
         {
             "name": "myclabs/deep-copy",
@@ -300,11 +244,11 @@
         },
         {
             "name": "phpstan/phpstan",
-            "version": "2.2.8",
+            "version": "2.2.9",
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/phpstan/phpstan/zipball/e285254e60f33c21902efef4a926ca0987c06804",
-                "reference": "e285254e60f33c21902efef4a926ca0987c06804",
+                "url": "https://api.github.com/repos/phpstan/phpstan/zipball/13d6b4f347bad222da436580c8304fa6f83e6bd0",
+                "reference": "13d6b4f347bad222da436580c8304fa6f83e6bd0",
                 "shasum": ""
             },
             "require": {
@@ -360,7 +304,7 @@
                     "type": "github"
                 }
             ],
-            "time": "2026-08-04T22:21:45+00:00"
+            "time": "2026-08-22T07:38:16+00:00"
         },
         {
             "name": "phpunit/php-code-coverage",
