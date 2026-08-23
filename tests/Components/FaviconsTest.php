@@ -1,14 +1,14 @@
 <?php
 declare(strict_types=1);
 
-namespace Eightfold\HTMLBuilder\Tests\Components;
+namespace Eightfold\HtmlBuilder\Tests\Components;
 
 use PHPUnit\Framework\Attributes\Test;
 use PHPUnit\Framework\TestCase;
 
-use Eightfold\HTMLBuilder\Components\Favicons;
+use Eightfold\HtmlBuilder\Components\Favicons;
 
-use Eightfold\HTMLBuilder\Components\FaviconMetroColors;
+use Eightfold\HtmlBuilder\Components\FaviconMetroColors;
 
 class FaviconsTest extends TestCase
 {

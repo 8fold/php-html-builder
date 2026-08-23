@@ -3,4 +3,4 @@ parameters:
 	paths:
 		- src
 	ignoreErrors:
-		- '#Call to an undefined static method Eightfold\\HTMLBuilder\\Element::(.*)#'
+		- '#Call to an undefined static method Eightfold\\HtmlBuilder\\Element::(.*)#'

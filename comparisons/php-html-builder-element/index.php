@@ -6,16 +6,6 @@ error_reporting(E_ALL);
 
 $start = hrtime(true);
 
-require_once(__DIR__ . '/../../vendor/8fold/php-xml-builder/src/Contracts/Contentable.php');
-require_once(__DIR__ . '/../../vendor/8fold/php-xml-builder/src/Contracts/ContentWithoutElement.php');
-
-require_once(__DIR__ . '/../../vendor/8fold/php-xml-builder/src/Implementations/Properties.php');
-require_once(__DIR__ . '/../../vendor/8fold/php-xml-builder/src/Implementations/Contentable.php');
-require_once(__DIR__ . '/../../vendor/8fold/php-xml-builder/src/Implementations/ContentWithoutElement.php');
-
-require_once(__DIR__ . '/../../vendor/8fold/php-xml-builder/src/Concatenate.php');
-require_once(__DIR__ . '/../../vendor/8fold/php-xml-builder/src/Element.php');
-
 require_once(__DIR__ . '/../../src/Element.php');
 
 $pageTitle = "Page title here";
@@ -105,11 +95,11 @@ $posts = [
 
 $sections = [];
 foreach ($posts as $post) {
-    $sections[] = \Eightfold\HTMLBuilder\Element::section(
-        \Eightfold\HTMLBuilder\Element::h2($post['title']),
-        \Eightfold\HTMLBuilder\Element::p($post['description']),
-        \Eightfold\HTMLBuilder\Element::p(
-            \Eightfold\HTMLBuilder\Element::a($post['url']['text'])
+    $sections[] = \Eightfold\HtmlBuilder\Element::section(
+        \Eightfold\HtmlBuilder\Element::h2($post['title']),
+        \Eightfold\HtmlBuilder\Element::p($post['description']),
+        \Eightfold\HtmlBuilder\Element::p(
+            \Eightfold\HtmlBuilder\Element::a($post['url']['text'])
                 ->props('href ' . $post['url']['href'])
         )
     );
@@ -125,7 +115,7 @@ foreach ($posts as $post) {
     <body>
         <h1><?php print($pageTitle); ?></h1>
         <p><a href="#bottom">time</a></p>
-        <?php print \Eightfold\HTMLBuilder\Element::article(...$sections); ?>
+        <?php print \Eightfold\HtmlBuilder\Element::article(...$sections); ?>
 <?php
 $end = hrtime(true);
 

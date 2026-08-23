@@ -2,9 +2,9 @@
 
 declare(strict_types=1);
 
-namespace Eightfold\HTMLBuilder\Tests\Extensions;
+namespace Eightfold\HtmlBuilder\Tests\Extensions;
 
-use Eightfold\HTMLBuilder\Element as HTMLElement;
+use Eightfold\HtmlBuilder\Element as HTMLElement;
 
 class ElementExtension extends HTMLElement
 {

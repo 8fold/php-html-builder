@@ -1,15 +1,13 @@
 <?php
 declare(strict_types=1);
 
-namespace Eightfold\HTMLBuilder\Components;
+namespace Eightfold\HtmlBuilder\Components;
 
 use Stringable;
 
-use Eightfold\XMLBuilder\Concatenate;
+use Eightfold\HtmlBuilder\Element;
 
-use Eightfold\HTMLBuilder\Element;
-
-use Eightfold\HTMLBuilder\Components\FaviconMetroColors;
+use Eightfold\HtmlBuilder\Components\FaviconMetroColors;
 
 /**
  * We use https://realfavicongenerator.net to generate favicon-related assets.
@@ -186,6 +184,6 @@ class Favicons implements Stringable
                 'content ' . $this->appName()
             );
         }
-        return (string) Concatenate::create(...$elements);
+        return (string) implode('', $elements);
     }
 }

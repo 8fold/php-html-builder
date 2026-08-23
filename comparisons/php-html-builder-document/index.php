@@ -6,16 +6,6 @@ error_reporting(E_ALL);
 
 $start = hrtime(true);
 
-require_once(__DIR__ . '/../../vendor/8fold/php-xml-builder/src/Contracts/Contentable.php');
-require_once(__DIR__ . '/../../vendor/8fold/php-xml-builder/src/Contracts/ContentWithoutElement.php');
-
-require_once(__DIR__ . '/../../vendor/8fold/php-xml-builder/src/Implementations/Properties.php');
-require_once(__DIR__ . '/../../vendor/8fold/php-xml-builder/src/Implementations/Contentable.php');
-require_once(__DIR__ . '/../../vendor/8fold/php-xml-builder/src/Implementations/ContentWithoutElement.php');
-
-require_once(__DIR__ . '/../../vendor/8fold/php-xml-builder/src/Concatenate.php');
-require_once(__DIR__ . '/../../vendor/8fold/php-xml-builder/src/Element.php');
-
 require_once(__DIR__ . '/../../src/Document.php');
 require_once(__DIR__ . '/../../src/Element.php');
 
@@ -106,22 +96,22 @@ $posts = [
 
 $sections = [];
 foreach ($posts as $post) {
-    $sections[] = \Eightfold\HTMLBuilder\Element::section(
-        \Eightfold\HTMLBuilder\Element::h2($post['title']),
-        \Eightfold\HTMLBuilder\Element::p($post['description']),
-        \Eightfold\HTMLBuilder\Element::p(
-            \Eightfold\HTMLBuilder\Element::a($post['url']['text'])
+    $sections[] = \Eightfold\HtmlBuilder\Element::section(
+        \Eightfold\HtmlBuilder\Element::h2($post['title']),
+        \Eightfold\HtmlBuilder\Element::p($post['description']),
+        \Eightfold\HtmlBuilder\Element::p(
+            \Eightfold\HtmlBuilder\Element::a($post['url']['text'])
                 ->props('href ' . $post['url']['href'])
         )
     );
 }
 
-print \Eightfold\HTMLBuilder\Document::create(
+print \Eightfold\HtmlBuilder\Document::create(
     $pageTitle
 )->body(
-    \Eightfold\HTMLBuilder\Element::h1($pageTitle),
-    \Eightfold\HTMLBuilder\Element::a('time')->props('href #bottom'),
-    \Eightfold\HTMLBuilder\Element::article(...$sections)
+    \Eightfold\HtmlBuilder\Element::h1($pageTitle),
+    \Eightfold\HtmlBuilder\Element::a('time')->props('href #bottom'),
+    \Eightfold\HtmlBuilder\Element::article(...$sections)
 );
 
 $end = hrtime(true);

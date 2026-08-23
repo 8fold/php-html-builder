@@ -1,17 +1,16 @@
 <?php
 declare(strict_types=1);
 
-namespace Eightfold\HTMLBuilder\Tests;
+namespace Eightfold\HtmlBuilder\Tests;
 
 use PHPUnit\Framework\Attributes\Test;
 use PHPUnit\Framework\TestCase;
 
-use Eightfold\HTMLBuilder\Tests\Extensions\ElementExtension;
+use Eightfold\HtmlBuilder\Tests\Extensions\ElementExtension;
 
-use Eightfold\XMLBuilder\Comment;
-
-use Eightfold\HTMLBuilder\Document;
-use Eightfold\HTMLBuilder\Element;
+use Eightfold\HtmlBuilder\Document;
+use Eightfold\HtmlBuilder\Element;
+use Eightfold\HtmlBuilder\Comment;
 
 class PerformanceTest extends TestCase
 {
@@ -57,7 +56,7 @@ class PerformanceTest extends TestCase
         $elapsed = $end - $start;
         $ms      = $elapsed/1e+6;
 
-        $this->assertLessThan(1.5, $ms);
+        $this->assertLessThan(0.75, $ms);
     }
 
     #[Test]

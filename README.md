@@ -85,6 +85,16 @@ The `/comparisons` folder can be used to run performance tests locally to compar
 4. PHP HTML Builder only (the Document class), and
 5. PHP HTML Builder only using PSR-4 autoloading.
 
+These results are from August 22nd, 2026 (running on PHP 8.5):
+
+|Configuration |Average time in milliseconds |Median time in milliseconds |Transfer size in kilobytes |
+|:---|---:|---:|---:|
+|1 |0.0022 |0.0020 |2.7  |
+|2 |0.0151 |0.0125 |1.99 |
+|3 |0.4314 |0.3025 |1.82 |
+|4 |1.4446 |0.3672 |1.74 |
+|5 |0.9059 |0.6750 |1.74 |
+
 These results are from February 26th, 2024:
 
 |Configuration |Average time in milliseconds |Median time in milliseconds |Transfer size in kilobytes |

@@ -1,16 +1,16 @@
 <?php
 declare(strict_types=1);
 
-namespace Eightfold\HTMLBuilder\Tests;
+namespace Eightfold\HtmlBuilder\Tests;
 
 use PHPUnit\Framework\Attributes\Test;
 use PHPUnit\Framework\TestCase;
 
-use Eightfold\HTMLBuilder\Document;
+use Eightfold\HtmlBuilder\Document;
 
-use Eightfold\HTMLBuilder\Element;
+use Eightfold\HtmlBuilder\Element;
 
-use Eightfold\HTMLBuilder\Components\PageTitle;
+use Eightfold\HtmlBuilder\Components\PageTitle;
 
 class DocumentBaselineTest extends TestCase
 {
