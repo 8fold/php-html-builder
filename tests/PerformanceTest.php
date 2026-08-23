@@ -8,10 +8,9 @@ use PHPUnit\Framework\TestCase;
 
 use Eightfold\HTMLBuilder\Tests\Extensions\ElementExtension;
 
-use Eightfold\XMLBuilder\Comment;
-
 use Eightfold\HTMLBuilder\Document;
 use Eightfold\HTMLBuilder\Element;
+use Eightfold\HTMLBuilder\Comment;
 
 class PerformanceTest extends TestCase
 {
@@ -57,7 +56,7 @@ class PerformanceTest extends TestCase
         $elapsed = $end - $start;
         $ms      = $elapsed/1e+6;
 
-        $this->assertLessThan(1.5, $ms);
+        $this->assertLessThan(0.75, $ms);
     }
 
     #[Test]
