@@ -6,16 +6,6 @@ error_reporting(E_ALL);
 
 $start = hrtime(true);
 
-require_once(__DIR__ . '/../../vendor/8fold/php-xml-builder/src/Contracts/Contentable.php');
-require_once(__DIR__ . '/../../vendor/8fold/php-xml-builder/src/Contracts/ContentWithoutElement.php');
-
-require_once(__DIR__ . '/../../vendor/8fold/php-xml-builder/src/Implementations/Properties.php');
-require_once(__DIR__ . '/../../vendor/8fold/php-xml-builder/src/Implementations/Contentable.php');
-require_once(__DIR__ . '/../../vendor/8fold/php-xml-builder/src/Implementations/ContentWithoutElement.php');
-
-require_once(__DIR__ . '/../../vendor/8fold/php-xml-builder/src/Concatenate.php');
-require_once(__DIR__ . '/../../vendor/8fold/php-xml-builder/src/Element.php');
-
 require_once(__DIR__ . '/../../src/Element.php');
 
 $pageTitle = "Page title here";
