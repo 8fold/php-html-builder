@@ -5,8 +5,6 @@ namespace Eightfold\HTMLBuilder\Components;
 
 use Stringable;
 
-use Eightfold\XMLBuilder\Concatenate;
-
 use Eightfold\HTMLBuilder\Element;
 
 use Eightfold\HTMLBuilder\Components\FaviconMetroColors;
@@ -186,6 +184,6 @@ class Favicons implements Stringable
                 'content ' . $this->appName()
             );
         }
-        return (string) Concatenate::create(...$elements);
+        return (string) implode('', $elements);
     }
 }
