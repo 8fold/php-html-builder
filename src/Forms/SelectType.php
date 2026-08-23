@@ -1,5 +1,5 @@
 <?php
-namespace Eightfold\HTMLBuilder\Forms;
+namespace Eightfold\HtmlBuilder\Forms;
 
 enum SelectType
 {

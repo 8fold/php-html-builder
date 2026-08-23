@@ -1,13 +1,13 @@
 <?php
 declare(strict_types=1);
 
-namespace Eightfold\HTMLBuilder\Components;
+namespace Eightfold\HtmlBuilder\Components;
 
 use Stringable;
 
-use Eightfold\HTMLBuilder\Element;
+use Eightfold\HtmlBuilder\Element;
 
-use Eightfold\HTMLBuilder\Components\FaviconMetroColors;
+use Eightfold\HtmlBuilder\Components\FaviconMetroColors;
 
 /**
  * We use https://realfavicongenerator.net to generate favicon-related assets.

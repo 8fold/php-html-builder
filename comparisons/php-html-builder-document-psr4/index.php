@@ -95,22 +95,22 @@ $posts = [
 
 $sections = [];
 foreach ($posts as $post) {
-    $sections[] = \Eightfold\HTMLBuilder\Element::section(
-        \Eightfold\HTMLBuilder\Element::h2($post['title']),
-        \Eightfold\HTMLBuilder\Element::p($post['description']),
-        \Eightfold\HTMLBuilder\Element::p(
-            \Eightfold\HTMLBuilder\Element::a($post['url']['text'])
+    $sections[] = \Eightfold\HtmlBuilder\Element::section(
+        \Eightfold\HtmlBuilder\Element::h2($post['title']),
+        \Eightfold\HtmlBuilder\Element::p($post['description']),
+        \Eightfold\HtmlBuilder\Element::p(
+            \Eightfold\HtmlBuilder\Element::a($post['url']['text'])
                 ->props('href ' . $post['url']['href'])
         )
     );
 }
 
-print \Eightfold\HTMLBuilder\Document::create(
+print \Eightfold\HtmlBuilder\Document::create(
     $pageTitle
 )->body(
-    \Eightfold\HTMLBuilder\Element::h1($pageTitle),
-    \Eightfold\HTMLBuilder\Element::a('time')->props('href #bottom'),
-    \Eightfold\HTMLBuilder\Element::article(...$sections)
+    \Eightfold\HtmlBuilder\Element::h1($pageTitle),
+    \Eightfold\HtmlBuilder\Element::a('time')->props('href #bottom'),
+    \Eightfold\HtmlBuilder\Element::article(...$sections)
 );
 
 $end = hrtime(true);

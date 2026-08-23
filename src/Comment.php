@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace Eightfold\HTMLBuilder;
+namespace Eightfold\HtmlBuilder;
 
 use Stringable;
 

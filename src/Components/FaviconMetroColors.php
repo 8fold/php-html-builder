@@ -1,7 +1,7 @@
 <?php
 declare(strict_types=1);
 
-namespace Eightfold\HTMLBuilder\Components;
+namespace Eightfold\HtmlBuilder\Components;
 
 enum FaviconMetroColors: string
 {

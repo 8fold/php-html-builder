@@ -19,12 +19,12 @@
   },
   "autoload": {
     "psr-4": {
-      "Eightfold\\HTMLBuilder\\": "./src"
+      "Eightfold\\HtmlBuilder\\": "./src"
     }
   },
   "autoload-dev": {
     "psr-4": {
-      "Eightfold\\HTMLBuilder\\Tests\\": "./tests"
+      "Eightfold\\HtmlBuilder\\Tests\\": "./tests"
     }
   },
   "config": {

@@ -1,16 +1,16 @@
 <?php
 declare(strict_types=1);
 
-namespace Eightfold\HTMLBuilder\Tests;
+namespace Eightfold\HtmlBuilder\Tests;
 
 use PHPUnit\Framework\Attributes\Test;
 use PHPUnit\Framework\TestCase;
 
-use Eightfold\HTMLBuilder\Tests\Extensions\ElementExtension;
+use Eightfold\HtmlBuilder\Tests\Extensions\ElementExtension;
 
-use Eightfold\HTMLBuilder\Document;
-use Eightfold\HTMLBuilder\Element;
-use Eightfold\HTMLBuilder\Comment;
+use Eightfold\HtmlBuilder\Document;
+use Eightfold\HtmlBuilder\Element;
+use Eightfold\HtmlBuilder\Comment;
 
 class PerformanceTest extends TestCase
 {

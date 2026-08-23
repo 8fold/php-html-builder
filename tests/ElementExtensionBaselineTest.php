@@ -1,12 +1,12 @@
 <?php
 declare(strict_types=1);
 
-namespace Eightfold\HTMLBuilder\Tests;
+namespace Eightfold\HtmlBuilder\Tests;
 
 use PHPUnit\Framework\Attributes\Test;
 use PHPUnit\Framework\TestCase;
 
-use Eightfold\HTMLBuilder\Tests\Extensions\ElementExtension;
+use Eightfold\HtmlBuilder\Tests\Extensions\ElementExtension;
 
 class ElementExtensionBaselineTest extends TestCase
 {

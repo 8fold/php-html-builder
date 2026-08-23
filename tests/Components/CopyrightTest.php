@@ -1,12 +1,12 @@
 <?php
 declare(strict_types=1);
 
-namespace Eightfold\HTMLBuilder\Tests\Components;
+namespace Eightfold\HtmlBuilder\Tests\Components;
 
 use PHPUnit\Framework\Attributes\Test;
 use PHPUnit\Framework\TestCase;
 
-use Eightfold\HTMLBuilder\Components\Copyright;
+use Eightfold\HtmlBuilder\Components\Copyright;
 
 class CopyrightTest extends TestCase
 {

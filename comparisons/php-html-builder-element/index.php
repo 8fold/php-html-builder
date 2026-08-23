@@ -95,11 +95,11 @@ $posts = [
 
 $sections = [];
 foreach ($posts as $post) {
-    $sections[] = \Eightfold\HTMLBuilder\Element::section(
-        \Eightfold\HTMLBuilder\Element::h2($post['title']),
-        \Eightfold\HTMLBuilder\Element::p($post['description']),
-        \Eightfold\HTMLBuilder\Element::p(
-            \Eightfold\HTMLBuilder\Element::a($post['url']['text'])
+    $sections[] = \Eightfold\HtmlBuilder\Element::section(
+        \Eightfold\HtmlBuilder\Element::h2($post['title']),
+        \Eightfold\HtmlBuilder\Element::p($post['description']),
+        \Eightfold\HtmlBuilder\Element::p(
+            \Eightfold\HtmlBuilder\Element::a($post['url']['text'])
                 ->props('href ' . $post['url']['href'])
         )
     );
@@ -115,7 +115,7 @@ foreach ($posts as $post) {
     <body>
         <h1><?php print($pageTitle); ?></h1>
         <p><a href="#bottom">time</a></p>
-        <?php print \Eightfold\HTMLBuilder\Element::article(...$sections); ?>
+        <?php print \Eightfold\HtmlBuilder\Element::article(...$sections); ?>
 <?php
 $end = hrtime(true);
 

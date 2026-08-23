@@ -1,11 +1,9 @@
 <?php
 declare(strict_types=1);
 
-namespace Eightfold\HTMLBuilder;
+namespace Eightfold\HtmlBuilder;
 
 use Stringable;
-
-// use Eightfold\XMLBuilder\Element as XMLElement;
 
 class Element implements Stringable
 {

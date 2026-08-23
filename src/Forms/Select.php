@@ -1,13 +1,13 @@
 <?php
 declare(strict_types=1);
 
-namespace Eightfold\HTMLBuilder\Forms;
+namespace Eightfold\HtmlBuilder\Forms;
 
 use Stringable;
 
-use Eightfold\HTMLBuilder\Element;
+use Eightfold\HtmlBuilder\Element;
 
-use Eightfold\HTMLBuilder\Forms\SelectType;
+use Eightfold\HtmlBuilder\Forms\SelectType;
 
 class Select implements Stringable
 {

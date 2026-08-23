@@ -1,11 +1,11 @@
 <?php
 declare(strict_types=1);
 
-namespace Eightfold\HTMLBuilder;
+namespace Eightfold\HtmlBuilder;
 
 use Stringable;
 
-use Eightfold\HTMLBuilder\Element;
+use Eightfold\HtmlBuilder\Element;
 
 class Document implements Stringable
 {
