@@ -11,6 +11,55 @@ use Eightfold\HtmlBuilder\Forms\Select;
 class SelectTest extends TestCase
 {
     #[Test]
+    public function can_add_props_to_label(): void // phpcs: ignore
+    {
+        $expected = <<<html
+        <div><label is="select-dropdown" for="select">Select</label><select id="select" name="select"><option value="value">display</option><option value="value2">display2</option></select></div>
+        html;
+
+        $result = (string) Select::create(
+            label: 'Select',
+            name: 'select',
+            options: [
+                'value'  => 'display',
+                'value2' => 'display2'
+            ]
+        )->labelProps('is select-dropdown');
+
+        parent::assertSame($expected, $result);
+
+        $expected = <<<html
+        <fieldset><legend is="checkbox">Select</legend><div><input id="select-value" name="select[]" type="checkbox" value="value"><label for="select-value">display</label></div><div><input id="select-value2" name="select[]" type="checkbox" value="value2"><label for="select-value2">display2</label></div></fieldset>
+        html;
+
+        $result = (string) Select::create(
+            label: 'Select',
+            name: 'select',
+            options: [
+                'value'  => 'display',
+                'value2' => 'display2'
+            ]
+        )->checkbox()->labelProps('is checkbox');
+
+        parent::assertSame($expected, $result);
+
+        $expected = <<<html
+        <fieldset><legend is="radio">Select</legend><div><input id="select-value" name="select" type="radio" value="value"><label for="select-value">display</label></div><div><input id="select-value2" name="select" type="radio" value="value2"><label for="select-value2">display2</label></div></fieldset>
+        html;
+
+        $result = (string) Select::create(
+            label: 'Select',
+            name: 'select',
+            options: [
+                'value'  => 'display',
+                'value2' => 'display2'
+            ]
+        )->radio()->labelProps('is radio');
+
+        parent::assertSame($expected, $result);
+    }
+
+    #[Test]
     public function can_be_checkboxes(): void // phpcs: ignore
     {
         $expected = <<<html
@@ -18,16 +67,16 @@ class SelectTest extends TestCase
         html;
 
         $result = (string) Select::create(
-            'Select your option',
-            'select',
-            [
+            label: 'Select your option',
+            name: 'select',
+            options: [
                 'value'  => 'display',
                 'value2' => 'display2'
             ],
-            ['value', 'value2']
+            selected: ['value', 'value2']
         )->checkbox();
 
-        $this->assertSame($expected, $result);
+        parent::assertSame($expected, $result);
     }
 
     #[Test]
@@ -46,7 +95,7 @@ class SelectTest extends TestCase
             'value'
         )->radio();
 
-        $this->assertSame($expected, $result);
+        parent::assertSame($expected, $result);
     }
 
     #[Test]
@@ -64,7 +113,7 @@ class SelectTest extends TestCase
             ]
         )->radio()->dropdown();
 
-        $this->assertSame($expected, $result);
+        parent::assertSame($expected, $result);
     }
 
     #[Test]
@@ -83,7 +132,7 @@ class SelectTest extends TestCase
             'value'
         )->radio()->checkbox();
 
-        $this->assertSame($expected, $result);
+        parent::assertSame($expected, $result);
     }
 
     #[Test]
@@ -101,7 +150,7 @@ class SelectTest extends TestCase
             ]
         )->wrapperProps('id some-id', 'class some-token');
 
-        $this->assertSame($expected, $result);
+        parent::assertSame($expected, $result);
     }
 
     #[Test]
@@ -121,7 +170,7 @@ class SelectTest extends TestCase
             'value2'
         );
 
-        $this->assertSame($expected, $result);
+        parent::assertSame($expected, $result);
     }
 
     #[Test]
@@ -139,7 +188,7 @@ class SelectTest extends TestCase
             ]
         );
 
-        $this->assertSame($expected, $result);
+        parent::assertSame($expected, $result);
     }
 
     #[Test]
@@ -158,6 +207,6 @@ class SelectTest extends TestCase
             ]
         );
 
-        $this->assertSame($expected, $result);
+        parent::assertSame($expected, $result);
     }
 }

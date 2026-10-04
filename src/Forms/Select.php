@@ -16,6 +16,11 @@ class Select implements Stringable
      */
     private array $wrapperProperties = [];
 
+    /**
+     * @var string[]
+     */
+    private array $labelProperties = [];
+
     private SelectType $type = SelectType::Dropdown;
 
     /**
@@ -46,6 +51,12 @@ class Select implements Stringable
     public function wrapperProps(string ...$properties): self
     {
         $this->wrapperProperties = $properties;
+        return $this;
+    }
+
+    public function labelProps(string ...$properties): self
+    {
+        $this->labelProperties = $properties;
         return $this;
     }
 
@@ -133,7 +144,7 @@ class Select implements Stringable
         return Element::div(
             Element::label(
                 $this->label
-            )->props('for ' . $this->name),
+            )->props('for ' . $this->name, ...$this->labelProperties),
             Element::select(
                 ...$elements
             )->props('id ' . $this->name, 'name ' . $this->name)
@@ -162,7 +173,7 @@ class Select implements Stringable
             $elements[] = Element::div($input, $label);
         }
         return Element::fieldset(
-            Element::legend($this->label),
+            Element::legend($this->label)->props(...$this->labelProperties),
             ...$elements
         );
     }
