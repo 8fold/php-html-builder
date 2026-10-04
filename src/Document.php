@@ -10,6 +10,11 @@ use Eightfold\HtmlBuilder\Element;
 class Document implements Stringable
 {
     /**
+     * @var array<string>
+     */
+    private array $htmlProps = [];
+
+    /**
      * @var array<string|Stringable>
      */
     private array $head = [];
@@ -37,6 +42,12 @@ class Document implements Stringable
         private string $lang,
         private string $charset
     ) {
+    }
+
+    public function htmlProps(string ...$props): Document
+    {
+        $this->htmlProps = $props;
+        return $this;
     }
 
     public function head(string|Stringable ...$content): Document
@@ -75,7 +86,7 @@ class Document implements Stringable
                 ...$this->headContent()
             ),
             Element::body(...$this->bodyContent())->props(...$this->bodyProps)
-        )->props($this->lang());
+        )->props($this->lang(), ...$this->htmlProps);
         return $doctype . $html;
     }
 
