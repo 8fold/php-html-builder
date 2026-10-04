@@ -207,8 +207,13 @@ class Select implements Stringable
                 $input = $input->prop('aria-invalid true');
                 $input = $input->prop('aria-describedby ' . $this->warningId);
             }
-            $elements[] = Element::div($input, $label, self::warningMessage());
+            $elements[] = Element::div($input, $label);
         }
+
+        if (self::warningMessage() !== '') {
+            $elements[] = self::warningMessage();
+        }
+
         return Element::fieldset(
             Element::legend($this->label)->props(...$this->labelProperties),
             ...$elements

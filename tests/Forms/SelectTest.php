@@ -13,6 +13,24 @@ use Eightfold\HtmlBuilder\Element;
 class SelectTest extends TestCase
 {
     #[Test]
+    public function ticket_36(): void // phpcs: ignore
+    {
+        $expected = <<<html
+        <fieldset><legend>Toppings</legend><div><input id="toppings-mushroom" name="toppings[]" type="checkbox" value="mushroom" aria-describedby="toppings-warning" aria-invalid="true"><label for="toppings-mushroom">Mushroom</label></div><div><input id="toppings-olive" name="toppings[]" type="checkbox" value="olive" aria-describedby="toppings-warning" aria-invalid="true"><label for="toppings-olive">Olive</label></div><p id="toppings-warning">Choose at least one topping.</p></fieldset>
+        html;
+
+        $result = (string) Select::create(
+            'Toppings',
+            'toppings',
+            ['mushroom' => 'Mushroom', 'olive' => 'Olive'],
+            [],
+            'Choose at least one topping.'
+        )->checkbox();
+
+        parent::assertSame($expected, $result);
+    }
+
+    #[Test]
     public function warning_message_can_be_property_interface(): void // phpcs: ignore
     {
         $expected = <<<html
