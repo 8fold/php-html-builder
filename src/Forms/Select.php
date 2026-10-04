@@ -156,6 +156,8 @@ class Select implements Stringable
     private function selectDropdown(): Element
     {
         $elements = [];
+
+        $hasWarningMessage = (self::warningMessage() !== '');
         foreach ($this->options as $value => $content) {
             $value  = (string) $value;
             $option = Element::option($content)->props('value ' . $value);
@@ -168,7 +170,7 @@ class Select implements Stringable
         $input = Element::select(
             ...$elements
         )->props('id ' . $this->name, 'name ' . $this->name);
-        if (self::warningMessage() !== '') {
+        if ($hasWarningMessage) {
             $input = $input->prop('aria-invalid true');
             $input = $input->prop('aria-describedby ' . $this->warningId);
         }
