@@ -8,7 +8,7 @@ use Stringable;
 use Eightfold\HtmlBuilder\Element;
 use Eightfold\HtmlBuilder\PropertyInterface;
 
-class TextInput implements Stringable
+class EmailInput implements Stringable
 {
     // phpcs:disable
     private string $warningId {
@@ -79,7 +79,7 @@ class TextInput implements Stringable
         );
 
         $input = Element::input()->omitEndTag()->props(
-            'type text',
+            'type email',
             'id ' . $this->name,
             'name ' . $this->name,
             'value ' . $this->value,
