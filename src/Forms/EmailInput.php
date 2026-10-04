@@ -83,6 +83,8 @@ class EmailInput implements Stringable
             'id ' . $this->name,
             'name ' . $this->name,
             'value ' . $this->value,
+            'autocorrect off',
+            'autocapitalize off',
             ...$this->inputProperties
         );
 
