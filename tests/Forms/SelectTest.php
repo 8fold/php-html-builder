@@ -8,8 +8,52 @@ use PHPUnit\Framework\TestCase;
 
 use Eightfold\HtmlBuilder\Forms\Select;
 
+use Eightfold\HtmlBuilder\Element;
+
 class SelectTest extends TestCase
 {
+    #[Test]
+    public function warning_message_can_be_property_interface(): void // phpcs: ignore
+    {
+        $expected = <<<html
+        <div><label for="select">Select</label><select id="select" name="select" aria-describedby="select-warning" aria-invalid="true"><option value="value">display</option><option value="value2">display2</option></select><ul id="select-warning"><li>Invalid value</li></ul></div>
+        html;
+
+        $result = (string) Select::create(
+            label: 'Select',
+            name: 'select',
+            options: [
+                'value'  => 'display',
+                'value2' => 'display2'
+            ],
+            warningMessage: Element::ul(
+                Element::li('Invalid value')
+            )
+        );
+
+        parent::assertSame($expected, $result);
+    }
+
+    #[Test]
+    public function warning_message_can_be_string(): void // phpcs: ignore
+    {
+        $expected = <<<html
+        <div><label for="select">Select</label><select id="select" name="select" aria-describedby="select-warning" aria-invalid="true"><option value="value">display</option><option value="value2">display2</option></select><p id="select-warning">Invalid value</p></div>
+        html;
+
+        $result = (string) Select::create(
+            label: 'Select',
+            name: 'select',
+            options: [
+                'value'  => 'display',
+                'value2' => 'display2'
+            ],
+            warningMessage: 'Invalid value'
+        );
+
+        parent::assertSame($expected, $result);
+    }
+
     #[Test]
     public function can_add_props_to_label(): void // phpcs: ignore
     {

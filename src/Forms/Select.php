@@ -6,11 +6,18 @@ namespace Eightfold\HtmlBuilder\Forms;
 use Stringable;
 
 use Eightfold\HtmlBuilder\Element;
+use Eightfold\HtmlBuilder\PropertyInterface;
 
 use Eightfold\HtmlBuilder\Forms\SelectType;
 
 class Select implements Stringable
 {
+    // phpcs:disable
+    private string $warningId {
+        get => $this->name . '-warning';
+    }
+    // phpcs:enable
+
     /**
      * @var string[]
      */
@@ -31,9 +38,10 @@ class Select implements Stringable
         string|Stringable $label,
         string|Stringable $name,
         array $options,
-        string|array $selected = []
+        string|array $selected = [],
+        string|PropertyInterface $warningMessage = ''
     ): self {
-        return new self($label, $name, $options, $selected);
+        return new self($label, $name, $options, $selected, $warningMessage);
     }
 
     /**
@@ -44,7 +52,8 @@ class Select implements Stringable
         private readonly string|Stringable $label,
         private readonly string|Stringable $name,
         private readonly array $options,
-        private string|array $selected = []
+        private readonly string|array $selected = [],
+        private readonly string|PropertyInterface $warningMessage = ''
     ) {
     }
 
@@ -80,7 +89,7 @@ class Select implements Stringable
 
     private function hasSelected(): bool
     {
-        $selected = $this->selected();
+        $selected = self::selected();
         if (is_string($selected) and strlen($selected) > 0) {
             return true;
 
@@ -111,22 +120,37 @@ class Select implements Stringable
 
     private function isSelected(string $value): bool
     {
-        if ($this->hasSelected() === false) {
+        if (self::hasSelected() === false) {
             return false;
         }
 
-        if (is_array($this->selected())) {
-            return in_array($value, $this->selected());
+        if (is_array(self::selected())) {
+            return in_array($value, self::selected());
         }
-        return $value === $this->selected();
+        return $value === self::selected();
+    }
+
+    private function warningMessage(): string|PropertyInterface
+    {
+        if ($this->warningMessage === '') {
+            return '';
+        }
+
+        if (is_string($this->warningMessage)) {
+            return Element::p($this->warningMessage)->props(
+                'id ' . $this->warningId
+            );
+        }
+
+        return $this->warningMessage->prop('id ' . $this->warningId);
     }
 
     public function __toString(): string
     {
         if ($this->type === SelectType::Dropdown) {
-            return (string) $this->selectDropdown();
+            return (string) self::selectDropdown();
         }
-        return (string) $this->selectOther();
+        return (string) self::selectOther();
     }
 
     private function selectDropdown(): Element
@@ -135,19 +159,26 @@ class Select implements Stringable
         foreach ($this->options as $value => $content) {
             $value  = (string) $value;
             $option = Element::option($content)->props('value ' . $value);
-            if ($this->isSelected($value)) {
+            if (self::isSelected($value)) {
                 $option = $option->prop('selected selected');
             }
             $elements[] = $option;
+        }
+
+        $input = Element::select(
+            ...$elements
+        )->props('id ' . $this->name, 'name ' . $this->name);
+        if (self::warningMessage() !== '') {
+            $input = $input->prop('aria-invalid true');
+            $input = $input->prop('aria-describedby ' . $this->warningId);
         }
 
         return Element::div(
             Element::label(
                 $this->label
             )->props('for ' . $this->name, ...$this->labelProperties),
-            Element::select(
-                ...$elements
-            )->props('id ' . $this->name, 'name ' . $this->name)
+            $input,
+            self::warningMessage()
         )->props(...$this->wrapperProperties);
     }
 
@@ -167,10 +198,16 @@ class Select implements Stringable
                 'type ' . $type,
                 'value ' . $value
             );
-            if ($this->isSelected($value)) {
+
+            if (self::isSelected($value)) {
                 $input = $input->prop('checked checked');
             }
-            $elements[] = Element::div($input, $label);
+
+            if (self::warningMessage() !== '') {
+                $input = $input->prop('aria-invalid true');
+                $input = $input->prop('aria-describedby ' . $this->warningId);
+            }
+            $elements[] = Element::div($input, $label, self::warningMessage());
         }
         return Element::fieldset(
             Element::legend($this->label)->props(...$this->labelProperties),
