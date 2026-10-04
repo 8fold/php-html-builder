@@ -15,6 +15,43 @@ use Eightfold\HtmlBuilder\Components\PageTitle;
 class DocumentBaselineTest extends TestCase
 {
     #[Test]
+    public function adding_lang_to_html_props_overrides_create(): void // phpcs:ignore
+    {
+        $expected = <<<html
+        <!doctype html>
+        <html class="dark-theme" lang="fr"><head><title>Second | First</title><meta charset="utf-8"></head><body></body></html>
+        html;
+
+        $result = (string) Document::create(
+            PageTitle::create(['Second', 'First']),
+            'en-us'
+        )->htmlProps('class dark-theme', 'lang fr');
+
+        $this->assertSame(
+            $expected,
+            $result
+        );
+    }
+
+    #[Test]
+    public function can_add_properties_to_html_element(): void // phpcs:ignore
+    {
+        $expected = <<<html
+        <!doctype html>
+        <html class="dark-theme" lang="en"><head><title>Second | First</title><meta charset="utf-8"></head><body></body></html>
+        html;
+
+        $result = (string) Document::create(
+            PageTitle::create(['Second', 'First'])
+        )->htmlProps('class dark-theme');
+
+        $this->assertSame(
+            $expected,
+            $result
+        );
+    }
+
+    #[Test]
     public function can_add_properties_to_body_element(): void // phpcs:ignore
     {
         $expected = <<<html
