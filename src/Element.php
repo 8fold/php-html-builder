@@ -5,7 +5,9 @@ namespace Eightfold\HtmlBuilder;
 
 use Stringable;
 
-class Element implements Stringable
+use Eightfold\HtmlBuilder\PropertyInterface;
+
+class Element implements Stringable, PropertyInterface
 {
     /**
      * The following attributes will be placed in this order if used in an
