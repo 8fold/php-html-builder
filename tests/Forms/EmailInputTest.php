@@ -14,7 +14,7 @@ class EmailInputTest extends TestCase
     public function can_set_value(): void // phpcs:ignore
     {
         $expected = <<<html
-        <label for="email">Email</label><input id="email" name="email" type="email" value="support@8fold.pro">
+        <label for="email">Email</label><input id="email" name="email" type="email" value="support@8fold.pro" autocapitalize="off" autocorrect="off">
         html;
 
         $result = (string) EmailInput::create(
@@ -30,7 +30,7 @@ class EmailInputTest extends TestCase
     public function can_set_warning_message(): void // phpcs:ignore
     {
         $expected = <<<html
-        <label for="email">Email</label><input id="email" name="email" type="email" aria-describedby="email-warning" aria-invalid="true"><p id="email-warning">Invalid value</p>
+        <label for="email">Email</label><input id="email" name="email" type="email" aria-describedby="email-warning" aria-invalid="true" autocapitalize="off" autocorrect="off"><p id="email-warning">Invalid value</p>
         html;
 
         $result = (string) EmailInput::create(
@@ -46,7 +46,7 @@ class EmailInputTest extends TestCase
     public function is_expected_base(): void // phpcs:ignore
     {
         $expected = <<<html
-        <label for="email">Email</label><input id="email" name="email" type="email">
+        <label for="email">Email</label><input id="email" name="email" type="email" autocapitalize="off" autocorrect="off">
         html;
 
         $result = (string) EmailInput::create(
