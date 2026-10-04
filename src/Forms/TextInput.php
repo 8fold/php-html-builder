@@ -98,8 +98,6 @@ class TextInput implements Stringable
             $elements[] = $warningMessage;
         }
 
-        return $elements
-            |> (fn(array $e) => array_map('strval', $e))
-            |> (fn(array $e) => implode('', $e));
+        return implode('', array_map('strval', $elements));
     }
 }
