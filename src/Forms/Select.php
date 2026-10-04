@@ -186,6 +186,8 @@ class Select implements Stringable
     {
         $elements = [];
         $type = $this->type === SelectType::Checkbox ? 'checkbox' : 'radio';
+
+        $hasWarningMessage = (self::warningMessage() !== '');
         foreach ($this->options as $value => $content) {
             $value = (string) $value;
             $id    = $this->name . '-' . $value;
@@ -203,14 +205,14 @@ class Select implements Stringable
                 $input = $input->prop('checked checked');
             }
 
-            if (self::warningMessage() !== '') {
+            if ($hasWarningMessage) {
                 $input = $input->prop('aria-invalid true');
                 $input = $input->prop('aria-describedby ' . $this->warningId);
             }
             $elements[] = Element::div($input, $label);
         }
 
-        if (self::warningMessage() !== '') {
+        if ($hasWarningMessage) {
             $elements[] = self::warningMessage();
         }
 
