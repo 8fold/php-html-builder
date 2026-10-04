@@ -157,7 +157,9 @@ class Select implements Stringable
     {
         $elements = [];
 
-        $hasWarningMessage = (self::warningMessage() !== '');
+        $warningMessage = self::warningMessage();
+        $hasWarningMessage = ($warningMessage !== '');
+
         foreach ($this->options as $value => $content) {
             $value  = (string) $value;
             $option = Element::option($content)->props('value ' . $value);
@@ -180,7 +182,7 @@ class Select implements Stringable
                 $this->label
             )->props('for ' . $this->name, ...$this->labelProperties),
             $input,
-            self::warningMessage()
+            $warningMessage
         )->props(...$this->wrapperProperties);
     }
 
@@ -189,7 +191,9 @@ class Select implements Stringable
         $elements = [];
         $type = $this->type === SelectType::Checkbox ? 'checkbox' : 'radio';
 
-        $hasWarningMessage = (self::warningMessage() !== '');
+        $warningMessage = self::warningMessage();
+        $hasWarningMessage = ($warningMessage !== '');
+
         foreach ($this->options as $value => $content) {
             $value = (string) $value;
             $id    = $this->name . '-' . $value;
@@ -215,7 +219,7 @@ class Select implements Stringable
         }
 
         if ($hasWarningMessage) {
-            $elements[] = self::warningMessage();
+            $elements[] = $warningMessage;
         }
 
         return Element::fieldset(
