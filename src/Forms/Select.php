@@ -9,6 +9,7 @@ use Eightfold\HtmlBuilder\Element;
 use Eightfold\HtmlBuilder\PropertyInterface;
 
 use Eightfold\HtmlBuilder\Forms\SelectType;
+use Eightfold\HtmlBuilder\Forms\Fieldset;
 
 class Select implements Stringable
 {
@@ -186,7 +187,7 @@ class Select implements Stringable
         )->props(...$this->wrapperProperties);
     }
 
-    private function selectOther(): Element
+    private function selectOther(): Fieldset
     {
         $elements = [];
         $type = $this->type === SelectType::Checkbox ? 'checkbox' : 'radio';
@@ -218,13 +219,15 @@ class Select implements Stringable
             $elements[] = Element::div($input, $label);
         }
 
-        if ($hasWarningMessage) {
-            $elements[] = $warningMessage;
-        }
+        return Fieldset::create(
+            $this->label,
+            $this->name,
+            $warningMessage
+        )->elements(...$elements)->labelProps(...$this->labelProperties);
 
-        return Element::fieldset(
-            Element::legend($this->label)->props(...$this->labelProperties),
-            ...$elements
-        );
+        // return Element::fieldset(
+        //     Element::legend($this->label)->props(...$this->labelProperties),
+        //     ...$elements
+        // );
     }
 }
