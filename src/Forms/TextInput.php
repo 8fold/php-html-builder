@@ -80,6 +80,23 @@ class TextInput implements Stringable
         return $this;
     }
 
+    private function warningMessage(string $warningId): string|PropertyInterface
+    {
+        if ($this->warningMessage === '') {
+            return '';
+        }
+
+        if (is_string($this->warningMessage)) {
+            return Element::p($this->warningMessage)->props(
+                'id ' . $warningId
+            );
+        }
+
+        $warning = clone $this->warningMessage;
+
+        return $warning->prop('id ' . $warningId);
+    }
+
     public function __toString(): string
     {
         $input = Element::input()->omitEndTag()->props(
@@ -98,9 +115,7 @@ class TextInput implements Stringable
                 'aria-describedby ' . $warningId
             );
 
-            $warning = Element::p($this->warningMessage)->props(
-                'id ' . $warningId
-            );
+            $warning = (string) self::warningMessage($warningId);
         }
 
         return (string) Element::div(
