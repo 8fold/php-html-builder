@@ -72,6 +72,10 @@ class Select implements Stringable
         return $this;
     }
 
+    /**
+     * Sets properties on the outermost div in dropdown/multiple modes,
+     * or the fieldset in radio/checkbox modes, not on member controls.
+     */
     public function wrapperProps(string ...$properties): self
     {
         $this->wrapperProperties = array_values($properties);

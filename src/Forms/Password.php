@@ -58,6 +58,9 @@ class Password implements Stringable
         return $this;
     }
 
+    /**
+     * Sets properties on this component's outermost div, not the input.
+     */
     public function wrapperProps(string ...$properties): self
     {
         $this->wrapperProperties = array_values($properties);
