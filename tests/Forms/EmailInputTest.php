@@ -25,7 +25,7 @@ class EmailInputTest extends TestCase
             warningMessage: 'Invalid value'
         )->id('email-input-id')->content(
             Element::p('Helpful text')->props('id email-input-id-help')
-        )->wrapperProps('is form-control');
+        )->containerProps('is form-control');
 
         parent::assertSame($expected, $result);
     }

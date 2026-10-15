@@ -25,7 +25,7 @@ class TextInputTest extends TestCase
             warningMessage: 'Invalid value'
         )->id('text-input-id')->content(
             Element::p('Helpful text')->props('id text-input-id-help')
-        )->wrapperProps('is form-control');
+        )->containerProps('is form-control');
 
         parent::assertSame($expected, $result);
     }

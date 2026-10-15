@@ -62,10 +62,16 @@ class TextArea implements Stringable
     /**
      * Sets properties on this component's outermost div, not the textarea.
      */
-    public function wrapperProps(string ...$properties): self
+    public function containerProps(string ...$properties): self
     {
         $this->wrapperProperties = array_values($properties);
         return $this;
+    }
+
+    #[\Deprecated(message: 'Use containerProps() instead.', since: '5.0')]
+    public function wrapperProps(string ...$properties): self
+    {
+        return $this->containerProps(...$properties);
     }
 
     public function labelProps(string ...$properties): self
