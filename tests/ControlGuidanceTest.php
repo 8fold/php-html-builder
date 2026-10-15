@@ -13,6 +13,7 @@ use Dom\HTMLDocument;
 use Dom\XPath;
 use Eightfold\HtmlBuilder\Element;
 use Eightfold\HtmlBuilder\Forms\EmailInput;
+use Eightfold\HtmlBuilder\Forms\Password;
 use Eightfold\HtmlBuilder\Forms\Select;
 use Eightfold\HtmlBuilder\Forms\TextArea;
 use Eightfold\HtmlBuilder\Forms\TextInput;
@@ -23,7 +24,7 @@ final class ControlGuidanceTest extends TestCase
     /** @return iterable<string, array{string}> */
     public static function controls(): iterable
     {
-        foreach (['text', 'email', 'textarea', 'dropdown', 'multiple', 'radio', 'checkbox'] as $mode) {
+        foreach (['text', 'email', 'password', 'textarea', 'dropdown', 'multiple', 'radio', 'checkbox'] as $mode) {
             yield $mode => [$mode];
         }
     }
@@ -145,6 +146,7 @@ final class ControlGuidanceTest extends TestCase
         $control = match ($mode) {
             'text' => TextInput::create('Field', 'field', '', $warning),
             'email' => EmailInput::create('Field', 'field', '', $warning),
+            'password' => Password::create('Field', 'field', $warning),
             'textarea' => TextArea::create('Field', 'field', '', $warning),
             'dropdown' => Select::create('Field', 'field', ['a' => 'A', 'b' => 'B'], [], $warning),
             'multiple' => Select::create(

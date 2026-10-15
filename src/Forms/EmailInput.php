@@ -111,10 +111,16 @@ class EmailInput implements Stringable
      */
     private function inputProperties(bool $noWarning): array
     {
+        $properties = array_values(array_filter(
+            $this->inputProperties,
+            static fn(string $property): bool =>
+                strtolower(explode(' ', $property, 2)[0]) !== 'value'
+        ));
+
         return ($noWarning)
-            ? $this->inputProperties
+            ? $properties
             : ControlProperties::withWarning(
-                $this->inputProperties,
+                $properties,
                 $this->id . '-warning'
             );
     }
@@ -135,10 +141,10 @@ class EmailInput implements Stringable
         ]);
 
         return (string) Element::div(
-            Element::label($this->label)->props(
-                'for ' . $this->id,
-                ...$this->labelProperties
-            ),
+            Element::label($this->label)->props(...[
+                ...$this->labelProperties,
+                'for ' . $this->id
+            ]),
             $input,
             ...[...$this->content, $warning]
         )->props(...$this->containerProperties);
