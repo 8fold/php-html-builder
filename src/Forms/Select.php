@@ -157,10 +157,19 @@ class Select implements Stringable
      */
     private function inputProperties(bool $noWarning): array
     {
+        $properties = array_values(array_filter(
+            $this->inputProperties,
+            static fn(string $property): bool => !in_array(
+                explode(' ', $property, 2)[0],
+                ['checked', 'multiple'],
+                true
+            )
+        ));
+
         return ($noWarning)
-            ? $this->inputProperties
+            ? $properties
             : ControlProperties::withWarning(
-                $this->inputProperties,
+                $properties,
                 $this->id . '-warning'
             );
     }
