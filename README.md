@@ -75,6 +75,94 @@ Output:
 <input required>
 ```
 
+## Migrating from 4.x to 5.0
+
+This section highlights the changes to check when upgrading from 4.4.0. It
+links to the [form control guidance](#form-control-guidance) for details that
+apply to the new and existing APIs.
+
+### Required migration checks: markup and property targets
+
+Text-entry controls now render an outer `<div>` unconditionally. In 4.4.0,
+`TextInput` and `EmailInput` rendered their label and input as siblings without
+that container. Update CSS child/sibling selectors, flex or grid layouts, and
+JavaScript traversal that assumed the old structure.
+
+```html
+<!-- 4.4.0 -->
+<label for="email">Email</label><input id="email" name="email" type="text" value="">
+
+<!-- 5.0 -->
+<div class="field">
+  <label for="email">Email</label><input id="email" name="email" type="text" value="">
+</div>
+```
+
+Use each property method for its element: `containerProps()` targets the outer
+container, `labelProps()` targets the label (or a Select group's legend), and
+`inputProps()` targets the input or select. For example:
+
+```php
+use Eightfold\HtmlBuilder\Forms\TextInput;
+
+TextInput::create('Email', 'email')
+    ->containerProps('class field')
+    ->labelProps('class field-label')
+    ->inputProps('class form-control');
+```
+
+Do not use `inputProps()` or `labelProps()` to replace generated properties
+such as `type`, `id`, `name`, `value`, or the label's `for` association. For
+example, 4.4.0 allowed `TextInput::create('Email', 'email')->inputProps('type email')`
+to change its generated type; in 5.0, use `EmailInput` instead. Use constructor
+arguments, `id()`, or the component/mode that matches the control you need.
+Setting a custom ID changes the DOM ID and its generated label and warning
+associations, but does not change the submitted field name:
+
+```php
+TextInput::create('Email', 'account_email')->id('email-field');
+// The input has id="email-field" and name="account_email".
+```
+
+### Choose Select modes and names explicitly
+
+The default remains a single dropdown. `multiple()`, `radio()`, and
+`checkbox()` explicitly choose the other modes. The initial selection is
+single-valued for dropdowns and radio groups (only the first supplied value is
+considered), and every matching value is selected for multiple dropdowns and
+checkbox groups.
+
+Dropdowns, including multiple dropdowns, and radio groups submit the supplied
+name unchanged. Include `[]` yourself when a multiple dropdown should submit a
+PHP array. Checkbox groups continue to append `[]` unless the supplied name
+already ends with it. `checked` and `multiple` passed through `inputProps()` are
+ignored; use the selection argument and mode methods instead. See
+[Select attributes and selection](#select-attributes-and-selection) for native
+attribute targets and examples.
+
+### Update custom PropertyInterface implementations
+
+`PropertyInterface` now extends PHP's `Stringable`. Any custom implementation
+must add `public function __toString(): string` alongside `prop()` and
+`props()`.
+
+### Additive APIs and deprecated, still-working calls
+
+`containerProps()` is available for form controls, and `id()` is available on
+TextInput, EmailInput, Password, TextArea, and Select. Select also adds
+`multiple()` and `inputProps()`. These APIs are additive.
+
+`wrapperProps()` remains callable as a forwarding alias throughout 5.x. It
+continues to set the same container properties, but is deprecated in favor of
+`containerProps()` and emits `E_USER_DEPRECATED`. The native `#[Deprecated]`
+attribute is supported by PHP 8.4 and later; removal is deferred until at
+least 6.0. See [Migrating from wrapperProps](#migrating-from-wrapperprops).
+
+Escaping remains caller-owned; this upgrade does not introduce automatic
+escaping. `TextArea` is a new control, and its caller-supplied, already-escaped
+value is rendered as text content. Its leading-newline and newline-normalizing
+behavior is described in [Textarea values](#textarea-values).
+
 ## Form control guidance
 
 `TextInput`, `EmailInput`, `Password`, `TextArea`, and all `Select` modes preserve help IDs
