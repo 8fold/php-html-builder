@@ -88,6 +88,14 @@ Overriding the control's `id()` also changes its generated warning ID.
 Assertion failures identify the relationship, control type and ID, and rendered
 HTML, alongside PHPUnit's named case and expected/actual diff.
 
+### Text and email input values
+
+`TextInput` and `EmailInput` use the constructor's initial value, including an
+empty string. Caller-supplied `value` properties in `inputProps()` are ignored;
+an empty constructor value omits the attribute rather than retaining stale
+caller content. Unrelated native input properties are preserved. Values remain
+caller-sanitized: the components do not escape or encode them.
+
 ### Textarea values
 
 `TextArea::create($label, $name, $value = '', $warningMessage = '')` accepts
