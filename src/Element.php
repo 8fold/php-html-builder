@@ -3,11 +3,11 @@ declare(strict_types=1);
 
 namespace Eightfold\HtmlBuilder;
 
-use Stringable;
-
 use Eightfold\HtmlBuilder\PropertyInterface;
 
-class Element implements Stringable, PropertyInterface
+use Stringable;
+
+class Element implements PropertyInterface
 {
     /**
      * The following attributes will be placed in this order if used in an

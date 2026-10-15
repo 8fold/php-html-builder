@@ -16,7 +16,7 @@ class SelectTest extends TestCase
     public function ticket_36(): void // phpcs: ignore
     {
         $expected = <<<html
-        <fieldset><legend>Toppings</legend><div><input id="toppings-mushroom" name="toppings[]" type="checkbox" value="mushroom" aria-describedby="toppings-warning" aria-invalid="true"><label for="toppings-mushroom">Mushroom</label></div><div><input id="toppings-olive" name="toppings[]" type="checkbox" value="olive" aria-describedby="toppings-warning" aria-invalid="true"><label for="toppings-olive">Olive</label></div><p id="toppings-warning">Choose at least one topping.</p></fieldset>
+        <fieldset><legend>Toppings</legend><div><input id="toppings-option-0" name="toppings[]" type="checkbox" value="mushroom" aria-describedby="toppings-warning" aria-invalid="true"><label for="toppings-option-0">Mushroom</label></div><div><input id="toppings-option-1" name="toppings[]" type="checkbox" value="olive" aria-describedby="toppings-warning" aria-invalid="true"><label for="toppings-option-1">Olive</label></div><p id="toppings-warning">Choose at least one topping.</p></fieldset>
         html;
 
         $result = (string) Select::create(
@@ -26,6 +26,28 @@ class SelectTest extends TestCase
             [],
             'Choose at least one topping.'
         )->checkbox();
+
+        parent::assertSame($expected, $result);
+    }
+
+    #[Test]
+    public function can_be_multiple(): void // phpcs: ignore
+    {
+        $expected = <<<html
+        <div><label for="select">Select</label><select id="select" name="select" aria-describedby="select-warning" aria-invalid="true" multiple><option value="value">display</option><option value="value2">display2</option></select><ul id="select-warning"><li>Invalid value</li></ul></div>
+        html;
+
+        $result = (string) Select::create(
+            name: 'select',
+            options: [
+                'value'  => 'display',
+                'value2' => 'display2'
+            ],
+            warningMessage: Element::ul(
+                Element::li('Invalid value')
+            ),
+            label: 'Select'
+        )->multiple();
 
         parent::assertSame($expected, $result);
     }
@@ -91,7 +113,7 @@ class SelectTest extends TestCase
         parent::assertSame($expected, $result);
 
         $expected = <<<html
-        <fieldset><legend is="checkbox">Select</legend><div><input id="select-value" name="select[]" type="checkbox" value="value"><label for="select-value">display</label></div><div><input id="select-value2" name="select[]" type="checkbox" value="value2"><label for="select-value2">display2</label></div></fieldset>
+        <fieldset><legend is="checkbox">Select</legend><div><input id="select-option-0" name="select[]" type="checkbox" value="value"><label for="select-option-0">display</label></div><div><input id="select-option-1" name="select[]" type="checkbox" value="value2"><label for="select-option-1">display2</label></div></fieldset>
         html;
 
         $result = (string) Select::create(
@@ -106,7 +128,7 @@ class SelectTest extends TestCase
         parent::assertSame($expected, $result);
 
         $expected = <<<html
-        <fieldset><legend is="radio">Select</legend><div><input id="select-value" name="select" type="radio" value="value"><label for="select-value">display</label></div><div><input id="select-value2" name="select" type="radio" value="value2"><label for="select-value2">display2</label></div></fieldset>
+        <fieldset><legend is="radio">Select</legend><div><input id="select-option-0" name="select" type="radio" value="value"><label for="select-option-0">display</label></div><div><input id="select-option-1" name="select" type="radio" value="value2"><label for="select-option-1">display2</label></div></fieldset>
         html;
 
         $result = (string) Select::create(
@@ -125,7 +147,7 @@ class SelectTest extends TestCase
     public function can_be_checkboxes(): void // phpcs: ignore
     {
         $expected = <<<html
-        <fieldset><legend>Select your option</legend><div><input id="select-value" name="select[]" type="checkbox" value="value" checked><label for="select-value">display</label></div><div><input id="select-value2" name="select[]" type="checkbox" value="value2" checked><label for="select-value2">display2</label></div></fieldset>
+        <fieldset><legend>Select your option</legend><div><input id="select-option-0" name="select[]" type="checkbox" value="value" checked><label for="select-option-0">display</label></div><div><input id="select-option-1" name="select[]" type="checkbox" value="value2" checked><label for="select-option-1">display2</label></div></fieldset>
         html;
 
         $result = (string) Select::create(
@@ -145,7 +167,7 @@ class SelectTest extends TestCase
     public function can_be_radio_buttons(): void // phpcs: ignore
     {
         $expected = <<<html
-        <fieldset><legend>Select your option</legend><div><input id="select-value" name="select" type="radio" value="value" checked><label for="select-value">display</label></div></fieldset>
+        <fieldset><legend>Select your option</legend><div><input id="select-option-0" name="select" type="radio" value="value" checked><label for="select-option-0">display</label></div></fieldset>
         html;
 
         $result = (string) Select::create(
@@ -182,7 +204,7 @@ class SelectTest extends TestCase
     public function checkbox_mode_is_explicit(): void // phpcs: ignore
     {
         $expected = <<<html
-        <fieldset><legend>Select your option</legend><div><input id="select-value" name="select[]" type="checkbox" value="value" checked><label for="select-value">display</label></div></fieldset>
+        <fieldset><legend>Select your option</legend><div><input id="select-option-0" name="select[]" type="checkbox" value="value" checked><label for="select-option-0">display</label></div></fieldset>
         html;
 
         $result = (string) Select::create(

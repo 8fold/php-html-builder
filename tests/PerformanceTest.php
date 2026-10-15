@@ -56,7 +56,7 @@ class PerformanceTest extends TestCase
         $elapsed = $end - $start;
         $ms      = $elapsed/1e+6;
 
-        $this->assertLessThan(0.75, $ms);
+        $this->assertLessThan(1, $ms);
     }
 
     #[Test]

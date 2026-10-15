@@ -8,26 +8,33 @@ use Stringable;
 use Eightfold\HtmlBuilder\Element;
 use Eightfold\HtmlBuilder\PropertyInterface;
 
+use Eightfold\HtmlBuilder\Forms\ControlProperties;
 use Eightfold\HtmlBuilder\Forms\SelectType;
 use Eightfold\HtmlBuilder\Forms\Fieldset;
 
 class Select implements Stringable
 {
-    // phpcs:disable
-    private string $warningId {
-        get => $this->name . '-warning';
-    }
-    // phpcs:enable
+    private string $id;
 
     /**
-     * @var string[]
+     * @var list<string>
      */
     private array $wrapperProperties = [];
 
     /**
-     * @var string[]
+     * @var list<string>
      */
     private array $labelProperties = [];
+
+    /**
+     * @var list<string>
+     */
+    private array $inputProperties = [];
+
+    /**
+     * @var list<string|Stringable>
+     */
+    private array $content = [];
 
     private SelectType $type = SelectType::Dropdown;
 
@@ -56,23 +63,48 @@ class Select implements Stringable
         private readonly string|array $selected = [],
         private readonly string|PropertyInterface $warningMessage = ''
     ) {
+        $this->id = (string) $name;
+    }
+
+    public function id(string $id): self
+    {
+        $this->id = $id;
+        return $this;
     }
 
     public function wrapperProps(string ...$properties): self
     {
-        $this->wrapperProperties = $properties;
+        $this->wrapperProperties = array_values($properties);
         return $this;
     }
 
     public function labelProps(string ...$properties): self
     {
-        $this->labelProperties = $properties;
+        $this->labelProperties = array_values($properties);
+        return $this;
+    }
+
+    public function inputProps(string ...$properties): self
+    {
+        $this->inputProperties = array_values($properties);
+        return $this;
+    }
+
+    public function content(string|Stringable ...$content): self
+    {
+        $this->content = array_values($content);
         return $this;
     }
 
     public function dropdown(): self
     {
         $this->type = SelectType::Dropdown;
+        return $this;
+    }
+
+    public function multiple(): self
+    {
+        $this->type = SelectType::Multiple;
         return $this;
     }
 
@@ -88,146 +120,161 @@ class Select implements Stringable
         return $this;
     }
 
-    private function hasSelected(): bool
-    {
-        $selected = self::selected();
-        if (is_string($selected) and strlen($selected) > 0) {
-            return true;
-
-        } elseif (is_array($selected) and count($selected) > 0) {
-            return true;
-
-        }
-        return false;
-    }
-
     /**
-     * @return string|string[]
+     * @return list<string>
      */
-    private function selected(): string|array
+    private function selectedValues(): array
     {
-        if ($this->type === SelectType::Checkbox) {
-            if (is_array($this->selected)) {
-                return $this->selected;
-            }
-            return [$this->selected];
-        }
+        $values = is_array($this->selected)
+            ? array_values($this->selected)
+            : [$this->selected];
 
-        if (is_array($this->selected) and count($this->selected) > 0) {
-            return $this->selected[0];
-        }
-        return $this->selected;
+        return match ($this->type) {
+            SelectType::Multiple, SelectType::Checkbox => $values,
+            SelectType::Dropdown, SelectType::Radio => array_slice($values, 0, 1)
+        };
     }
 
-    private function isSelected(string $value): bool
-    {
-        if (self::hasSelected() === false) {
-            return false;
-        }
-
-        if (is_array(self::selected())) {
-            return in_array($value, self::selected());
-        }
-        return $value === self::selected();
-    }
-
-    private function warningMessage(): string|PropertyInterface
+    private function warningMessage(): string
     {
         if ($this->warningMessage === '') {
             return '';
         }
 
         if (is_string($this->warningMessage)) {
-            return Element::p($this->warningMessage)->props(
-                'id ' . $this->warningId
+            return (string) Element::p($this->warningMessage)->props(
+                'id ' . $this->id . '-warning'
             );
         }
 
-        return $this->warningMessage->prop('id ' . $this->warningId);
+        $warning = clone $this->warningMessage;
+
+        return (string) $warning->prop('id ' . $this->id . '-warning');
+    }
+
+    /**
+     * @return list<string>
+     */
+    private function inputProperties(bool $noWarning): array
+    {
+        return ($noWarning)
+            ? $this->inputProperties
+            : ControlProperties::withWarning(
+                $this->inputProperties,
+                $this->id . '-warning'
+            );
     }
 
     public function __toString(): string
     {
-        if ($this->type === SelectType::Dropdown) {
-            return (string) self::selectDropdown();
-        }
-        return (string) self::selectOther();
+        $warning         = self::warningMessage();
+        $inputProperties = self::inputProperties($warning === '');
+        $selected        = self::selectedValues();
+
+        return (string) match ($this->type) {
+            SelectType::Dropdown,
+            SelectType::Multiple => self::selectDropdown(
+                $warning,
+                $inputProperties,
+                $selected
+            ),
+            SelectType::Radio,
+            SelectType::Checkbox => self::selectGroup(
+                $warning,
+                $inputProperties,
+                $selected
+            )
+        };
     }
 
-    private function selectDropdown(): Element
-    {
-        $elements = [];
+    /**
+     * @param list<string> $inputProperties
+     * @param list<string> $selected
+     */
+    private function selectDropdown(
+        string $warning,
+        array $inputProperties,
+        array $selected
+    ): Element {
+        $options = [];
 
-        $warningMessage = self::warningMessage();
-        $hasWarningMessage = ($warningMessage !== '');
+        foreach ($this->options as $value => $label) {
+            $value = (string) $value;
+            $option = Element::option($label)->props('value ' . $value);
 
-        foreach ($this->options as $value => $content) {
-            $value  = (string) $value;
-            $option = Element::option($content)->props('value ' . $value);
-            if (self::isSelected($value)) {
+            if (in_array($value, $selected, true)) {
                 $option = $option->prop('selected selected');
             }
-            $elements[] = $option;
+
+            $options[] = $option;
         }
 
-        $input = Element::select(
-            ...$elements
-        )->props('id ' . $this->name, 'name ' . $this->name);
-        if ($hasWarningMessage) {
-            $input = $input->prop('aria-invalid true');
-            $input = $input->prop('aria-describedby ' . $this->warningId);
+        $select = Element::select(...$options)->props(...[
+            ...$inputProperties,
+            'id ' . $this->id,
+            'name ' . $this->name
+        ]);
+
+        if ($this->type === SelectType::Multiple) {
+            $select = $select->prop('multiple multiple');
         }
 
         return Element::div(
-            Element::label(
-                $this->label
-            )->props('for ' . $this->name, ...$this->labelProperties),
-            $input,
-            $warningMessage
+            Element::label($this->label)->props(...[
+                ...$this->labelProperties,
+                'for ' . $this->id
+            ]),
+            $select,
+            ...[...$this->content, $warning]
         )->props(...$this->wrapperProperties);
     }
 
-    private function selectOther(): Fieldset
-    {
-        $elements = [];
-        $type = $this->type === SelectType::Checkbox ? 'checkbox' : 'radio';
+    /**
+     * @param list<string> $inputProperties
+     * @param list<string> $selected
+     */
+    private function selectGroup(
+        string $warning,
+        array $inputProperties,
+        array $selected
+    ): Element {
+        $members = [];
+        $isCheckbox = $this->type === SelectType::Checkbox;
+        $type = $isCheckbox ? 'checkbox' : 'radio';
+        $name = (string) $this->name;
 
-        $warningMessage = self::warningMessage();
-        $hasWarningMessage = ($warningMessage !== '');
+        // Retains existing checkbox-group naming without adding [] twice.
+        if ($isCheckbox && str_ends_with($name, '[]') === false) {
+            $name .= '[]';
+        }
 
-        foreach ($this->options as $value => $content) {
+        $index = 0;
+
+        foreach ($this->options as $value => $label) {
             $value = (string) $value;
-            $id    = $this->name . '-' . $value;
-            $label = Element::label($content)->props('for ' . $id);
-            $input = Element::input()->omitEndTag()->props(
-                'id ' . $id,
-                ($this->type === SelectType::Checkbox)
-                    ? 'name ' . $this->name . '[]'
-                    : 'name ' . $this->name,
+            $memberId = $this->id . '-option-' . $index++;
+
+            $input = Element::input()->omitEndTag()->props(...[
+                ...$inputProperties,
+                'id ' . $memberId,
+                'name ' . $name,
                 'type ' . $type,
                 'value ' . $value
-            );
+            ]);
 
-            if (self::isSelected($value)) {
+            if (in_array($value, $selected, true)) {
                 $input = $input->prop('checked checked');
             }
 
-            if ($hasWarningMessage) {
-                $input = $input->prop('aria-invalid true');
-                $input = $input->prop('aria-describedby ' . $this->warningId);
-            }
-            $elements[] = Element::div($input, $label);
+            $members[] = Element::div(
+                $input,
+                Element::label($label)->props('for ' . $memberId)
+            );
         }
 
-        return Fieldset::create(
-            $this->label,
-            $this->name,
-            $warningMessage
-        )->elements(...$elements)->labelProps(...$this->labelProperties);
-
-        // return Element::fieldset(
-        //     Element::legend($this->label)->props(...$this->labelProperties),
-        //     ...$elements
-        // );
+        return Element::fieldset(
+            Element::legend($this->label)->props(...$this->labelProperties),
+            ...[...$members, ...$this->content, $warning]
+        )->props(...$this->wrapperProperties);
     }
 }

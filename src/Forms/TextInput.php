@@ -10,11 +10,12 @@ use Eightfold\HtmlBuilder\PropertyInterface;
 
 class TextInput implements Stringable
 {
-    // phpcs:disable
-    private string $warningId {
-        get => $this->name . '-warning';
-    }
-    // phpcs:enable
+    private string $id;
+
+    /**
+     * @var string[]
+     */
+    private array $wrapperProperties = [];
 
     /**
      * @var string[]
@@ -25,6 +26,11 @@ class TextInput implements Stringable
      * @var string[]
      */
     private array $inputProperties = [];
+
+    /**
+     * @var array<string|Stringable>
+     */
+    private array $content = [];
 
     public static function create(
         string|Stringable $label,
@@ -41,6 +47,19 @@ class TextInput implements Stringable
         private readonly string $value,
         private readonly string|PropertyInterface $warningMessage = ''
     ) {
+        $this->id = (string) $name;
+    }
+
+    public function id(string $id): self
+    {
+        $this->id = $id;
+        return $this;
+    }
+
+    public function wrapperProps(string ...$properties): self
+    {
+        $this->wrapperProperties = $properties;
+        return $this;
     }
 
     public function labelProps(string ...$properties): self
@@ -55,7 +74,13 @@ class TextInput implements Stringable
         return $this;
     }
 
-    private function warningMessage(): string|PropertyInterface
+    public function content(string|Stringable ...$content): self
+    {
+        $this->content = $content;
+        return $this;
+    }
+
+    private function warningMessage(string $warningId): string|PropertyInterface
     {
         if ($this->warningMessage === '') {
             return '';
@@ -63,41 +88,46 @@ class TextInput implements Stringable
 
         if (is_string($this->warningMessage)) {
             return Element::p($this->warningMessage)->props(
-                'id ' . $this->warningId
+                'id ' . $warningId
             );
         }
 
-        return $this->warningMessage->prop('id ' . $this->warningId);
+        $warning = clone $this->warningMessage;
+
+        return $warning->prop('id ' . $warningId);
     }
 
     public function __toString(): string
     {
-        $elements = [];
-        $elements[] = Element::label($this->label)->props(
-            'for ' . $this->name,
-            ...$this->labelProperties
-        );
+        $inputProperties = $this->warningMessage === ''
+            ? $this->inputProperties
+            : ControlProperties::withWarning(
+                array_values($this->inputProperties),
+                $this->id . '-warning'
+            );
 
-        $input = Element::input()->omitEndTag()->props(
+        $input = Element::input()->omitEndTag()->props(...[
+            ...$inputProperties,
             'type text',
-            'id ' . $this->name,
+            'id ' . $this->id,
             'name ' . $this->name,
-            'value ' . $this->value,
-            ...$this->inputProperties
-        );
+            'value ' . $this->value
+        ]);
 
-        $warningMessage = self::warningMessage();
-        $hasWarningMessage = ($warningMessage !== '');
-        if ($hasWarningMessage) {
-            $input = $input->prop('aria-invalid true');
-            $input = $input->prop('aria-describedby ' . $this->warningId);
-        }
-        $elements[] = $input;
+        $warning = '';
+        if ($this->warningMessage !== '') {
+            $warningId = $this->id . '-warning';
 
-        if ($hasWarningMessage) {
-            $elements[] = $warningMessage;
+            $warning = (string) self::warningMessage($warningId);
         }
 
-        return implode('', array_map('strval', $elements));
+        return (string) Element::div(
+            Element::label($this->label)->props(...[
+                ...$this->labelProperties,
+                'for ' . $this->id
+            ]),
+            $input,
+            ...[...$this->content, $warning]
+        )->props(...$this->wrapperProperties);
     }
 }
