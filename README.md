@@ -77,7 +77,7 @@ Output:
 
 ## Form control guidance
 
-`TextInput`, `EmailInput`, `TextArea`, and all `Select` modes preserve help IDs
+`TextInput`, `EmailInput`, `Password`, `TextArea`, and all `Select` modes preserve help IDs
 supplied through `inputProps('aria-describedby help-id')` when adding a warning.
 With a warning, the control sets `aria-invalid="true"` and appends
 `<control-id>-warning` to `aria-describedby`, removing duplicate references while
