@@ -8,6 +8,7 @@ use Stringable;
 use Eightfold\HtmlBuilder\Element;
 use Eightfold\HtmlBuilder\PropertyInterface;
 
+use Eightfold\HtmlBuilder\Forms\ControlProperties;
 use Eightfold\HtmlBuilder\Forms\SelectType;
 use Eightfold\HtmlBuilder\Forms\Fieldset;
 
@@ -16,22 +17,22 @@ class Select implements Stringable
     private string $id;
 
     /**
-     * @var string[]
+     * @var list<string>
      */
     private array $wrapperProperties = [];
 
     /**
-     * @var string[]
+     * @var list<string>
      */
     private array $labelProperties = [];
 
     /**
-     * @var string[]
+     * @var list<string>
      */
     private array $inputProperties = [];
 
     /**
-     * @var array<string|Stringable>
+     * @var list<string|Stringable>
      */
     private array $content = [];
 
@@ -62,7 +63,7 @@ class Select implements Stringable
         private readonly string|array $selected = [],
         private readonly string|PropertyInterface $warningMessage = ''
     ) {
-        $this->id = $name;
+        $this->id = (string) $name;
     }
 
     public function id(string $id): self
@@ -73,43 +74,26 @@ class Select implements Stringable
 
     public function wrapperProps(string ...$properties): self
     {
-        $this->wrapperProperties = $properties;
+        $this->wrapperProperties = array_values($properties);
         return $this;
     }
 
     public function labelProps(string ...$properties): self
     {
-        $this->labelProperties = $properties;
+        $this->labelProperties = array_values($properties);
         return $this;
     }
 
     public function inputProps(string ...$properties): self
     {
-        $this->inputProperties = $properties;
+        $this->inputProperties = array_values($properties);
         return $this;
     }
 
     public function content(string|Stringable ...$content): self
     {
-        $this->content = $content;
+        $this->content = array_values($content);
         return $this;
-    }
-
-    private function warningMessage(string $warningId): string|PropertyInterface
-    {
-        if ($this->warningMessage === '') {
-            return '';
-        }
-
-        if (is_string($this->warningMessage)) {
-            return Element::p($this->warningMessage)->props(
-                'id ' . $warningId
-            );
-        }
-
-        $warning = clone $this->warningMessage;
-
-        return $warning->prop('id ' . $warningId);
     }
 
     public function dropdown(): self
@@ -136,28 +120,6 @@ class Select implements Stringable
         return $this;
     }
 
-    private function hasSelected(): bool
-    {
-        $selected = self::selected();
-        if (is_string($selected) and $selected !== '') {
-            return true;
-
-        } elseif (is_array($selected) and $selected !== 0) {
-            return true;
-
-        }
-        return false;
-    }
-
-    /**
-     * @return string|string[]
-     */
-    #[Deprecated(message: 'Use selectedValues() instead.', since: '5.0')]
-    private function selected(): string|array
-    {
-        return self::selectedValues();
-    }
-
     /**
      * @return list<string>
      */
@@ -173,26 +135,65 @@ class Select implements Stringable
         };
     }
 
-    private function isSelected(string $value): bool
+    private function warningMessage(): string
     {
-        return in_array($value, self::selectedValues(), true);
+        if ($this->warningMessage === '') {
+            return '';
+        }
+
+        if (is_string($this->warningMessage)) {
+            return (string) Element::p($this->warningMessage)->props(
+                'id ' . $this->id . '-warning'
+            );
+        }
+
+        $warning = clone $this->warningMessage;
+
+        return (string) $warning->prop('id ' . $this->id . '-warning');
+    }
+
+    /**
+     * @return list<string>
+     */
+    private function inputProperties(bool $noWarning): array
+    {
+        return ($noWarning)
+            ? $this->inputProperties
+            : ControlProperties::withWarning(
+                $this->inputProperties,
+                $this->id . '-warning'
+            );
     }
 
     public function __toString(): string
     {
-        $warning  = self::warningMessage($this->id . '-warning');
-        $selected = self::selectedValues();
+        $warning         = self::warningMessage();
+        $inputProperties = self::inputProperties($warning === '');
+        $selected        = self::selectedValues();
 
         return (string) match ($this->type) {
             SelectType::Dropdown,
-            SelectType::Multiple => self::selectDropdown($warning, $selected),
+            SelectType::Multiple => self::selectDropdown(
+                $warning,
+                $inputProperties,
+                $selected
+            ),
             SelectType::Radio,
-            SelectType::Checkbox => Self::selectGroup($warning, $selected)
+            SelectType::Checkbox => self::selectGroup(
+                $warning,
+                $inputProperties,
+                $selected
+            )
         };
     }
 
+    /**
+     * @param list<string> $inputProperties
+     * @param list<string> $selected
+     */
     private function selectDropdown(
-        string|PropertyInterface $warning,
+        string $warning,
+        array $inputProperties,
         array $selected
     ): Element {
         $options = [];
@@ -207,8 +208,6 @@ class Select implements Stringable
 
             $options[] = $option;
         }
-
-        $inputProperties = self::controlProperties($warning);
 
         $select = Element::select(...$options)->props(...[
             ...$inputProperties,
@@ -231,10 +230,12 @@ class Select implements Stringable
     }
 
     /**
+     * @param list<string> $inputProperties
      * @param list<string> $selected
      */
     private function selectGroup(
-        string|PropertyInterface $warning,
+        string $warning,
+        array $inputProperties,
         array $selected
     ): Element {
         $members = [];
@@ -247,7 +248,6 @@ class Select implements Stringable
             $name .= '[]';
         }
 
-        $inputProperties = self::controlProperties($warning);
         $index = 0;
 
         foreach ($this->options as $value => $label) {
@@ -276,42 +276,5 @@ class Select implements Stringable
             Element::legend($this->label)->props(...$this->labelProperties),
             ...[...$members, ...$this->content, $warning]
         )->props(...$this->wrapperProperties);
-    }
-
-    /** @return list<string> */
-    private function controlProperties(
-        string|PropertyInterface $warning
-    ): array {
-        $properties = [];
-        $descriptionIds = [];
-
-        foreach ($this->inputProperties as $property) {
-            if (str_starts_with($property, 'aria-describedby ')) {
-                $ids = preg_split(
-                    '/\s+/',
-                    trim(substr($property, strlen('aria-describedby ')))
-                );
-
-                foreach ($ids === false ? [] : $ids as $id) {
-                    if ($id !== '') {
-                        $descriptionIds[] = $id;
-                    }
-                }
-            } else {
-                $properties[] = $property;
-            }
-        }
-
-        if ($warning !== '') {
-            $descriptionIds[] = $this->id . '-warning';
-            $properties[] = 'aria-invalid true';
-        }
-
-        if ($descriptionIds !== []) {
-            $properties[] = 'aria-describedby '
-                . implode(' ', array_unique($descriptionIds));
-        }
-
-        return $properties;
     }
 }
