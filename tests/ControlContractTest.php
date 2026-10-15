@@ -13,6 +13,9 @@ use Dom\HTMLDocument;
 use Dom\XPath;
 use Eightfold\HtmlBuilder\Element;
 use Eightfold\HtmlBuilder\Forms\EmailInput;
+use Eightfold\HtmlBuilder\Forms\Password;
+use Eightfold\HtmlBuilder\Forms\Select;
+use Eightfold\HtmlBuilder\Forms\TextArea;
 use Eightfold\HtmlBuilder\Forms\TextInput;
 
 final class ControlContractTest extends TestCase
@@ -74,6 +77,61 @@ final class ControlContractTest extends TestCase
             '<input value="existing">',
             (string) Element::input()->omitEndTag()->props('value existing', 'value ', 'value')
         );
+    }
+
+    /** @return iterable<string, array{string, ?string}> */
+    public static function labelCases(): iterable
+    {
+        foreach (['text', 'email', 'password', 'textarea', 'dropdown', 'multiple'] as $mode) {
+            foreach (['default' => null, 'overridden' => 'custom-field'] as $case => $id) {
+                yield "$mode: $case ID" => [$mode, $id];
+            }
+        }
+    }
+
+    #[Test]
+    #[DataProvider('labelCases')]
+    public function generated_label_association_overrides_caller_properties(string $mode, ?string $id): void
+    {
+        $control = match ($mode) {
+            'text' => TextInput::create('Field', 'field'),
+            'email' => EmailInput::create('Field', 'field'),
+            'password' => Password::create('Field', 'field'),
+            'textarea' => TextArea::create('Field', 'field'),
+            'dropdown' => Select::create('Field', 'field', ['a' => 'A']),
+            'multiple' => Select::create('Field', 'field', ['a' => 'A'])->multiple()
+        };
+        if ($id !== null) {
+            $control->id($id);
+        }
+        $html = (string) $control->labelProps(
+            'for other',
+            'class field-label',
+            'for another',
+            'data-for preserved'
+        );
+        $xpath = self::xpath($html);
+        $controls = $xpath->query(
+            '//*[local-name()="input" or local-name()="select" or local-name()="textarea"]'
+        );
+        parent::assertNotFalse($controls);
+        parent::assertCount(1, $controls, $html);
+        $input = $controls->item(0);
+        parent::assertInstanceOf(DomElement::class, $input);
+        $controlId = $input->getAttribute('id');
+        parent::assertSame($id ?? 'field', $controlId, $html);
+        $labels = $xpath->query('//*[local-name()="label"]');
+        parent::assertNotFalse($labels);
+        parent::assertCount(1, $labels, $html);
+        $label = $labels->item(0);
+        parent::assertInstanceOf(DomElement::class, $label);
+        parent::assertSame($controlId, $label->getAttribute('for'), $html);
+        parent::assertSame('field-label', $label->getAttribute('class'), $html);
+        parent::assertSame('preserved', $label->getAttribute('data-for'), $html);
+        $targets = $xpath->query('//*[@id="' . $label->getAttribute('for') . '"]');
+        parent::assertNotFalse($targets);
+        parent::assertCount(1, $targets, $html);
+        parent::assertSame($input, $targets->item(0), $html);
     }
 
     private static function xpath(string $html): XPath

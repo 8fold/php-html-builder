@@ -141,10 +141,10 @@ class EmailInput implements Stringable
         ]);
 
         return (string) Element::div(
-            Element::label($this->label)->props(
-                'for ' . $this->id,
-                ...$this->labelProperties
-            ),
+            Element::label($this->label)->props(...[
+                ...$this->labelProperties,
+                'for ' . $this->id
+            ]),
             $input,
             ...[...$this->content, $warning]
         )->props(...$this->containerProperties);

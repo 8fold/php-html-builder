@@ -96,6 +96,11 @@ an empty constructor value omits the attribute rather than retaining stale
 caller content. Unrelated native input properties are preserved. Values remain
 caller-sanitized: the components do not escape or encode them.
 
+Text-entry controls and dropdown selects keep each label's generated `for`
+association in sync with the control's `id()`, overriding conflicting
+`labelProps('for other')` properties while preserving unrelated label properties.
+For radio and checkbox groups, `labelProps()` targets the legend instead.
+
 ### Textarea values
 
 `TextArea::create($label, $name, $value = '', $warningMessage = '')` accepts
