@@ -84,23 +84,24 @@ apply to the new and existing APIs.
 ### Required migration checks: markup and property targets
 
 Text-entry controls now render an outer `<div>` unconditionally. In 4.4.0,
-`TextInput` and `EmailInput` rendered their label and input as siblings without
+`TextInput`, `EmailInput`, and `Password` rendered their label and input as siblings without
 that container. Update CSS child/sibling selectors, flex or grid layouts, and
 JavaScript traversal that assumed the old structure.
 
 ```html
 <!-- 4.4.0 -->
-<label for="email">Email</label><input id="email" name="email" type="text" value="">
+<label for="email">Email</label><input id="email" name="email" type="text">
 
 <!-- 5.0 -->
 <div class="field">
-  <label for="email">Email</label><input id="email" name="email" type="text" value="">
+  <label for="email">Email</label><input id="email" name="email" type="text">
 </div>
 ```
 
 Use each property method for its element: `containerProps()` targets the outer
 container, `labelProps()` targets the label (or a Select group's legend), and
-`inputProps()` targets the input or select. For example:
+`inputProps()` targets the input, textarea, or select. Fieldset's `labelProps()`
+targets its legend. For example:
 
 ```php
 use Eightfold\HtmlBuilder\Forms\TextInput;
@@ -139,6 +140,13 @@ already ends with it. `checked` and `multiple` passed through `inputProps()` are
 ignored; use the selection argument and mode methods instead. See
 [Select attributes and selection](#select-attributes-and-selection) for native
 attribute targets and examples.
+
+Radio and checkbox member IDs now use `<control-id>-option-<zero-based-index>`
+instead of `<name>-<option-value>`. For example, option `a` in a group named
+`categories` changes from `categories-a` to `categories-option-0`. Generated
+labels follow the new IDs automatically; update external labels, CSS selectors,
+and JavaScript that reference the old IDs. `id()` changes the group's member-ID
+prefix, not its submitted name.
 
 ### Update custom PropertyInterface implementations
 
