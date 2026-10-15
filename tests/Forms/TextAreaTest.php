@@ -33,9 +33,10 @@ final class TextAreaTest extends TestCase
 
     #[Test]
     #[DataProvider('values')]
-    public function raw_values_round_trip_as_text_without_creating_markup(string $value): void
+    public function caller_escaped_values_round_trip_without_double_encoding(string $value): void
     {
-        $control = TextArea::create('Notes', 'notes', $value);
+        $escaped = htmlspecialchars($value, ENT_QUOTES | ENT_SUBSTITUTE, 'UTF-8');
+        $control = TextArea::create('Notes', 'notes', $escaped);
         $html = (string) $control;
         $xpath = self::xpath($html);
         $textareas = $xpath->query('//*[local-name()="textarea"]');
@@ -46,15 +47,58 @@ final class TextAreaTest extends TestCase
         parent::assertSame(
             $value,
             $textarea->textContent,
-            "The raw value must round-trip exactly, without trimming or entity decoding.\nRendered HTML:\n" . $html
+            "Caller-escaped text must round-trip without trimming or double encoding.\nRendered HTML:\n" . $html
         );
         parent::assertFalse($textarea->hasAttribute('value'), 'Textarea values belong in text content.');
         parent::assertSame(
             0,
             $xpath->query('//*[local-name()="script" or local-name()="p"]')->length,
-            'Markup-like value text must not become document elements.'
+            'Caller-escaped markup-like text must not become document elements.'
         );
-        parent::assertSame($html, (string) $control, 'Rendering twice must not encode the value twice.');
+        parent::assertStringContainsString(
+            '>' . "\n" . $escaped . '</textarea>',
+            $html,
+            'The supplied value must be rendered verbatim after the parser-consumed newline.'
+        );
+        parent::assertSame($html, (string) $control, 'Repeated rendering must not transform the supplied value.');
+    }
+
+    /** @return iterable<string, array{int}> */
+    public static function escapingOptions(): iterable
+    {
+        yield 'quotes' => [ENT_QUOTES | ENT_SUBSTITUTE];
+        yield 'double quotes only' => [ENT_COMPAT | ENT_SUBSTITUTE];
+        yield 'no quotes' => [ENT_NOQUOTES | ENT_SUBSTITUTE];
+        yield 'HTML5 entities' => [ENT_QUOTES | ENT_SUBSTITUTE | ENT_HTML5];
+    }
+
+    #[Test]
+    #[DataProvider('escapingOptions')]
+    public function caller_selected_escaping_options_are_preserved(int $flags): void
+    {
+        $value = '<notes> & "quoted" and \'single\'';
+        $escaped = htmlspecialchars($value, $flags, 'UTF-8');
+        $html = (string) TextArea::create('Notes', 'notes', $escaped);
+        parent::assertStringContainsString(
+            '>' . "\n" . $escaped . '</textarea>',
+            $html,
+            'TextArea must not impose its own encoding options on caller-escaped values.'
+        );
+        parent::assertSame(
+            $value,
+            self::xpath($html)->query('//*[local-name()="textarea"]')->item(0)->textContent
+        );
+    }
+
+    #[Test]
+    public function supplied_content_is_not_automatically_sanitized(): void
+    {
+        $value = '<b>Literal source</b> &amp; "quotes"';
+        parent::assertStringContainsString(
+            '>' . "\n" . $value . '</textarea>',
+            (string) TextArea::create('Notes', 'notes', $value),
+            'Sanitization belongs to the caller, consistently with the other controls.'
+        );
     }
 
     #[Test]
@@ -71,7 +115,7 @@ final class TextAreaTest extends TestCase
     #[Test]
     public function native_properties_and_custom_identity_target_the_textarea(): void
     {
-        $html = (string) TextArea::create('Notes', 'notes', 'A & B')
+        $html = (string) TextArea::create('Notes', 'notes', 'A &amp; B')
             ->id('custom-notes')
             ->inputProps(
                 'id ignored',
@@ -106,7 +150,7 @@ final class TextAreaTest extends TestCase
             $xpath->query('//*[local-name()="div" and (@rows or @required or @readonly or @disabled)]')->length,
             'Native control attributes must not leak onto the wrapper.'
         );
-        parent::assertStringContainsString('A &amp; B', $html, 'Raw ampersands must be encoded once.');
+        parent::assertStringContainsString('A &amp; B', $html, 'Caller-escaped ampersands must remain unchanged.');
     }
 
     private static function xpath(string $html): XPath

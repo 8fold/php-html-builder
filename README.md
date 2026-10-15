@@ -91,17 +91,20 @@ HTML, alongside PHPUnit's named case and expected/actual diff.
 ### Textarea values
 
 `TextArea::create($label, $name, $value = '', $warningMessage = '')` accepts
-**raw UTF-8 text** for `$value`, not HTML or pre-encoded entities. It encodes
-the value once when rendering, so `</textarea>`, script-like text, ampersands,
-and quotes remain text rather than markup. Pass `A & B`, not `A &amp; B`, to
-display `A & B`. Literal entity syntax in the raw value stays literal: passing
-`&amp;` displays `&amp;`. Invalid UTF-8 sequences are replaced with the Unicode
-replacement character.
+**caller-sanitized content** for `$value`, consistent with the other controls.
+It renders the supplied value without escaping, decoding, or double encoding.
+The implementer must escape untrusted text before passing it to the component;
+an unescaped `</textarea>` can close the control and introduce markup.
+Escaping flags, character encoding, and invalid-character handling remain the
+implementer's choice.
 
 ```php
 use Eightfold\HtmlBuilder\Forms\TextArea;
 
-TextArea::create('Notes', 'notes', "\nFirst line\nSecond line\n", 'Add more detail.')
+$value = "\nFirst line & second line\n";
+$escapedValue = htmlspecialchars($value, ENT_QUOTES | ENT_SUBSTITUTE, 'UTF-8');
+
+TextArea::create('Notes', 'notes', $escapedValue, 'Add more detail.')
     ->inputProps('rows 4', 'required required')
     ->labelProps('class notes-label');
 ```
@@ -116,9 +119,10 @@ conflicting input properties; `id()` also updates the label and warning
 associations. String and `PropertyInterface` warnings follow the shared guidance
 rules above.
 
-This value encoding does not change the general builder contract: callers
-remain responsible for sanitizing labels, warning markup, additional content,
-and attribute values.
+The escaping call above is an application example, not a component default.
+To display literal entity syntax such as `&amp;`, escape that text too (for
+example, supply `&amp;amp;`). Callers remain responsible for sanitizing all
+values, labels, warning markup, additional content, and attribute values.
 
 ### Select attributes and selection
 
