@@ -15,17 +15,17 @@ class Password implements Stringable
     private string $id;
 
     /**
-     * @var string[]
+     * @var list<string>
      */
     private array $wrapperProperties = [];
 
     /**
-     * @var string[]
+     * @var list<string>
      */
     private array $labelProperties = [];
 
     /**
-     * @var string[]
+     * @var list<string>
      */
     private array $inputProperties = [];
 
@@ -49,7 +49,7 @@ class Password implements Stringable
         private readonly string|Stringable $name,
         private readonly string|PropertyInterface $warningMessage = ''
     ) {
-        $this->id = $name;
+        $this->id = (string) $name;
     }
 
     public function id(string $id): self
@@ -60,25 +60,25 @@ class Password implements Stringable
 
     public function wrapperProps(string ...$properties): self
     {
-        $this->wrapperProperties = $properties;
+        $this->wrapperProperties = array_values($properties);
         return $this;
     }
 
     public function labelProps(string ...$properties): self
     {
-        $this->labelProperties = $properties;
+        $this->labelProperties = array_values($properties);
         return $this;
     }
 
     public function inputProps(string ...$properties): self
     {
-        $this->inputProperties = $properties;
+        $this->inputProperties = array_values($properties);
         return $this;
     }
 
     public function content(string|Stringable ...$content): self
     {
-        $this->content = $content;
+        $this->content = array_values($content);
         return $this;
     }
 
