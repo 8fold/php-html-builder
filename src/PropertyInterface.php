@@ -3,7 +3,9 @@ declare(strict_types=1);
 
 namespace Eightfold\HtmlBuilder;
 
-interface PropertyInterface
+use Stringable;
+
+interface PropertyInterface extends Stringable
 {
     public function props(string ...$properties): static;
 
