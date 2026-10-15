@@ -32,6 +32,9 @@ class TextArea implements Stringable
      */
     private array $content = [];
 
+    /**
+     * @param string $value Caller-sanitized content, rendered without escaping.
+     */
     public static function create(
         string|Stringable $label,
         string|Stringable $name,

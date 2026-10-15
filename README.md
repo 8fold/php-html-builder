@@ -88,6 +88,42 @@ Overriding the control's `id()` also changes its generated warning ID.
 Assertion failures identify the relationship, control type and ID, and rendered
 HTML, alongside PHPUnit's named case and expected/actual diff.
 
+### Textarea values
+
+`TextArea::create($label, $name, $value = '', $warningMessage = '')` accepts
+**caller-sanitized content** for `$value`, consistent with the other controls.
+It renders the supplied value without escaping, decoding, or double encoding.
+The implementer must escape untrusted text before passing it to the component;
+an unescaped `</textarea>` can close the control and introduce markup.
+Escaping flags, character encoding, and invalid-character handling remain the
+implementer's choice.
+
+```php
+use Eightfold\HtmlBuilder\Forms\TextArea;
+
+$value = "\nFirst line & second line\n";
+$escapedValue = htmlspecialchars($value, ENT_QUOTES | ENT_SUBSTITUTE, 'UTF-8');
+
+TextArea::create('Notes', 'notes', $escapedValue, 'Add more detail.')
+    ->inputProps('rows 4', 'required required')
+    ->labelProps('class notes-label');
+```
+
+Values are element text, not a `value` attribute. Spaces, tabs, and leading,
+internal, and trailing LF newlines are preserved: rendering adds one extra
+leading newline that HTML consumes. Native HTML parsing normalizes CR and CRLF
+line endings to LF; browsers apply their native textarea submission rules.
+`inputProps()` targets the textarea and supports native `rows`, `required`,
+`readonly`, and `disabled` attributes. Generated `id` and `name` override
+conflicting input properties; `id()` also updates the label and warning
+associations. String and `PropertyInterface` warnings follow the shared guidance
+rules above.
+
+The escaping call above is an application example, not a component default.
+To display literal entity syntax such as `&amp;`, escape that text too (for
+example, supply `&amp;amp;`). Callers remain responsible for sanitizing all
+values, labels, warning markup, additional content, and attribute values.
+
 ### Select attributes and selection
 
 `Select::inputProps()` targets the `<select>` in dropdown modes and **every**
