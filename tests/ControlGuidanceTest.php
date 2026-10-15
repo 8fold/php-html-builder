@@ -106,14 +106,23 @@ final class ControlGuidanceTest extends TestCase
         $warnings = $xpath->query(
             '//*[local-name()="div" and @id="field-warning" and @class="custom-warning"]'
         );
-        parent::assertNotFalse($warnings);
-        parent::assertCount(1, $warnings);
+        $context = $mode . " control.\nRendered HTML:\n" . $html;
+        parent::assertNotFalse($warnings, 'Could not query object warnings for ' . $context);
+        parent::assertCount(
+            1,
+            $warnings,
+            'Expected exactly one warning div preserving class="custom-warning" for ' . $context
+        );
         $links = $xpath->query(
             './/*[local-name()="a" and @href="/guidance/"]',
             $warnings->item(0)
         );
-        parent::assertNotFalse($links);
-        parent::assertCount(1, $links);
+        parent::assertNotFalse($links, 'Could not query warning links for ' . $context);
+        parent::assertCount(
+            1,
+            $links,
+            'Expected the warning to preserve its link to /guidance/ for ' . $context
+        );
     }
 
     #[Test]
@@ -165,50 +174,93 @@ final class ControlGuidanceTest extends TestCase
         bool $hasWarning,
         string $id = 'field'
     ): void {
+        $context = $mode . " control.\nRendered HTML:\n" . $html;
         $xpath = self::xpath($html);
         $controls = $xpath->query(
             '//*[local-name()="input" or local-name()="select" or local-name()="textarea"]'
         );
-        parent::assertNotFalse($controls);
-        parent::assertCount(in_array($mode, ['radio', 'checkbox'], true) ? 2 : 1, $controls);
+        parent::assertNotFalse($controls, 'Could not query controls for ' . $context);
+        parent::assertCount(
+            in_array($mode, ['radio', 'checkbox'], true) ? 2 : 1,
+            $controls,
+            'Expected one control, or two option inputs for radio/checkbox groups, for ' . $context
+        );
 
         $controlIds = [];
-        foreach ($controls as $control) {
-            parent::assertInstanceOf(DomElement::class, $control);
-            parent::assertSame('preserved', $control->getAttribute('data-example'));
+        foreach ($controls as $index => $control) {
+            parent::assertInstanceOf(DomElement::class, $control, 'Expected a DOM element for ' . $context);
+            $controlContext = sprintf(
+                'Option/control %d (id="%s") in %s',
+                $index + 1,
+                $control->getAttribute('id'),
+                $context
+            );
+            parent::assertSame(
+                'preserved',
+                $control->getAttribute('data-example'),
+                'inputProps() must preserve unrelated attributes. ' . $controlContext
+            );
             if ($expectedIds === []) {
-                parent::assertFalse($control->hasAttribute('aria-describedby'));
+                parent::assertFalse(
+                    $control->hasAttribute('aria-describedby'),
+                    'Without help references or a warning, aria-describedby must be absent. ' . $controlContext
+                );
             } else {
                 parent::assertSame(
                     $expectedIds,
-                    preg_split('/\s+/', trim($control->getAttribute('aria-describedby')))
+                    preg_split('/\s+/', trim($control->getAttribute('aria-describedby'))),
+                    'aria-describedby must preserve help IDs and append the warning ID once, in order. '
+                        . $controlContext
                 );
             }
             if ($hasWarning) {
-                parent::assertSame('true', $control->getAttribute('aria-invalid'));
+                parent::assertSame(
+                    'true',
+                    $control->getAttribute('aria-invalid'),
+                    'A warning must set aria-invalid="true", overriding any supplied valid state. ' . $controlContext
+                );
             } else {
-                parent::assertFalse($control->hasAttribute('aria-invalid'));
+                parent::assertFalse(
+                    $control->hasAttribute('aria-invalid'),
+                    'Without a warning or explicit invalid state, aria-invalid must be absent. ' . $controlContext
+                );
             }
 
             $controlId = $control->getAttribute('id');
-            parent::assertNotSame('', $controlId);
+            parent::assertNotSame('', $controlId, 'Each control needs a nonempty ID. ' . $controlContext);
             $controlIds[] = $controlId;
             $labels = $xpath->query(
                 '//*[local-name()="label" and @for="' . $controlId . '"]'
             );
-            parent::assertNotFalse($labels);
-            parent::assertCount(1, $labels);
+            parent::assertNotFalse($labels, 'Could not query associated labels. ' . $controlContext);
+            parent::assertCount(
+                1,
+                $labels,
+                'Expected exactly one label with for="' . $controlId . '". ' . $controlContext
+            );
         }
-        parent::assertCount(count($controlIds), array_unique($controlIds));
+        parent::assertCount(
+            count($controlIds),
+            array_unique($controlIds),
+            'Controls must have unique IDs so labels target the correct input. ' . $context
+        );
 
         foreach ($expectedIds as $reference) {
             $targets = $xpath->query('//*[@id="' . $reference . '"]');
-            parent::assertNotFalse($targets);
-            parent::assertCount(1, $targets);
+            parent::assertNotFalse($targets, 'Could not query guidance target "' . $reference . '" for ' . $context);
+            parent::assertCount(
+                1,
+                $targets,
+                'aria-describedby reference "' . $reference . '" must resolve to exactly one element for ' . $context
+            );
         }
         $warnings = $xpath->query('//*[@id="' . $id . '-warning"]');
-        parent::assertNotFalse($warnings);
-        parent::assertCount($hasWarning ? 1 : 0, $warnings);
+        parent::assertNotFalse($warnings, 'Could not query warning target "' . $id . '-warning" for ' . $context);
+        parent::assertCount(
+            $hasWarning ? 1 : 0,
+            $warnings,
+            'Expected ' . ($hasWarning ? 'exactly one' : 'no') . ' warning with id="' . $id . '-warning" for ' . $context
+        );
     }
 
     private static function xpath(string $html): XPath

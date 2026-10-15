@@ -99,8 +99,15 @@ class EmailInput implements Stringable
 
     public function __toString(): string
     {
+        $inputProperties = $this->warningMessage === ''
+            ? $this->inputProperties
+            : ControlProperties::withWarning(
+                array_values($this->inputProperties),
+                $this->id . '-warning'
+            );
+
         $input = Element::input()->omitEndTag()->props(...[
-            ...$this->inputProperties,
+            ...$inputProperties,
             'type email',
             'id ' . $this->id,
             'name ' . $this->name,
@@ -112,10 +119,6 @@ class EmailInput implements Stringable
         $warning = '';
         if ($this->warningMessage !== '') {
             $warningId = $this->id . '-warning';
-
-            $input = $input->prop('aria-invalid true')->prop(
-                'aria-describedby ' . $warningId
-            );
 
             $warning = (string) self::warningMessage($warningId);
         }

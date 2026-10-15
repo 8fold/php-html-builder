@@ -99,10 +99,17 @@ class TextArea implements Stringable
 
     public function __toString(): string
     {
+        $inputProperties = $this->warningMessage === ''
+            ? $this->inputProperties
+            : ControlProperties::withWarning(
+                array_values($this->inputProperties),
+                $this->id . '-warning'
+            );
+
         $textarea = Element::textarea(
             "\n" . $this->value
         )->props(...[
-            ...$this->inputProperties,
+            ...$inputProperties,
             'id ' . $this->id,
             'name ' . $this->name
         ]);
@@ -110,10 +117,6 @@ class TextArea implements Stringable
         $warning = '';
         if ($this->warningMessage !== '') {
             $warningId = $this->id . '-warning';
-
-            $textarea = $textarea->prop('aria-invalid true')->prop(
-                'aria-describedby ' . $warningId
-            );
 
             $warning = (string) self::warningMessage($warningId);
         }

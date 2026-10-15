@@ -75,6 +75,19 @@ Output:
 <input required>
 ```
 
+## Form control guidance
+
+`TextInput`, `EmailInput`, `TextArea`, and all `Select` modes preserve help IDs
+supplied through `inputProps('aria-describedby help-id')` when adding a warning.
+With a warning, the control sets `aria-invalid="true"` and appends
+`<control-id>-warning` to `aria-describedby`, removing duplicate references while
+preserving their order. Use `content()` to supply the referenced help elements.
+Overriding the control's `id()` also changes its generated warning ID.
+
+`tests/ControlGuidanceTest.php` checks these relationships across control types.
+Assertion failures identify the relationship, control type and ID, and rendered
+HTML, alongside PHPUnit's named case and expected/actual diff.
+
 ## Performance
 
 The `/comparisons` folder can be used to run performance tests locally to compare the same output using:
