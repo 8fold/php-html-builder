@@ -14,7 +14,7 @@ class PasswordTest extends TestCase
     public function can_set_warning_message(): void // phpcs:ignore
     {
         $expected = <<<html
-        <label for="password">Password</label><input id="password" name="password" type="password" aria-describedby="password-warning" aria-invalid="true" autocomplete="new-password"><p id="password-warning">Invalid value</p>
+        <div><label for="password">Password</label><input id="password" name="password" type="password" aria-describedby="password-warning" aria-invalid="true" autocomplete="new-password"><p id="password-warning">Invalid value</p></div>
         html;
 
         $result = (string) Password::create(
@@ -30,7 +30,7 @@ class PasswordTest extends TestCase
     public function can_change_autocomplete(): void // phpcs:ignore
     {
         $expected = <<<html
-        <label for="password">Password</label><input id="password" name="password" type="password" autocomplete="new-password">
+        <div><label for="password">Password</label><input id="password" name="password" type="password" autocomplete="new-password"></div>
         html;
 
         $result = (string) Password::create(
@@ -41,7 +41,7 @@ class PasswordTest extends TestCase
         parent::assertSame($expected, $result);
 
         $expected = <<<html
-        <label for="password">Password</label><input id="password" name="password" type="password" autocomplete="on">
+        <div><label for="password">Password</label><input id="password" name="password" type="password" autocomplete="on"></div>
         html;
 
         $result = (string) Password::create(
@@ -52,7 +52,7 @@ class PasswordTest extends TestCase
         parent::assertSame($expected, $result);
 
         $expected = <<<html
-        <label for="password">Password</label><input id="password" name="password" type="password" autocomplete="off">
+        <div><label for="password">Password</label><input id="password" name="password" type="password" autocomplete="off"></div>
         html;
 
         $result = (string) Password::create(
@@ -67,7 +67,7 @@ class PasswordTest extends TestCase
     public function is_expected_base(): void // phpcs:ignore
     {
         $expected = <<<html
-        <label for="password">Password</label><input id="password" name="password" type="password" autocomplete="current-password">
+        <div><label for="password">Password</label><input id="password" name="password" type="password" autocomplete="current-password"></div>
         html;
 
         $result = (string) Password::create(

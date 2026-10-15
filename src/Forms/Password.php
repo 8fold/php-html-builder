@@ -12,11 +12,12 @@ use Eightfold\HtmlBuilder\Forms\PasswordAutocomplete;
 
 class Password implements Stringable
 {
-    // phpcs:disable
-    private string $warningId {
-        get => $this->name . '-warning';
-    }
-    // phpcs:enable
+    private string $id;
+
+    /**
+     * @var string[]
+     */
+    private array $wrapperProperties = [];
 
     /**
      * @var string[]
@@ -28,6 +29,10 @@ class Password implements Stringable
      */
     private array $inputProperties = [];
 
+    /**
+     * @var array<string|Stringable>
+     */
+    private array $content = [];
 
     private PasswordAutocomplete $autocomplete = PasswordAutocomplete::CurrentPassword;
 
@@ -44,6 +49,19 @@ class Password implements Stringable
         private readonly string|Stringable $name,
         private readonly string|PropertyInterface $warningMessage = ''
     ) {
+        $this->id = $name;
+    }
+
+    public function id(string $id): self
+    {
+        $this->id = $id;
+        return $this;
+    }
+
+    public function wrapperProps(string ...$properties): self
+    {
+        $this->wrapperProperties = $properties;
+        return $this;
     }
 
     public function labelProps(string ...$properties): self
@@ -56,6 +74,42 @@ class Password implements Stringable
     {
         $this->inputProperties = $properties;
         return $this;
+    }
+
+    public function content(string|Stringable ...$content): self
+    {
+        $this->content = $content;
+        return $this;
+    }
+
+    private function warningMessage(): string
+    {
+        if ($this->warningMessage === '') {
+            return '';
+        }
+
+        if (is_string($this->warningMessage)) {
+            return (string) Element::p($this->warningMessage)->props(
+                'id ' . $this->id . '-warning'
+            );
+        }
+
+        $warning = clone $this->warningMessage;
+
+        return (string) $warning->prop('id ' . $this->id . '-warning');
+    }
+
+    /**
+     * @return list<string>
+     */
+    private function inputProperties(bool $noWarning): array
+    {
+        return ($noWarning)
+            ? $this->inputProperties
+            : ControlProperties::withWarning(
+                $this->inputProperties,
+                $this->id . '-warning'
+            );
     }
 
     public function forNewPassword(): self
@@ -76,49 +130,26 @@ class Password implements Stringable
         return $this;
     }
 
-    private function warningMessage(): string|PropertyInterface
-    {
-        if ($this->warningMessage === '') {
-            return '';
-        }
-
-        if (is_string($this->warningMessage)) {
-            return Element::p($this->warningMessage)->props(
-                'id ' . $this->warningId
-            );
-        }
-
-        return $this->warningMessage->prop('id ' . $this->warningId);
-    }
-
     public function __toString(): string
     {
-        $elements = [];
-        $elements[] = Element::label($this->label)->props(
-            'for ' . $this->name,
-            ...$this->labelProperties
-        );
+        $warning         = self::warningMessage();
+        $inputProperties = self::inputProperties($warning === '');
 
-        $input = Element::input()->omitEndTag()->props(
+        $input = Element::input()->omitEndTag()->props(...[
+            ...$inputProperties,
             'type password',
-            'id ' . $this->name,
+            'id ' . $this->id,
             'name ' . $this->name,
             'autocomplete ' . $this->autocomplete->value,
-            ...$this->inputProperties
-        );
+        ]);
 
-        $warningMessage = self::warningMessage();
-        $hasWarningMessage = ($warningMessage !== '');
-        if ($hasWarningMessage) {
-            $input = $input->prop('aria-invalid true');
-            $input = $input->prop('aria-describedby ' . $this->warningId);
-        }
-        $elements[] = $input;
-
-        if ($hasWarningMessage) {
-            $elements[] = $warningMessage;
-        }
-
-        return implode('', array_map('strval', $elements));
+        return (string) Element::div(
+            Element::label($this->label)->props(...[
+                ...$this->labelProperties,
+                'for ' . $this->id
+            ]),
+            $input,
+            ...[...$this->content, $warning]
+        )->props(...$this->wrapperProperties);
     }
 }

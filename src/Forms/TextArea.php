@@ -80,31 +80,40 @@ class TextArea implements Stringable
         return $this;
     }
 
-    private function warningMessage(string $warningId): string|PropertyInterface
+    private function warningMessage(): string
     {
         if ($this->warningMessage === '') {
             return '';
         }
 
         if (is_string($this->warningMessage)) {
-            return Element::p($this->warningMessage)->props(
-                'id ' . $warningId
+            return (string) Element::p($this->warningMessage)->props(
+                'id ' . $this->id . '-warning'
             );
         }
 
         $warning = clone $this->warningMessage;
 
-        return $warning->prop('id ' . $warningId);
+        return (string) $warning->prop('id ' . $this->id . '-warning');
+    }
+
+    /**
+     * @return list<string>
+     */
+    private function inputProperties(bool $noWarning): array
+    {
+        return ($noWarning)
+            ? $this->inputProperties
+            : ControlProperties::withWarning(
+                $this->inputProperties,
+                $this->id . '-warning'
+            );
     }
 
     public function __toString(): string
     {
-        $inputProperties = $this->warningMessage === ''
-            ? $this->inputProperties
-            : ControlProperties::withWarning(
-                array_values($this->inputProperties),
-                $this->id . '-warning'
-            );
+        $warning         = self::warningMessage();
+        $inputProperties = self::inputProperties($warning === '');
 
         $textarea = Element::textarea(
             "\n" . $this->value
@@ -113,13 +122,6 @@ class TextArea implements Stringable
             'id ' . $this->id,
             'name ' . $this->name
         ]);
-
-        $warning = '';
-        if ($this->warningMessage !== '') {
-            $warningId = $this->id . '-warning';
-
-            $warning = (string) self::warningMessage($warningId);
-        }
 
         return (string) Element::div(
             Element::label($this->label)->props(...[
