@@ -88,6 +88,57 @@ Overriding the control's `id()` also changes its generated warning ID.
 Assertion failures identify the relationship, control type and ID, and rendered
 HTML, alongside PHPUnit's named case and expected/actual diff.
 
+### Select attributes and selection
+
+`Select::inputProps()` targets the `<select>` in dropdown modes and **every**
+member `<input>` in radio/checkbox modes. Use native attributes appropriate to
+those elements: for example, `required`, `disabled`, and help references on
+either, and `size` on a dropdown. Selects, radios, and checkboxes do not support
+`readonly`; the component does not emulate it.
+
+```php
+use Eightfold\HtmlBuilder\Element;
+use Eightfold\HtmlBuilder\Forms\Select;
+
+Select::create('Category', 'category', ['a' => 'A', 'b' => 'B'], 'b')
+    ->inputProps('required required', 'disabled disabled');
+
+Select::create('Categories', 'categories[]', ['a' => 'A', 'b' => 'B'], ['a', 'b'])
+    ->multiple()
+    ->inputProps('size 4', 'aria-describedby categories-help')
+    ->content(Element::p('Choose one or more.')->props('id categories-help'));
+```
+
+The default mode is a single dropdown. `dropdown()` and `radio()` consider only
+the first supplied selection; `multiple()` and `checkbox()` select every matching
+option. Unmatched values select nothing in the generated markup (a native
+single dropdown may still display its first option by default). Option matching
+uses strings, including for numeric option keys.
+
+Dropdowns (including multiple dropdowns) and radio groups preserve the supplied
+field name exactly. For PHP array submissions, supply a name such as
+`categories[]` yourself. Checkbox groups retain the existing convention of
+appending `[]` unless the name already ends with it.
+
+`wrapperProps()` targets the dropdown's `<div>` or the group's `<fieldset>`.
+For native group-wide disabling, use
+`->checkbox()->wrapperProps('disabled disabled')` (or `radio()`); the browser
+disables descendants through fieldset semantics, without rewriting the inputs.
+Disabling a dropdown instead requires `inputProps('disabled disabled')`.
+`labelProps()` targets the dropdown's label or the group's legend.
+
+`inputProps('required required')` on a radio group uses native radio-group
+validation. On a checkbox group it makes **every checkbox required**, not
+"at least one checkbox"; the component provides no generic group-required rule.
+
+Generated control IDs and submitted names take precedence over `inputProps()`;
+group input types and option values are also generated. `checked` and `multiple`
+properties supplied through `inputProps()` are ignored: use the `selected`
+argument and explicit mode methods instead. A warning forces
+`aria-invalid="true"` and merges help references as described above. Without a
+warning, caller-supplied guidance and invalid-state properties remain unchanged.
+Other repeated properties use the element builder's normal last-value behavior.
+
 ## Performance
 
 The `/comparisons` folder can be used to run performance tests locally to compare the same output using:
