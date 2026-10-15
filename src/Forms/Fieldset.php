@@ -33,6 +33,10 @@ class Fieldset implements Stringable
      */
     private array $elements = [];
 
+    /**
+     * Renders one group warning; callers must wire aria-invalid and
+     * aria-describedby on member controls (see Select's radio/checkbox modes).
+     */
     public static function create(
         string|Stringable $label,
         string|Stringable $name,
@@ -54,6 +58,9 @@ class Fieldset implements Stringable
         return $this;
     }
 
+    /**
+     * Sets properties on this component's outermost element: the fieldset.
+     */
     public function wrapperProps(string ...$properties): self
     {
         $this->wrapperProperties = $properties;
