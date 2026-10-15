@@ -152,20 +152,10 @@ class Select implements Stringable
     /**
      * @return string|string[]
      */
+    #[Deprecated(message: 'Use selectedValues() instead.', since: '5.0')]
     private function selected(): string|array
     {
         return self::selectedValues();
-        // if ($this->type === SelectType::Checkbox) {
-        //     if (is_array($this->selected)) {
-        //         return $this->selected;
-        //     }
-        //     return [$this->selected];
-        // }
-
-        // if (is_array($this->selected) and count($this->selected) > 0) {
-        //     return $this->selected[0];
-        // }
-        // return $this->selected;
     }
 
     /**
@@ -186,14 +176,6 @@ class Select implements Stringable
     private function isSelected(string $value): bool
     {
         return in_array($value, self::selectedValues(), true);
-        // if (self::hasSelected() === false) {
-        //     return false;
-        // }
-
-        // if (is_array(self::selected())) {
-        //     return in_array($value, self::selected());
-        // }
-        // return $value === self::selected();
     }
 
     public function __toString(): string
@@ -207,10 +189,6 @@ class Select implements Stringable
             SelectType::Radio,
             SelectType::Checkbox => Self::selectGroup($warning, $selected)
         };
-        // if ($this->type === SelectType::Dropdown) {
-        //     return (string) self::selectDropdown();
-        // }
-        // return (string) self::selectOther();
     }
 
     private function selectDropdown(
@@ -250,35 +228,6 @@ class Select implements Stringable
             $select,
             ...[...$this->content, $warning]
         )->props(...$this->wrapperProperties);
-        // $elements = [];
-
-        // $warningMessage = self::warningMessage();
-        // $hasWarningMessage = ($warningMessage !== '');
-
-        // foreach ($this->options as $value => $content) {
-        //     $value  = (string) $value;
-        //     $option = Element::option($content)->props('value ' . $value);
-        //     if (self::isSelected($value)) {
-        //         $option = $option->prop('selected selected');
-        //     }
-        //     $elements[] = $option;
-        // }
-
-        // $input = Element::select(
-        //     ...$elements
-        // )->props('id ' . $this->name, 'name ' . $this->name);
-        // if ($hasWarningMessage) {
-        //     $input = $input->prop('aria-invalid true');
-        //     $input = $input->prop('aria-describedby ' . $this->warningId);
-        // }
-
-        // return Element::div(
-        //     Element::label(
-        //         $this->label
-        //     )->props('for ' . $this->name, ...$this->labelProperties),
-        //     $input,
-        //     $warningMessage
-        // )->props(...$this->wrapperProperties);
     }
 
     /**
@@ -327,50 +276,6 @@ class Select implements Stringable
             Element::legend($this->label)->props(...$this->labelProperties),
             ...[...$members, ...$this->content, $warning]
         )->props(...$this->wrapperProperties);
-    }
-
-    private function selectOther(): Fieldset
-    {
-        $elements = [];
-        $type = $this->type === SelectType::Checkbox ? 'checkbox' : 'radio';
-
-        $warningMessage = self::warningMessage();
-        $hasWarningMessage = ($warningMessage !== '');
-
-        foreach ($this->options as $value => $content) {
-            $value = (string) $value;
-            $id    = $this->name . '-' . $value;
-            $label = Element::label($content)->props('for ' . $id);
-            $input = Element::input()->omitEndTag()->props(
-                'id ' . $id,
-                ($this->type === SelectType::Checkbox)
-                    ? 'name ' . $this->name . '[]'
-                    : 'name ' . $this->name,
-                'type ' . $type,
-                'value ' . $value
-            );
-
-            if (self::isSelected($value)) {
-                $input = $input->prop('checked checked');
-            }
-
-            if ($hasWarningMessage) {
-                $input = $input->prop('aria-invalid true');
-                $input = $input->prop('aria-describedby ' . $this->warningId);
-            }
-            $elements[] = Element::div($input, $label);
-        }
-
-        return Fieldset::create(
-            $this->label,
-            $this->name,
-            $warningMessage
-        )->elements(...$elements)->labelProps(...$this->labelProperties);
-
-        // return Element::fieldset(
-        //     Element::legend($this->label)->props(...$this->labelProperties),
-        //     ...$elements
-        // );
     }
 
     /** @return list<string> */
