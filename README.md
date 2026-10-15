@@ -175,6 +175,19 @@ argument and explicit mode methods instead. A warning forces
 warning, caller-supplied guidance and invalid-state properties remain unchanged.
 Other repeated properties use the element builder's normal last-value behavior.
 
+### Fieldset warnings
+
+`Fieldset::create($label, $name, $warningMessage = '')` renders one group warning
+with the ID `<name>-warning`. String warnings are wrapped in a paragraph and
+retain caller-supplied markup. `PropertyInterface` warnings retain their element,
+content, and other properties; the generated ID is applied to a local clone,
+leaving the caller's warning object unchanged. Repeated rendering is stable, and
+the same warning object can be reused across components with independent IDs.
+
+Fieldset does not inspect or rewrite arbitrary children passed to `elements()`.
+Callers remain responsible for setting `aria-invalid` and `aria-describedby` on
+member controls, including references to the group warning when appropriate.
+
 ### Migrating from wrapperProps
 
 In 5.0, use `containerProps()` instead of `wrapperProps()` on all form

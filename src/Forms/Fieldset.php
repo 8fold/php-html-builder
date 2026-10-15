@@ -79,19 +79,21 @@ class Fieldset implements Stringable
         return $this;
     }
 
-    private function warningMessage(): string|PropertyInterface
+    private function warningMessage(): string
     {
         if ($this->warningMessage === '') {
             return '';
         }
 
         if (is_string($this->warningMessage)) {
-            return Element::p($this->warningMessage)->props(
+            return (string) Element::p($this->warningMessage)->props(
                 'id ' . $this->warningId
             );
         }
 
-        return $this->warningMessage->prop('id ' . $this->warningId);
+        $warning = clone $this->warningMessage;
+
+        return (string) $warning->prop('id ' . $this->warningId);
     }
 
     public function __toString(): string
