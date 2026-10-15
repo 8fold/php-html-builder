@@ -15,7 +15,7 @@ class EmailInput implements Stringable
     /**
      * @var list<string>
      */
-    private array $wrapperProperties = [];
+    private array $containerProperties = [];
 
     /**
      * @var list<string>
@@ -61,7 +61,7 @@ class EmailInput implements Stringable
      */
     public function containerProps(string ...$properties): self
     {
-        $this->wrapperProperties = array_values($properties);
+        $this->containerProperties = array_values($properties);
         return $this;
     }
 
@@ -141,6 +141,6 @@ class EmailInput implements Stringable
             ),
             $input,
             ...[...$this->content, $warning]
-        )->props(...$this->wrapperProperties);
+        )->props(...$this->containerProperties);
     }
 }

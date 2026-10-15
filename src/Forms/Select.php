@@ -19,7 +19,7 @@ class Select implements Stringable
     /**
      * @var list<string>
      */
-    private array $wrapperProperties = [];
+    private array $containerProperties = [];
 
     /**
      * @var list<string>
@@ -78,7 +78,7 @@ class Select implements Stringable
      */
     public function containerProps(string ...$properties): self
     {
-        $this->wrapperProperties = array_values($properties);
+        $this->containerProperties = array_values($properties);
         return $this;
     }
 
@@ -245,7 +245,7 @@ class Select implements Stringable
             ]),
             $select,
             ...[...$this->content, $warning]
-        )->props(...$this->wrapperProperties);
+        )->props(...$this->containerProperties);
     }
 
     /**
@@ -294,6 +294,6 @@ class Select implements Stringable
         return Element::fieldset(
             Element::legend($this->label)->props(...$this->labelProperties),
             ...[...$members, ...$this->content, $warning]
-        )->props(...$this->wrapperProperties);
+        )->props(...$this->containerProperties);
     }
 }
