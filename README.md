@@ -88,6 +88,38 @@ Overriding the control's `id()` also changes its generated warning ID.
 Assertion failures identify the relationship, control type and ID, and rendered
 HTML, alongside PHPUnit's named case and expected/actual diff.
 
+### Textarea values
+
+`TextArea::create($label, $name, $value = '', $warningMessage = '')` accepts
+**raw UTF-8 text** for `$value`, not HTML or pre-encoded entities. It encodes
+the value once when rendering, so `</textarea>`, script-like text, ampersands,
+and quotes remain text rather than markup. Pass `A & B`, not `A &amp; B`, to
+display `A & B`. Literal entity syntax in the raw value stays literal: passing
+`&amp;` displays `&amp;`. Invalid UTF-8 sequences are replaced with the Unicode
+replacement character.
+
+```php
+use Eightfold\HtmlBuilder\Forms\TextArea;
+
+TextArea::create('Notes', 'notes', "\nFirst line\nSecond line\n", 'Add more detail.')
+    ->inputProps('rows 4', 'required required')
+    ->labelProps('class notes-label');
+```
+
+Values are element text, not a `value` attribute. Spaces, tabs, and leading,
+internal, and trailing LF newlines are preserved: rendering adds one extra
+leading newline that HTML consumes. Native HTML parsing normalizes CR and CRLF
+line endings to LF; browsers apply their native textarea submission rules.
+`inputProps()` targets the textarea and supports native `rows`, `required`,
+`readonly`, and `disabled` attributes. Generated `id` and `name` override
+conflicting input properties; `id()` also updates the label and warning
+associations. String and `PropertyInterface` warnings follow the shared guidance
+rules above.
+
+This value encoding does not change the general builder contract: callers
+remain responsible for sanitizing labels, warning markup, additional content,
+and attribute values.
+
 ### Select attributes and selection
 
 `Select::inputProps()` targets the `<select>` in dropdown modes and **every**

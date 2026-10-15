@@ -32,6 +32,9 @@ class TextArea implements Stringable
      */
     private array $content = [];
 
+    /**
+     * @param string $value Raw UTF-8 text, not HTML or pre-encoded entities.
+     */
     public static function create(
         string|Stringable $label,
         string|Stringable $name,
@@ -116,7 +119,8 @@ class TextArea implements Stringable
         $inputProperties = self::inputProperties($warning === '');
 
         $textarea = Element::textarea(
-            "\n" . $this->value
+            // HTML consumes one leading newline after the opening tag.
+            "\n" . htmlspecialchars($this->value, ENT_QUOTES | ENT_SUBSTITUTE, 'UTF-8')
         )->props(...[
             ...$inputProperties,
             'id ' . $this->id,
