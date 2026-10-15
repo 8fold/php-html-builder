@@ -19,7 +19,7 @@ class Select implements Stringable
     /**
      * @var list<string>
      */
-    private array $wrapperProperties = [];
+    private array $containerProperties = [];
 
     /**
      * @var list<string>
@@ -76,10 +76,16 @@ class Select implements Stringable
      * Sets properties on the outermost div in dropdown/multiple modes,
      * or the fieldset in radio/checkbox modes, not on member controls.
      */
+    public function containerProps(string ...$properties): self
+    {
+        $this->containerProperties = array_values($properties);
+        return $this;
+    }
+
+    #[\Deprecated(message: 'Use containerProps() instead.', since: '5.0')]
     public function wrapperProps(string ...$properties): self
     {
-        $this->wrapperProperties = array_values($properties);
-        return $this;
+        return $this->containerProps(...$properties);
     }
 
     public function labelProps(string ...$properties): self
@@ -239,7 +245,7 @@ class Select implements Stringable
             ]),
             $select,
             ...[...$this->content, $warning]
-        )->props(...$this->wrapperProperties);
+        )->props(...$this->containerProperties);
     }
 
     /**
@@ -288,6 +294,6 @@ class Select implements Stringable
         return Element::fieldset(
             Element::legend($this->label)->props(...$this->labelProperties),
             ...[...$members, ...$this->content, $warning]
-        )->props(...$this->wrapperProperties);
+        )->props(...$this->containerProperties);
     }
 }

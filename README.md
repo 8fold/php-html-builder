@@ -156,9 +156,9 @@ field name exactly. For PHP array submissions, supply a name such as
 `categories[]` yourself. Checkbox groups retain the existing convention of
 appending `[]` unless the name already ends with it.
 
-`wrapperProps()` targets the dropdown's `<div>` or the group's `<fieldset>`.
+`containerProps()` targets the dropdown's `<div>` or the group's `<fieldset>`.
 For native group-wide disabling, use
-`->checkbox()->wrapperProps('disabled disabled')` (or `radio()`); the browser
+`->checkbox()->containerProps('disabled disabled')` (or `radio()`); the browser
 disables descendants through fieldset semantics, without rewriting the inputs.
 Disabling a dropdown instead requires `inputProps('disabled disabled')`.
 `labelProps()` targets the dropdown's label or the group's legend.
@@ -174,6 +174,14 @@ argument and explicit mode methods instead. A warning forces
 `aria-invalid="true"` and merges help references as described above. Without a
 warning, caller-supplied guidance and invalid-state properties remain unchanged.
 Other repeated properties use the element builder's normal last-value behavior.
+
+### Migrating from wrapperProps
+
+In 5.0, use `containerProps()` instead of `wrapperProps()` on all form
+components. This is a rename, not a change in property handling or target
+elements. `wrapperProps()` remains a forwarding alias throughout 5.x and is
+marked with PHP's native `#[Deprecated]` attribute (supported since PHP 8.4).
+Calling it emits `E_USER_DEPRECATED`; removal is deferred until at least 6.0.
 
 ## Performance
 

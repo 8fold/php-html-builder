@@ -15,7 +15,7 @@ class TextArea implements Stringable
     /**
      * @var list<string>
      */
-    private array $wrapperProperties = [];
+    private array $containerProperties = [];
 
     /**
      * @var list<string>
@@ -62,10 +62,16 @@ class TextArea implements Stringable
     /**
      * Sets properties on this component's outermost div, not the textarea.
      */
+    public function containerProps(string ...$properties): self
+    {
+        $this->containerProperties = array_values($properties);
+        return $this;
+    }
+
+    #[\Deprecated(message: 'Use containerProps() instead.', since: '5.0')]
     public function wrapperProps(string ...$properties): self
     {
-        $this->wrapperProperties = array_values($properties);
-        return $this;
+        return $this->containerProps(...$properties);
     }
 
     public function labelProps(string ...$properties): self
@@ -136,6 +142,6 @@ class TextArea implements Stringable
             ]),
             $textarea,
             ...[...$this->content, $warning]
-        )->props(...$this->wrapperProperties);
+        )->props(...$this->containerProperties);
     }
 }

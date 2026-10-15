@@ -124,7 +124,7 @@ final class TextAreaTest extends TestCase
                 'required required',
                 'readonly readonly',
                 'disabled disabled'
-            )->wrapperProps('class notes-wrapper')->labelProps('class notes-label');
+            )->containerProps('class notes-wrapper')->labelProps('class notes-label');
         $xpath = self::xpath($html);
         $textarea = $xpath->query('//*[local-name()="textarea"]')->item(0);
         parent::assertInstanceOf(DomElement::class, $textarea);

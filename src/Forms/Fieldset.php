@@ -21,7 +21,7 @@ class Fieldset implements Stringable
     /**
      * @var string[]
      */
-    private array $wrapperProperties = [];
+    private array $containerProperties = [];
 
     /**
      * @var string[]
@@ -61,10 +61,16 @@ class Fieldset implements Stringable
     /**
      * Sets properties on this component's outermost element: the fieldset.
      */
+    public function containerProps(string ...$properties): self
+    {
+        $this->containerProperties = $properties;
+        return $this;
+    }
+
+    #[\Deprecated(message: 'Use containerProps() instead.', since: '5.0')]
     public function wrapperProps(string ...$properties): self
     {
-        $this->wrapperProperties = $properties;
-        return $this;
+        return $this->containerProps(...$properties);
     }
 
     public function labelProps(string ...$properties): self
@@ -96,6 +102,6 @@ class Fieldset implements Stringable
         return (string) Element::fieldset(
             Element::legend($this->label)->props(...$this->labelProperties),
             ...$elements
-        )->props(...$this->wrapperProperties);
+        )->props(...$this->containerProperties);
     }
 }

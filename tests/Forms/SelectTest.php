@@ -102,7 +102,7 @@ class SelectTest extends TestCase
                 'aria-describedby category-help',
                 ...($isGroup ? [] : ['size 4'])
             )->content(Element::p('Help')->props('id category-help'))
-                ->wrapperProps('class wrapper')->labelProps('class caption')
+                ->containerProps('class wrapper')->labelProps('class caption')
         );
         $controls = $xpath->query('//*[local-name()="input" or local-name()="select"]');
         parent::assertNotFalse($controls);
@@ -193,7 +193,7 @@ class SelectTest extends TestCase
     {
         $control = Select::create('Categories', 'categories', ['a' => 'A', 'b' => 'B']);
         $xpath = self::controlXpath(
-            $control->$mode()->wrapperProps('disabled disabled')->inputProps('required required')
+            $control->$mode()->containerProps('disabled disabled')->inputProps('required required')
         );
         $isGroup = in_array($mode, ['radio', 'checkbox'], true);
         parent::assertSame($isGroup ? 1 : 0, $xpath->query('//*[local-name()="fieldset" and @disabled]')->length);
@@ -437,7 +437,7 @@ class SelectTest extends TestCase
             [
                 'value' => 'display'
             ]
-        )->wrapperProps('id some-id', 'class some-token');
+        )->containerProps('id some-id', 'class some-token');
 
         parent::assertSame($expected, $result);
     }
