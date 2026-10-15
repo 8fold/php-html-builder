@@ -47,7 +47,7 @@ class TextInput implements Stringable
         private readonly string $value,
         private readonly string|PropertyInterface $warningMessage = ''
     ) {
-        $this->id = $name;
+        $this->id = (string) $name;
     }
 
     public function id(string $id): self
@@ -99,13 +99,13 @@ class TextInput implements Stringable
 
     public function __toString(): string
     {
-        $input = Element::input()->omitEndTag()->props(
+        $input = Element::input()->omitEndTag()->props(...[
+            ...$this->inputProperties,
             'type text',
             'id ' . $this->id,
             'name ' . $this->name,
-            'value ' . $this->value,
-            ...$this->inputProperties
-        );
+            'value ' . $this->value
+        ]);
 
         $warning = '';
         if ($this->warningMessage !== '') {
@@ -119,10 +119,10 @@ class TextInput implements Stringable
         }
 
         return (string) Element::div(
-            Element::label($this->label)->props(
-                'for ' . $this->id,
-                ...$this->labelProperties
-            ),
+            Element::label($this->label)->props(...[
+                ...$this->labelProperties,
+                'for ' . $this->id
+            ]),
             $input,
             ...[...$this->content, $warning]
         )->props(...$this->wrapperProperties);

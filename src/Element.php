@@ -5,6 +5,8 @@ namespace Eightfold\HtmlBuilder;
 
 use Eightfold\HtmlBuilder\PropertyInterface;
 
+use Stringable;
+
 class Element implements PropertyInterface
 {
     /**

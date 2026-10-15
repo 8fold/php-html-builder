@@ -47,7 +47,7 @@ class EmailInput implements Stringable
         private readonly string $value,
         private readonly string|PropertyInterface $warningMessage = ''
     ) {
-        $this->id = $name;
+        $this->id = (string) $name;
     }
 
     public function id(string $id): self
@@ -99,15 +99,15 @@ class EmailInput implements Stringable
 
     public function __toString(): string
     {
-        $input = Element::input()->omitEndTag()->props(
+        $input = Element::input()->omitEndTag()->props(...[
+            ...$this->inputProperties,
             'type email',
             'id ' . $this->id,
             'name ' . $this->name,
             'value ' . $this->value,
             'autocapitalize off',
-            'autocorrect off',
-            ...$this->inputProperties
-        );
+            'autocorrect off'
+        ]);
 
         $warning = '';
         if ($this->warningMessage !== '') {
