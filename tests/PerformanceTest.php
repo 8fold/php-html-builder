@@ -14,6 +14,9 @@ use Eightfold\HtmlBuilder\Comment;
 
 class PerformanceTest extends TestCase
 {
+    /**
+     * @return list<Element|Comment> [description]
+     */
     private function head(): array
     {
         $head = [];
@@ -26,6 +29,9 @@ class PerformanceTest extends TestCase
         return $head;
     }
 
+    /**
+     * @return list<Element|Comment> [description]
+     */
     private function body(): array
     {
         $body = [];
@@ -51,12 +57,12 @@ class PerformanceTest extends TestCase
 
         $expected = file_get_contents(__DIR__ . '/performance.html');
 
-        $this->assertSame($expected, $result);
+        parent::assertSame($expected, $result);
 
         $elapsed = $end - $start;
         $ms      = $elapsed/1e+6;
 
-        $this->assertLessThan(1, $ms);
+        parent::assertLessThan(1, $ms);
     }
 
     #[Test]
@@ -72,11 +78,11 @@ class PerformanceTest extends TestCase
 
         $expected = file_get_contents(__DIR__ . '/performance.html');
 
-        $this->assertSame($expected, $result);
+        parent::assertSame($expected, $result);
 
         $used = $end - $start;
         $kb   = round($used/1024.2);
 
-        $this->assertLessThan(66, $kb);
+        parent::assertLessThan(66, $kb);
     }
 }
