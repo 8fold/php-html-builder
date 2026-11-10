@@ -62,7 +62,7 @@ if ($target === null) {
     exit(0);
 }
 
-if (file_put_contents($target, $docblock) === false) {
+if (file_put_contents(__DIR__ . '/../docblocks/' . $target, $docblock) === false) {
     fwrite(STDERR, "Could not write: {$target}\n");
     exit(1);
 }
