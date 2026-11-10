@@ -7,6 +7,8 @@ use PHPUnit\Framework\Attributes\Test;
 use PHPUnit\Framework\TestCase;
 
 use Eightfold\HtmlBuilder\Element;
+use Eightfold\HtmlBuilder\EmptyElement;
+
 
 class ElementBaselineTest extends TestCase
 {
@@ -19,7 +21,7 @@ class ElementBaselineTest extends TestCase
 
         $result = (string) Element::a('link')->props('');
 
-        $this->assertSame($expected, $result);
+        parent::assertSame($expected, $result);
     }
 
     #[Test]
@@ -37,18 +39,22 @@ class ElementBaselineTest extends TestCase
                 'data-testing test'
             );
 
-        $this->assertSame($expected, $result);
+        parent::assertSame($expected, $result);
     }
 
     #[Test]
     public function has_correct_selfclosing_string(): void // phpcs:ignore
     {
         $expected = <<<html
-            <tag>
+            <img>
             html;
 
-        $result = (string) Element::tag()->omitEndTag();
+        $result = (string) Element::img()->omitEndTag();
 
-        $this->assertSame($expected, $result);
+        parent::assertSame($expected, $result);
+
+        $result = (string) EmptyElement::img();
+
+        parent::assertSame($expected, $result);
     }
 }
