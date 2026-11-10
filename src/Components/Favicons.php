@@ -184,6 +184,6 @@ class Favicons implements Stringable
                 'content ' . $this->appName()
             );
         }
-        return (string) implode('', $elements);
+        return implode('', $elements);
     }
 }
