@@ -6,7 +6,7 @@ namespace Eightfold\HtmlBuilder\Tests;
 use PHPUnit\Framework\Attributes\Test;
 use PHPUnit\Framework\TestCase;
 
-use Eightfold\HtmlBuilder\Element;
+use Eightfold\HtmlBuilder\EmptyElement;
 
 class EmptyElementBaselineTest extends TestCase
 {
@@ -17,7 +17,7 @@ class EmptyElementBaselineTest extends TestCase
             <img>
             html;
 
-        $result = (string) Element::img();
+        $result = (string) EmptyElement::h1();
 
         $this->assertSame($expected, $result);
     }
