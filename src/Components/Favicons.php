@@ -155,7 +155,7 @@ class Favicons implements Stringable
         ];
 
         if ($this->hasPath()) {
-            $elements[] = Element::link()->omitendTag()->props(
+            $elements[] = Element::link()->omitEndTag()->props(
                 'rel shortcut icon',
                 'href ' . $this->path() . '/favicon.ico'
             );
