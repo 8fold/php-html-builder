@@ -26,6 +26,6 @@ class ElementExtensionBaselineTest extends TestCase
                 'is link'
             );
 
-        $this->assertSame($exptected, $result);
+        parent::assertSame($exptected, $result);
     }
 }
