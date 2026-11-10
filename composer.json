@@ -47,6 +47,7 @@
     ],
     "check:style": "./vendor/bin/phpcs --standard=phpcs.xml -p ./src",
     "check:analysis": "./vendor/bin/phpstan analyze",
-    "check:test": "./vendor/bin/phpunit --display-all-issues"
+    "check:test": "./vendor/bin/phpunit --display-all-issues",
+    "build:docblocks": "php ./bin/generate-element-docblock.php elements.txt "
   }
 }
