@@ -9,6 +9,7 @@ use PHPUnit\Framework\TestCase;
 use Eightfold\HtmlBuilder\Document;
 
 use Eightfold\HtmlBuilder\Element;
+use Eightfold\HtmlBuilder\EmptyElement;
 
 use Eightfold\HtmlBuilder\Components\PageTitle;
 
@@ -27,7 +28,7 @@ class DocumentBaselineTest extends TestCase
             'en-us'
         )->htmlProps('class dark-theme', 'lang fr');
 
-        $this->assertSame(
+        parent::assertSame(
             $expected,
             $result
         );
@@ -38,14 +39,15 @@ class DocumentBaselineTest extends TestCase
     {
         $expected = <<<html
         <!doctype html>
-        <html class="dark-theme" lang="en"><head><title>Second | First</title><meta charset="utf-8"></head><body></body></html>
+        <html class="dark-theme" lang="en">
+        <head><title>Second | First</title><meta charset="utf-8"></head><body></body></html>
         html;
 
         $result = (string) Document::create(
             PageTitle::create(['Second', 'First'])
         )->htmlProps('class dark-theme');
 
-        $this->assertSame(
+        parent::assertSame(
             $expected,
             $result
         );
@@ -56,14 +58,15 @@ class DocumentBaselineTest extends TestCase
     {
         $expected = <<<html
         <!doctype html>
-        <html lang="en"><head><title>Second | First</title><meta charset="utf-8"></head><body id="hello" class="world" style="color: #000;"></body></html>
+        <html lang="en">
+        <head><title>Second | First</title><meta charset="utf-8"></head><body id="hello" class="world" style="color: #000;"></body></html>
         html;
 
         $result = (string) Document::create(
             PageTitle::create(['Second', 'First'])
         )->bodyProps('style color: #000;', 'class world', 'id hello');
 
-        $this->assertSame(
+        parent::assertSame(
             $expected,
             $result
         );
@@ -81,7 +84,7 @@ class DocumentBaselineTest extends TestCase
             PageTitle::create(['Second', 'First'])
         );
 
-        $this->assertSame(
+        parent::assertSame(
             $expected,
             $result
         );
@@ -96,14 +99,13 @@ class DocumentBaselineTest extends TestCase
             html;
 
         $result = (string) Document::create('title', 'fr', 'ascii')->head(
-                Element::link()
-                    ->omitEndTag()->props('rel stylesheet', 'href style.css'),
+                EmptyElement::link()->props('rel stylesheet', 'href style.css'),
                 Element::script()->props('src script.js')
             )->body(
                 Element::p('paragraph content')
             );
 
-        $this->assertSame($expected, $result);
+        parent::assertSame($expected, $result);
     }
 
     #[Test]
@@ -115,14 +117,13 @@ class DocumentBaselineTest extends TestCase
             html;
 
         $result = (string) Document::create('title', 'fr', 'ascii')->head(
-                Element::link()
-                    ->omitEndTag()->props('rel stylesheet', 'href style.css'),
+                EmptyElement::link()->props('rel stylesheet', 'href style.css'),
                 Element::script()->props('src script.js')
             )->body(
                 Element::p('paragraph content')
             );
 
-        $this->assertSame($expected, $result);
+        parent::assertSame($expected, $result);
     }
 
     #[Test]
@@ -130,16 +131,16 @@ class DocumentBaselineTest extends TestCase
     {
         $expected = <<<html
             <!doctype html>
-            <html lang="fr"><head><title>title</title><meta charset="ascii"><link rel="stylesheet" href="style.css"><script src="script.js"></script></head><body></body></html>
+            <html lang="fr">
+            <head><title>title</title><meta charset="ascii"><link rel="stylesheet" href="style.css"><script src="script.js"></script></head><body></body></html>
             html;
 
         $result = (string) Document::create('title', 'fr', 'ascii')->head(
-                Element::link()
-                    ->omitEndTag()->props('rel stylesheet', 'href style.css'),
+                EmptyElement::link()->props('rel stylesheet', 'href style.css'),
                 Element::script()->props('src script.js')
             );
 
-        $this->assertSame($expected, $result);
+        parent::assertSame($expected, $result);
     }
 
     #[Test]
@@ -152,7 +153,7 @@ class DocumentBaselineTest extends TestCase
 
         $result = (string) Document::create('title', 'fr', 'ascii');
 
-        $this->assertSame($expected, $result);
+        parent::assertSame($expected, $result);
     }
 
     #[Test]
@@ -165,6 +166,6 @@ class DocumentBaselineTest extends TestCase
 
         $result = (string) Document::create('title');
 
-        $this->assertSame($expected, $result);
+        parent::assertSame($expected, $result);
     }
 }

@@ -143,7 +143,7 @@ final class ControlGuidanceTest extends TestCase
         array $properties,
         string $id = 'field'
     ): string {
-        $control = match ($mode) {
+        $control = match ($mode) {  // @phpstan-ignore match.unhandled
             'text' => TextInput::create('Field', 'field', '', $warning),
             'email' => EmailInput::create('Field', 'field', '', $warning),
             'password' => Password::create('Field', 'field', $warning),
@@ -210,7 +210,7 @@ final class ControlGuidanceTest extends TestCase
             } else {
                 parent::assertSame(
                     $expectedIds,
-                    preg_split('/\s+/', trim($control->getAttribute('aria-describedby'))),
+                    preg_split('/\s+/', trim($control->getAttribute('aria-describedby'))), // @phpstan-ignore argument.type
                     'aria-describedby must preserve help IDs and append the warning ID once, in order. '
                         . $controlContext
                 );

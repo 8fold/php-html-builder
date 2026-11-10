@@ -49,7 +49,7 @@ final class ControlContractTest extends TestCase
         string $warning,
         array $properties
     ): void {
-        $control = match ($mode) {
+        $control = match ($mode) { // @phpstan-ignore match.unhandled
             'text' => TextInput::create('Field', 'field', $value, $warning),
             'email' => EmailInput::create('Field', 'field', $value, $warning)
         };
@@ -94,7 +94,7 @@ final class ControlContractTest extends TestCase
     #[DataProvider('labelCases')]
     public function generated_label_association_overrides_caller_properties(string $mode, ?string $id): void
     {
-        $control = match ($mode) {
+        $control = match ($mode) { // @phpstan-ignore match.unhandled
             'text' => TextInput::create('Field', 'field'),
             'email' => EmailInput::create('Field', 'field'),
             'password' => Password::create('Field', 'field'),
