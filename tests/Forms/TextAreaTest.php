@@ -84,9 +84,12 @@ final class TextAreaTest extends TestCase
             $html,
             'TextArea must not impose its own encoding options on caller-escaped values.'
         );
+
+        $node = self::xpath($html)->query('//*[local-name()="textarea"]')->item(0);
+        parent::assertNotNull($node);
         parent::assertSame(
             $value,
-            self::xpath($html)->query('//*[local-name()="textarea"]')->item(0)->textContent
+            $node->textContent
         );
     }
 
@@ -104,10 +107,13 @@ final class TextAreaTest extends TestCase
     #[Test]
     public function carriage_returns_follow_native_html_newline_normalization(): void
     {
-        $xpath = self::xpath((string) TextArea::create('Notes', 'notes', "\r\nFirst\rSecond\r\n"));
+        $textarea = (string) TextArea::create('Notes', 'notes', "\r\nFirst\rSecond\r\n");
+        $node     = self::xpath($textarea)->query('//*[local-name()="textarea"]')->item(0);
+
+        parent::assertNotNull($node);
         parent::assertSame(
             "\nFirst\nSecond\n",
-            $xpath->query('//*[local-name()="textarea"]')->item(0)->textContent,
+            $node->textContent,
             'HTML parsing normalizes CR and CRLF to LF without losing leading or trailing line breaks.'
         );
     }
