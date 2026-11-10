@@ -222,7 +222,7 @@ class Element implements PropertyInterface
 
     /**
      * @param  array<string|Stringable>  $content
-     * @param  string[]  $properties
+     * @param  list<string>  $properties
      */
     final private function __construct(
         private string $name,
@@ -234,7 +234,7 @@ class Element implements PropertyInterface
 
     public function props(string ...$properties): static
     {
-        $this->properties = $properties;
+        $this->properties = array_values($properties);
         return $this;
     }
 

@@ -12,6 +12,7 @@ use Dom\Element as DomElement;
 use Dom\HTMLDocument;
 use Dom\XPath;
 use Eightfold\HtmlBuilder\Element;
+use Eightfold\HtmlBuilder\EmptyElement;
 use Eightfold\HtmlBuilder\Forms\EmailInput;
 use Eightfold\HtmlBuilder\Forms\Password;
 use Eightfold\HtmlBuilder\Forms\Select;
@@ -75,7 +76,7 @@ final class ControlContractTest extends TestCase
     {
         parent::assertSame(
             '<input value="existing">',
-            (string) Element::input()->omitEndTag()->props('value existing', 'value ', 'value')
+            (string) EmptyElement::input('value existing', 'value ', 'value')
         );
     }
 
