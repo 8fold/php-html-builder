@@ -16,8 +16,8 @@ class ElementBaselineTest extends TestCase
     public function can_have_empty_props(): void // phpcs:ignore
     {
         $expected = <<<html
-            <a>link</a>
-            html;
+        <a>link</a>
+        html;
 
         $result = (string) Element::a('link')->props('');
 
@@ -27,9 +27,11 @@ class ElementBaselineTest extends TestCase
     #[Test]
     public function has_ordered_properties(): void // phpcs:ignore
     {
+        // phpcs:disable
         $expected = <<<html
-            <a id="unique" class="some-style" href="https://8fold.pro" data-testing="test" required>link</a>
-            html;
+        <a id="unique" class="some-style" href="https://8fold.pro" data-testing="test" required>link</a>
+        html;
+        // phpcs:enable
 
         $result = (string) Element::a('link')->props(
             'required required',

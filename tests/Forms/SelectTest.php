@@ -99,6 +99,7 @@ class SelectTest extends TestCase
     #[Test]
     public function ticket_36(): void // phpcs: ignore
     {
+        // phpcs:disable
         $html = <<<html
         <fieldset>
             <legend>Toppings</legend>
@@ -112,6 +113,7 @@ class SelectTest extends TestCase
             </div>
             <p id="toppings-warning">Choose at least one topping.</p></fieldset>
         html;
+        // phpcs:enable
 
         $expected = self::collapsedHtml($html);
 
@@ -129,6 +131,7 @@ class SelectTest extends TestCase
     #[Test]
     public function can_be_multiple(): void // phpcs: ignore
     {
+        // phpcs:disable
         $html = <<<html
         <div>
             <label for="select">Select</label>
@@ -141,6 +144,7 @@ class SelectTest extends TestCase
             </ul>
         </div>
         html;
+        // phpcs:enable
 
         $expected = self::collapsedHtml($html);
 

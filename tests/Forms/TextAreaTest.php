@@ -26,8 +26,10 @@ final class TextAreaTest extends TestCase
         yield 'whitespace only' => [" \t\n "];
         yield 'ampersand and quotes' => ['A & B say "hello" and \'goodbye\''];
         yield 'literal entity syntax' => ['&amp; &lt; &#10; &#x3c;'];
-        yield 'closing tag and script text' => ['</textarea><script>window.example = true;</script><textarea>'];
-        yield 'mixed case closing tag' => ['</TeXtArEa><p>Outside</p>'];
+        yield 'closing tag and script text' =>
+            ['</textarea><script>window.example = true;</script><textarea>'];
+        yield 'mixed case closing tag' =>
+            ['</TeXtArEa><p>Outside</p>'];
         yield 'UTF-8 text' => ["Caf\u{00e9} \u{1f642}"];
     }
 
@@ -41,15 +43,23 @@ final class TextAreaTest extends TestCase
         $xpath = self::xpath($html);
         $textareas = $xpath->query('//*[local-name()="textarea"]');
         parent::assertNotFalse($textareas);
-        parent::assertCount(1, $textareas, "Value must not create extra textareas.\nRendered HTML:\n" . $html);
+        parent::assertCount(
+            1,
+            $textareas,
+            "Value must not create extra textareas.\nRendered HTML:\n" . $html
+        );
         $textarea = $textareas->item(0);
         parent::assertInstanceOf(DomElement::class, $textarea);
         parent::assertSame(
             $value,
             $textarea->textContent,
-            "Caller-escaped text must round-trip without trimming or double encoding.\nRendered HTML:\n" . $html
+            "Caller-escaped text must round-trip without trimming or double "
+            . "encoding.\nRendered HTML:\n" . $html
         );
-        parent::assertFalse($textarea->hasAttribute('value'), 'Textarea values belong in text content.');
+        parent::assertFalse(
+            $textarea->hasAttribute('value'),
+            'Textarea values belong in text content.'
+        );
         parent::assertSame(
             0,
             $xpath->query('//*[local-name()="script" or local-name()="p"]')->length,
@@ -60,7 +70,11 @@ final class TextAreaTest extends TestCase
             $html,
             'The supplied value must be rendered verbatim after the parser-consumed newline.'
         );
-        parent::assertSame($html, (string) $control, 'Repeated rendering must not transform the supplied value.');
+        parent::assertSame(
+            $html,
+            (string) $control,
+            'Repeated rendering must not transform the supplied value.'
+        );
     }
 
     /** @return iterable<string, array{int}> */
@@ -114,7 +128,8 @@ final class TextAreaTest extends TestCase
         parent::assertSame(
             "\nFirst\nSecond\n",
             $node->textContent,
-            'HTML parsing normalizes CR and CRLF to LF without losing leading or trailing line breaks.'
+            'HTML parsing normalizes CR and CRLF to LF without losing '
+            . 'leading or trailing line breaks.'
         );
     }
 
@@ -134,17 +149,38 @@ final class TextAreaTest extends TestCase
         $xpath = self::xpath($html);
         $textarea = $xpath->query('//*[local-name()="textarea"]')->item(0);
         parent::assertInstanceOf(DomElement::class, $textarea);
-        parent::assertSame('custom-notes', $textarea->getAttribute('id'), 'The explicit ID must win.');
-        parent::assertSame('notes', $textarea->getAttribute('name'), 'The declared submitted name must win.');
+        parent::assertSame(
+            'custom-notes',
+            $textarea->getAttribute('id'),
+            'The explicit ID must win.'
+        );
+        parent::assertSame(
+            'notes',
+            $textarea->getAttribute('name'),
+            'The declared submitted name must win.'
+        );
         parent::assertSame('4', $textarea->getAttribute('rows'));
-        foreach (['required', 'readonly', 'disabled'] as $attribute) {
-            parent::assertTrue($textarea->hasAttribute($attribute), $attribute . ' must reach the textarea.');
+
+        $attributes = ['required', 'readonly', 'disabled'];
+        foreach ($attributes as $attribute) {
+            parent::assertTrue(
+                $textarea->hasAttribute($attribute),
+                $attribute . ' must reach the textarea.'
+            );
         }
-        parent::assertFalse($textarea->hasAttribute('aria-invalid'), 'No warning must mean no generated invalid state.');
-        parent::assertFalse($textarea->hasAttribute('aria-describedby'), 'No guidance must mean no generated references.');
+        parent::assertFalse(
+            $textarea->hasAttribute('aria-invalid'),
+            'No warning must mean no generated invalid state.'
+        );
+        parent::assertFalse(
+            $textarea->hasAttribute('aria-describedby'),
+            'No guidance must mean no generated references.'
+        );
         parent::assertSame(
             1,
-            $xpath->query('//*[local-name()="label" and @for="custom-notes" and @class="notes-label"]')->length,
+            $xpath->query(
+                '//*[local-name()="label" and @for="custom-notes" and @class="notes-label"]'
+            )->length,
             'The styled label must reference the custom control ID.'
         );
         parent::assertSame(
@@ -153,10 +189,16 @@ final class TextAreaTest extends TestCase
         );
         parent::assertSame(
             0,
-            $xpath->query('//*[local-name()="div" and (@rows or @required or @readonly or @disabled)]')->length,
+            $xpath->query(
+                '//*[local-name()="div" and (@rows or @required or @readonly or @disabled)]'
+            )->length,
             'Native control attributes must not leak onto the wrapper.'
         );
-        parent::assertStringContainsString('A &amp; B', $html, 'Caller-escaped ampersands must remain unchanged.');
+        parent::assertStringContainsString(
+            'A &amp; B',
+            $html,
+            'Caller-escaped ampersands must remain unchanged.'
+        );
     }
 
     private static function xpath(string $html): XPath

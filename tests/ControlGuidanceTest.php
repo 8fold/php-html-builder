@@ -24,7 +24,17 @@ final class ControlGuidanceTest extends TestCase
     /** @return iterable<string, array{string}> */
     public static function controls(): iterable
     {
-        foreach (['text', 'email', 'password', 'textarea', 'dropdown', 'multiple', 'radio', 'checkbox'] as $mode) {
+        $controls = [
+            'text',
+            'email',
+            'password',
+            'textarea',
+            'dropdown',
+            'multiple',
+            'radio',
+            'checkbox'
+        ];
+        foreach ($controls as $mode) {
             yield $mode => [$mode];
         }
     }
@@ -196,7 +206,11 @@ final class ControlGuidanceTest extends TestCase
 
         $controlIds = [];
         foreach ($controls as $index => $control) {
-            parent::assertInstanceOf(DomElement::class, $control, 'Expected a DOM element for ' . $context);
+            parent::assertInstanceOf(
+                DomElement::class,
+                $control,
+                'Expected a DOM element for ' . $context
+            );
             $controlContext = sprintf(
                 'Option/control %d (id="%s") in %s',
                 $index + 1,
@@ -211,36 +225,49 @@ final class ControlGuidanceTest extends TestCase
             if ($expectedIds === []) {
                 parent::assertFalse(
                     $control->hasAttribute('aria-describedby'),
-                    'Without help references or a warning, aria-describedby must be absent. ' . $controlContext
+                    'Without help or a warning, aria-describedby must be absent. '
+                    . $controlContext
                 );
             } else {
                 parent::assertSame(
                     $expectedIds,
-                    preg_split('/\s+/', trim($control->getAttribute('aria-describedby'))), // @phpstan-ignore argument.type
-                    'aria-describedby must preserve help IDs and append the warning ID once, in order. '
-                        . $controlContext
+                    preg_split(
+                        '/\s+/',
+                        trim($control->getAttribute('aria-describedby'))
+                    ), // @phpstan-ignore argument.type
+                    'aria-describedby must preserve help IDs and append the warning ID once '
+                        . ', in order. ' . $controlContext
                 );
             }
             if ($hasWarning) {
                 parent::assertSame(
                     'true',
                     $control->getAttribute('aria-invalid'),
-                    'A warning must set aria-invalid="true", overriding any supplied valid state. ' . $controlContext
+                    'A warning must set aria-invalid="true", overriding any '
+                    . 'supplied valid state. ' . $controlContext
                 );
             } else {
                 parent::assertFalse(
                     $control->hasAttribute('aria-invalid'),
-                    'Without a warning or explicit invalid state, aria-invalid must be absent. ' . $controlContext
+                    'Without a warning or explicit invalid state, '
+                    . 'aria-invalid must be absent. ' . $controlContext
                 );
             }
 
             $controlId = $control->getAttribute('id');
-            parent::assertNotSame('', $controlId, 'Each control needs a nonempty ID. ' . $controlContext);
+            parent::assertNotSame(
+                '',
+                $controlId,
+                'Each control needs a nonempty ID. ' . $controlContext
+            );
             $controlIds[] = $controlId;
             $labels = $xpath->query(
                 '//*[local-name()="label" and @for="' . $controlId . '"]'
             );
-            parent::assertNotFalse($labels, 'Could not query associated labels. ' . $controlContext);
+            parent::assertNotFalse(
+                $labels,
+                'Could not query associated labels. ' . $controlContext
+            );
             parent::assertCount(
                 1,
                 $labels,
@@ -255,19 +282,27 @@ final class ControlGuidanceTest extends TestCase
 
         foreach ($expectedIds as $reference) {
             $targets = $xpath->query('//*[@id="' . $reference . '"]');
-            parent::assertNotFalse($targets, 'Could not query guidance target "' . $reference . '" for ' . $context);
+            parent::assertNotFalse(
+                $targets,
+                'Could not query guidance target "' . $reference . '" for ' . $context
+            );
             parent::assertCount(
                 1,
                 $targets,
-                'aria-describedby reference "' . $reference . '" must resolve to exactly one element for ' . $context
+                'aria-describedby reference "' . $reference
+                . '" must resolve to exactly one element for ' . $context
             );
         }
         $warnings = $xpath->query('//*[@id="' . $id . '-warning"]');
-        parent::assertNotFalse($warnings, 'Could not query warning target "' . $id . '-warning" for ' . $context);
+        parent::assertNotFalse(
+            $warnings,
+            'Could not query warning target "' . $id . '-warning" for ' . $context
+        );
         parent::assertCount(
             $hasWarning ? 1 : 0,
             $warnings,
-            'Expected ' . ($hasWarning ? 'exactly one' : 'no') . ' warning with id="' . $id . '-warning" for ' . $context
+            'Expected ' . ($hasWarning ? 'exactly one' : 'no') . ' warning with id="'
+            . $id . '-warning" for ' . $context
         );
     }
 

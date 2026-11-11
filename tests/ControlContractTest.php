@@ -24,18 +24,34 @@ final class ControlContractTest extends TestCase
     /** @return iterable<string, array{string, string, string, list<string>}> */
     public static function valueCases(): iterable
     {
-        foreach (['text', 'email'] as $mode) {
-            foreach (['empty' => '', 'nonempty' => 'current@example.com', 'zero' => '0'] as $case => $value) {
-                foreach (['no warning' => '', 'warning' => 'Check the value.'] as $guidance => $warning) {
-                    foreach (
-                        [
+        $modes = ['text', 'email'];
+        foreach ($modes as $mode) {
+            $cases = [
+                'empty' => '',
+                'nonempty' => 'current@example.com',
+                'zero' => '0'
+            ];
+            foreach ($cases as $case => $value) {
+                $guidances = [
+                    'no warning' => '',
+                    'warning' => 'Check the value.'
+                ];
+                foreach ($guidances as $guidance => $warning) {
+                    $declarations = [
                         'single' => ['value stale@example.com'],
-                        'repeated' => ['value first@example.com', 'value second@example.com', 'value '],
-                        'mixed case' => ['VALUE stale@example.com', 'Value another@example.com'],
+                        'repeated' => [
+                            'value first@example.com',
+                            'value second@example.com', 'value '
+                        ],
+                        'mixed case' => [
+                            'VALUE stale@example.com',
+                            'Value another@example.com'
+                        ],
                         'bare' => ['value', 'value stale@example.com']
-                        ] as $declaration => $properties
-                    ) {
-                        yield "$mode: $case, $guidance, $declaration" => [$mode, $value, $warning, $properties];
+                    ];
+                    foreach ($declarations as $declaration => $properties) {
+                        yield "$mode: $case, $guidance, $declaration" =>
+                            [$mode, $value, $warning, $properties];
                     }
                 }
             }
@@ -94,8 +110,10 @@ final class ControlContractTest extends TestCase
 
     #[Test]
     #[DataProvider('labelCases')]
-    public function generated_label_association_overrides_caller_properties(string $mode, ?string $id): void
-    {
+    public function generated_label_association_overrides_caller_properties(
+        string $mode,
+        ?string $id
+    ): void {
         $control = match ($mode) { // @phpstan-ignore match.unhandled
             'text' => TextInput::create('Field', 'field'),
             'email' => EmailInput::create('Field', 'field'),
