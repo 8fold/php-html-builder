@@ -78,7 +78,8 @@ function getSpecsByElement(array $entries): array
         }
 
         if (str_contains($element, '[')) {
-            $element = explode('[', $element) |> 'array_first';
+            // TODO: convert to pipe when PHP 8.5 required |> 'array_first';
+            $element = array_first(explode('[', $element))
         }
 
         if (array_key_exists($element, $specsByName) === false) {
@@ -86,8 +87,10 @@ function getSpecsByElement(array $entries): array
                 fwrite(STDERR, "'specs' not array: {$element}\n");
                 exit(1);
             }
-            $specsByName[$element] = array_filter($entry->specs, 'is_string')
-                |> 'array_values';
+            // TODO: convert to pipe when PHP 8.5 required |> 'array_values';
+            $specsByName[$element] = array_values(
+                array_filter($entry->specs, 'is_string')
+            );
         }
     }
     return $specsByName;
