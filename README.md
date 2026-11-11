@@ -10,7 +10,7 @@ Warning: Users of this library are responsible for sanitizing content.
   - [`EmptyElement`](#emptyelement)
   - [`Document`](#document)
   - [`Comment`](#comment)
-  - ⁣
+  - [Properties](#properties)⁣
 
 ## Installation
 
@@ -102,13 +102,14 @@ Document::create('title')
   );
 ```
 
-Output (compressed):
+Output:
 
 ```html
+<!-- compressed -->
 <!doctype html>
 <html lang="en"><head><title>title</title><meta charset="utf-8"><link rel="stylesheet" href="style.css"><script src="script.js"></script></head><body><p>Hello, World!</p></body></html>
 
-// Output (human-readable):
+<!-- human-readable -->
 <!doctype html>
 <html lang="en">
   <head>
@@ -127,9 +128,9 @@ Further examples are in the [`tests`](https://github.com/8fold/php-html-builder/
 
 ### `Comment`
 
-There’s even a [`Comment`](https://github.com/8fold/php-html-builder/blob/main/src/Comment.php) element for adding inline comments to the HTML.
+There’s even a [`Comment`](https://github.com/8fold/php-html-builder/blob/main/src/Comment.php) component for adding inline HTML comments.
 
-```
+```php
 use Eightfold\HtmlBuilder\Document;
 use Eightfold\HtmlBuilder\Element;
 use Eightfold\HtmlBuilder\EmptyElement;
@@ -143,9 +144,9 @@ Document::create('title')
     Comment::create('comment-based-injection-point'),
     Element::p('Hello, World!')
   );
-  
-// Output (human-readable):
+```
 
+Output (human-readable):
 ```html
 <!doctype html>
 <html lang="en">
