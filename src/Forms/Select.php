@@ -6,6 +6,7 @@ namespace Eightfold\HtmlBuilder\Forms;
 use Stringable;
 
 use Eightfold\HtmlBuilder\Element;
+use Eightfold\HtmlBuilder\EmptyElement;
 use Eightfold\HtmlBuilder\PropertyInterface;
 
 use Eightfold\HtmlBuilder\Forms\ControlProperties;
@@ -273,7 +274,7 @@ class Select implements Stringable
             $value = (string) $value;
             $memberId = $this->id . '-option-' . $index++;
 
-            $input = Element::input()->omitEndTag()->props(...[
+            $input = EmptyElement::input(...[
                 ...$inputProperties,
                 'id ' . $memberId,
                 'name ' . $name,

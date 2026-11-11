@@ -6,6 +6,7 @@ namespace Eightfold\HtmlBuilder;
 use Stringable;
 
 use Eightfold\HtmlBuilder\Element;
+use Eightfold\HtmlBuilder\EmptyElement;
 
 class Document implements Stringable
 {
@@ -82,7 +83,7 @@ class Document implements Stringable
         $html = (string) Element::html(
             Element::head(
                 $pageTitle,
-                Element::meta()->omitEndTag()->props($this->charset()),
+                EmptyElement::meta($this->charset()),
                 ...$this->headContent()
             ),
             Element::body(...$this->bodyContent())->props(...$this->bodyProps)

@@ -6,6 +6,7 @@ namespace Eightfold\HtmlBuilder\Components;
 use Stringable;
 
 use Eightfold\HtmlBuilder\Element;
+use Eightfold\HtmlBuilder\EmptyElement;
 
 use Eightfold\HtmlBuilder\Components\FaviconMetroColors;
 
@@ -118,36 +119,36 @@ class Favicons implements Stringable
     public function __toString(): string
     {
         $elements = [
-            Element::link()->omitEndTag()->props(
+            EmptyElement::link(
                 'rel apple-touch-icon',
                 'sizes 180x180',
                 'href ' . $this->path() . '/apple-touch-icon.png'
             ),
-            Element::link()->omitEndTag()->props(
+            EmptyElement::link(
                 'rel icon',
                 'type image/png',
                 'sizes 32x32',
                 'href ' . $this->path() . '/favicon-32x32.png'
             ),
-            Element::link()->omitEndTag()->props(
+            EmptyElement::link(
                 'rel icon',
                 'type image/png',
                 'sizes 16x16',
                 'href ' . $this->path() . '/favicon-16x16.png'
             ),
-            Element::link()->omitEndTag()->props(
+            EmptyElement::link(
                 'rel manifest',
                 'href ' . $this->path() . '/site.webmanifest'
             ),
-            Element::meta()->omitEndTag()->props(
+            EmptyElement::meta(
                 'name msapplication-TileColor',
                 'content ' . $this->metroTileColor()
             ),
-            Element::meta()->omitEndTag()->props(
+            EmptyElement::meta(
                 'name theme-color',
                 'content ' . $this->themeColor()
             ),
-            Element::link()->omitEndTag()->props(
+            EmptyElement::link(
                 'rel mask-icon',
                 'href ' . $this->path() . '/safari-pinned-tab.svg',
                 'color ' . $this->safariThemeColor()
@@ -155,31 +156,31 @@ class Favicons implements Stringable
         ];
 
         if ($this->hasPath()) {
-            $elements[] = Element::link()->omitEndTag()->props(
+            $elements[] = EmptyElement::link(
                 'rel shortcut icon',
                 'href ' . $this->path() . '/favicon.ico'
             );
 
-            $elements[] = Element::meta()->omitEndTag()->props(
+            $elements[] = EmptyElement::meta(
                 'name msapplication-config',
                 'content ' . $this->path() . '/browserconfig.xml'
             );
         }
 
         if ($this->hasMetro() and $this->metroUsesWhite()) {
-            $elements[] = Element::meta()->omitEndTag()->props(
+            $elements[] = EmptyElement::meta(
                 'name msapplication-TileImage',
                 'content ' . $this->path() . '/mstile-144x144.png'
             );
         }
 
         if ($this->hasAppName()) {
-            $elements[] = Element::meta()->omitEndTag()->props(
+            $elements[] = EmptyElement::meta(
                 'name application-name',
                 'content ' . $this->appName()
             );
 
-            $elements[] = Element::meta()->omitEndTag()->props(
+            $elements[] = EmptyElement::meta(
                 'name apple-mobile-web-app-title',
                 'content ' . $this->appName()
             );
