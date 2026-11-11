@@ -81,7 +81,7 @@ class PasswordTest extends TestCase
         </div>
         html;
 
-        self::collapsedHtml($html);
+        $expected = self::collapsedHtml($html);
 
         $result = (string) Password::create(
             'Password',

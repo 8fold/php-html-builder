@@ -228,17 +228,21 @@ final class ControlGuidanceTest extends TestCase
                     'Without help or a warning, aria-describedby must be absent. '
                     . $controlContext
                 );
+
             } else {
+                parent::assertIsString($control->getAttribute('aria-describedby'));
                 parent::assertSame(
                     $expectedIds,
                     preg_split(
                         '/\s+/',
                         trim($control->getAttribute('aria-describedby'))
-                    ), // @phpstan-ignore argument.type
+                    ),
                     'aria-describedby must preserve help IDs and append the warning ID once '
                         . ', in order. ' . $controlContext
                 );
+
             }
+
             if ($hasWarning) {
                 parent::assertSame(
                     'true',
@@ -246,6 +250,7 @@ final class ControlGuidanceTest extends TestCase
                     'A warning must set aria-invalid="true", overriding any '
                     . 'supplied valid state. ' . $controlContext
                 );
+
             } else {
                 parent::assertFalse(
                     $control->hasAttribute('aria-invalid'),
