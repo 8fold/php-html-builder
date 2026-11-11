@@ -19,12 +19,10 @@ declare(strict_types=1);
 
 use stdClass;
 
-$source = $argv[2] ?? 'https://raw.githubusercontent.com/w3c/elements-of-html/master/elements.json';
-
 /**
  * @return list<stdClass>
  */
-function getElementEntries(string $source) : array
+function getElementEntries(string $source): array
 {
     $json = file_get_contents($source);
     if ($json === false) {
@@ -47,7 +45,7 @@ function getElementEntries(string $source) : array
     foreach ($entries as $entry) {
         if (
             is_object($entry) === false
-            or is_a($entry, stdClass::class) ===false
+            or is_a($entry, stdClass::class) === false
             or property_exists($entry, 'element') === false
             or is_string($entry->element) === false
             or property_exists($entry, 'specs') === false
@@ -98,6 +96,8 @@ function getSpecsByElement(array $entries): array
     }
     return $specsByName;
 }
+
+$source = $argv[2] ?? 'https://raw.githubusercontent.com/w3c/elements-of-html/master/elements.json';
 
 $entries = getElementEntries($source);
 

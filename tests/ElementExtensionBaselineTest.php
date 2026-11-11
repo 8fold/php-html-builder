@@ -18,13 +18,13 @@ class ElementExtensionBaselineTest extends TestCase
             html;
 
         $result = (string) ElementExtension::a('link')->props(
-                'required required',
-                'href https://8fold.pro',
-                'class some-style',
-                'id unique',
-                'data-testing test',
-                'is link'
-            );
+            'required required',
+            'href https://8fold.pro',
+            'class some-style',
+            'id unique',
+            'data-testing test',
+            'is link'
+        );
 
         parent::assertSame($exptected, $result);
     }

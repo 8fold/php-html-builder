@@ -60,7 +60,7 @@ class PerformanceTest extends TestCase
         parent::assertSame($expected, $result);
 
         $elapsed = $end - $start;
-        $ms      = $elapsed/1e+6;
+        $ms      = $elapsed / 1e+6;
 
         parent::assertLessThan(1, $ms);
     }
@@ -81,7 +81,7 @@ class PerformanceTest extends TestCase
         parent::assertSame($expected, $result);
 
         $used = $end - $start;
-        $kb   = round($used/1024.2);
+        $kb   = round($used / 1024.2);
 
         parent::assertLessThan(66, $kb);
     }

@@ -27,12 +27,14 @@ final class ControlContractTest extends TestCase
         foreach (['text', 'email'] as $mode) {
             foreach (['empty' => '', 'nonempty' => 'current@example.com', 'zero' => '0'] as $case => $value) {
                 foreach (['no warning' => '', 'warning' => 'Check the value.'] as $guidance => $warning) {
-                    foreach ([
+                    foreach (
+                        [
                         'single' => ['value stale@example.com'],
                         'repeated' => ['value first@example.com', 'value second@example.com', 'value '],
                         'mixed case' => ['VALUE stale@example.com', 'Value another@example.com'],
                         'bare' => ['value', 'value stale@example.com']
-                    ] as $declaration => $properties) {
+                        ] as $declaration => $properties
+                    ) {
                         yield "$mode: $case, $guidance, $declaration" => [$mode, $value, $warning, $properties];
                     }
                 }

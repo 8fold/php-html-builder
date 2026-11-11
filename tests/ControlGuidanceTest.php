@@ -150,13 +150,19 @@ final class ControlGuidanceTest extends TestCase
             'textarea' => TextArea::create('Field', 'field', '', $warning),
             'dropdown' => Select::create('Field', 'field', ['a' => 'A', 'b' => 'B'], [], $warning),
             'multiple' => Select::create(
-                'Field', 'field', ['a' => 'A', 'b' => 'B'], [], $warning
+                'Field',
+                'field', ['a' => 'A', 'b' => 'B'], [], $warning
             )->multiple(),
             'radio' => Select::create(
-                'Field', 'field', ['a' => 'A', 'b' => 'B'], [], $warning
+                'Field',
+                'field', ['a' => 'A', 'b' => 'B'], [], $warning
             )->radio(),
             'checkbox' => Select::create(
-                'Field', 'field', ['a' => 'A', 'b' => 'B'], [], $warning
+                'Field',
+                'field',
+                ['a' => 'A', 'b' => 'B'],
+                [],
+                $warning
             )->checkbox()
         };
 

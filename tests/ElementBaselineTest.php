@@ -32,12 +32,12 @@ class ElementBaselineTest extends TestCase
             html;
 
         $result = (string) Element::a('link')->props(
-                'required required',
-                'href https://8fold.pro',
-                'class some-style',
-                'id unique',
-                'data-testing test'
-            );
+            'required required',
+            'href https://8fold.pro',
+            'class some-style',
+            'id unique',
+            'data-testing test'
+        );
 
         parent::assertSame($expected, $result);
     }

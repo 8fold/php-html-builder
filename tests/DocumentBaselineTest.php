@@ -97,11 +97,11 @@ class DocumentBaselineTest extends TestCase
             html;
 
         $result = (string) Document::create('title', 'fr', 'ascii')->head(
-                EmptyElement::link()->props('rel stylesheet', 'href style.css'),
-                Element::script()->props('src script.js')
-            )->body(
-                Element::p('paragraph content')
-            );
+            EmptyElement::link()->props('rel stylesheet', 'href style.css'),
+            Element::script()->props('src script.js')
+        )->body(
+            Element::p('paragraph content')
+        );
 
         parent::assertSame($expected, $result);
     }
@@ -115,11 +115,11 @@ class DocumentBaselineTest extends TestCase
             html;
 
         $result = (string) Document::create('title', 'fr', 'ascii')->head(
-                EmptyElement::link()->props('rel stylesheet', 'href style.css'),
-                Element::script()->props('src script.js')
-            )->body(
-                Element::p('paragraph content')
-            );
+            EmptyElement::link()->props('rel stylesheet', 'href style.css'),
+            Element::script()->props('src script.js')
+        )->body(
+            Element::p('paragraph content')
+        );
 
         parent::assertSame($expected, $result);
     }
@@ -133,9 +133,9 @@ class DocumentBaselineTest extends TestCase
             html;
 
         $result = (string) Document::create('title', 'fr', 'ascii')->head(
-                EmptyElement::link()->props('rel stylesheet', 'href style.css'),
-                Element::script()->props('src script.js')
-            );
+            EmptyElement::link()->props('rel stylesheet', 'href style.css'),
+            Element::script()->props('src script.js')
+        );
 
         parent::assertSame($expected, $result);
     }
