@@ -32,7 +32,7 @@ use Eightfold\HtmlBuilder\EmptyElement;
 // line breaks added for emphasis
 Element::img()
     ->omitEndTag()
-    ->prop(
+    ->props(
         'id cat-picture',
         'src /path/to/image.png'
     );
