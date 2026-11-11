@@ -6,6 +6,7 @@ namespace Eightfold\HtmlBuilder\Forms;
 use Stringable;
 
 use Eightfold\HtmlBuilder\Element;
+use Eightfold\HtmlBuilder\EmptyElement;
 use Eightfold\HtmlBuilder\PropertyInterface;
 
 class EmailInput implements Stringable
@@ -130,7 +131,7 @@ class EmailInput implements Stringable
         $warning         = self::warningMessage();
         $inputProperties = self::inputProperties($warning === '');
 
-        $input = Element::input()->omitEndTag()->props(...[
+        $input = EmptyElement::input(...[
             ...$inputProperties,
             'type email',
             'id ' . $this->id,
