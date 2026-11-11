@@ -60,7 +60,7 @@ Element::img()->omitEndTag()->props('src /path/to/image.png');
 ```
 
 Output:
-```
+```html
 <!-- output -->
 <img src="/path/to/image.php">
 ```
@@ -75,11 +75,15 @@ use Eightfold\HtmlBuilder\EmptyElement;
 
 // empty element use Element
 Element::img()->omitEndTag()->props('src /path/to/image.png');
+```
 
-// output
+Output:
+```html
 <img src="/path/to/image.php">
+```
 
-// using EmptyElement
+Using `EmptyElement`:
+```php
 EmptyElement::img('src /path/to/image.png');
 
 // output same as previous
