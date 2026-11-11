@@ -4,6 +4,8 @@ HTML Builder is a web-specific string compiler.
 
 Warning: Users of this library are responsible for sanitizing content.
 
+- [Installation](#installation)
+
 ## Installation
 
 `composer require 8fold/php-html-builder`
