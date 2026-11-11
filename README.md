@@ -5,6 +5,12 @@ HTML Builder is a web-specific string compiler.
 Warning: Users of this library are responsible for sanitizing content.
 
 - [Installation](#installation)
+- [Usage](#usage)
+  - [`Element⁣`](#element)
+  - [`EmptyElement`](#emptyelement)
+  - [`Document`](#document)
+  - [`Comment`](#comment)
+  - ⁣
 
 ## Installation
 
@@ -27,20 +33,33 @@ use Eightfold\HtmlBuilder\Element;
 
 // non-empty element, using `create()`
 Element::create('p', 'Hello, World!')->props('id intro');
+```
 
-// output
+Output:
+```html
+<!-- output -->
 <p id="intro">Hello, World!</p>
+```
 
+```php
 // non-empty element, magic method
 Element::p('Hello, World!')->props('id intro');
+```
 
-// output
+Output:
+```html
+<!-- output -->
 <p id="intro">Hello, World!</p>
+```
 
+```php
 // empty element
 Element::img()->omitEndTag()->props('src /path/to/image.png');
+```
 
-// output
+Output:
+```
+<!-- output -->
 <img src="/path/to/image.php">
 ```
 
