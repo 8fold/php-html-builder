@@ -37,31 +37,26 @@ Element::create('p', 'Hello, World!')->props('id intro');
 
 Output:
 ```html
-<!-- output -->
 <p id="intro">Hello, World!</p>
 ```
 
 Non-empty element using magic method:
 ```php
-// non-empty element, magic method
 Element::p('Hello, World!')->props('id intro');
 ```
 
 Output:
 ```html
-<!-- output -->
 <p id="intro">Hello, World!</p>
 ```
 
 Empty element using magic method:
 ```php
-// empty element
 Element::img()->omitEndTag()->props('src /path/to/image.png');
 ```
 
 Output:
 ```html
-<!-- output -->
 <img src="/path/to/image.php">
 ```
 
@@ -93,7 +88,7 @@ EmptyElement::img('src /path/to/image.png');
 
 The [`Document`](https://github.com/8fold/php-html-builder/blob/main/src/Document.php) class gives you to generate a complete HTML document entirely in PHP.
 
-```
+```php
 use Eightfold\HtmlBuilder\Document;
 use Eightfold\HtmlBuilder\Element;
 use Eightfold\HtmlBuilder\EmptyElement;
@@ -105,16 +100,15 @@ Document::create('title')
   )->body(
     Element::p('Hello, World!')
   );
+```
 
-// Output (compressed):
+Output (compressed):
 
 ```html
 <!doctype html>
 <html lang="en"><head><title>title</title><meta charset="utf-8"><link rel="stylesheet" href="style.css"><script src="script.js"></script></head><body><p>Hello, World!</p></body></html>
 
 // Output (human-readable):
-
-```html
 <!doctype html>
 <html lang="en">
   <head>
