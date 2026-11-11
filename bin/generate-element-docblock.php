@@ -71,15 +71,16 @@ function getSpecsByElement(array $entries): array
     $specsByName = [];
     foreach ($entries as $entry) {
         $element = $entry->element;
+        if (is_string($element) and str_contains($element, '[')) {
+            // TODO: convert to pipe when PHP 8.5 required
+            // $element = explode('[', $element) |> 'array_first';
+            $element = array_unshift(explode('[', $element));
+        }
+
         if (is_string($element) === false) {
             $json = json_encode($entry);
             fwrite(STDERR, "Element not a string: {$json}\n");
             exit(1);
-        }
-
-        if (str_contains($element, '[')) {
-            // TODO: convert to pipe when PHP 8.5 required |> 'array_first';
-            $element = array_first(explode('[', $element));
         }
 
         if (array_key_exists($element, $specsByName) === false) {
