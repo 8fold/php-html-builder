@@ -11,6 +11,7 @@ Warning: Users of this library are responsible for sanitizing content.
   - [`Document`](#document)
   - [`Comment`](#comment)
   - [Properties](#properties)⁣
+- [Extending](#extending)⁣
 
 ## Installation
 
@@ -173,14 +174,14 @@ Properties with same name and value are presumed to be boolean properties (`requ
 use Eightfold\HtmlBuilder\EmptyElement;
 
 EmptyElement::input('required required');
+```
 
-// Output:
-
+Output:
 ```html
 <input required>
 ```
 
-You may also add properties individually to facilitate dynamic construction.
+Properties me be added individually to facilitate dynamic construction.
 
 ```php
 use Eightfold\HtmlBuild\Element;
@@ -191,13 +192,16 @@ $callout = Element::div('Information in the callout.')
 if ($isWarning) {
     $callout = $callout->prop('is warning');
 }
+```
 
-// output (human-readable): $isWarning = false
+Output
+```html
+<!-- human-readable: `$isWarning = false` -->
 <div class="callout" aria-role="alert">
     Information in the callout.
 </div>
 
-// output (human-readable): $isWarning = true
+<!-- human-readable: $isWarning = true -->
 <div is="warning" class="callout" aria-role="alert">
     Information in the callout.
 </div>
