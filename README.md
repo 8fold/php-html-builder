@@ -22,11 +22,11 @@ changed without updating templates or other code.
 ```php
 use Eightfold\HTMLBuilder\Document;
 use Eightfold\HTMLBuilder\Element;
+use Eightfold\HTMLBuilder\EmptyElement;
 
 Document::create('title')
   ->head(
-    Element::link()
-      ->omitEndTag()->props('rel stylesheet', 'href style.css'),
+    EmptyElement::link('rel stylesheet', 'href style.css'),
     Element::script()->props('src script.js')
   )->body(
     Element::p('paragraph content')
