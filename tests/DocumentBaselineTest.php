@@ -39,8 +39,7 @@ class DocumentBaselineTest extends TestCase
     {
         $expected = <<<html
         <!doctype html>
-        <html class="dark-theme" lang="en">
-        <head><title>Second | First</title><meta charset="utf-8"></head><body></body></html>
+        <html class="dark-theme" lang="en"><head><title>Second | First</title><meta charset="utf-8"></head><body></body></html>
         html;
 
         $result = (string) Document::create(
@@ -58,8 +57,7 @@ class DocumentBaselineTest extends TestCase
     {
         $expected = <<<html
         <!doctype html>
-        <html lang="en">
-        <head><title>Second | First</title><meta charset="utf-8"></head><body id="hello" class="world" style="color: #000;"></body></html>
+        <html lang="en"><head><title>Second | First</title><meta charset="utf-8"></head><body id="hello" class="world" style="color: #000;"></body></html>
         html;
 
         $result = (string) Document::create(
@@ -131,8 +129,7 @@ class DocumentBaselineTest extends TestCase
     {
         $expected = <<<html
             <!doctype html>
-            <html lang="fr">
-            <head><title>title</title><meta charset="ascii"><link rel="stylesheet" href="style.css"><script src="script.js"></script></head><body></body></html>
+            <html lang="fr"><head><title>title</title><meta charset="ascii"><link rel="stylesheet" href="style.css"><script src="script.js"></script></head><body></body></html>
             html;
 
         $result = (string) Document::create('title', 'fr', 'ascii')->head(

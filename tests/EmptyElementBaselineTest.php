@@ -17,8 +17,8 @@ class EmptyElementBaselineTest extends TestCase
             <img>
             html;
 
-        $result = (string) EmptyElement::h1();
+        $result = (string) EmptyElement::img();
 
-        $this->assertSame($expected, $result);
+        parent::assertSame($expected, $result);
     }
 }
