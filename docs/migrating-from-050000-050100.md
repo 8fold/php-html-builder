@@ -4,9 +4,9 @@ While not a major release, it could have been, but the potential breaking change
 
 Otherwise, this is a quality of life improvement release.
 
-- [New](#new)
+- New
     - [`EmptyElement`](#emptyelement) component
-- [Updated](#updated)
+- Updated
     - (could cause frustration) [Static analysis](#static-analysis) may throw if the element name in an `Element` or `EmptyElement` static creation is not in the HTML specification, is not declared empty by the HTML specification, or both.
     - (see previous) Removed all [`ignoreErrors`](https://phpstan.org/user-guide/ignoring-errors#ignoring-in-configuration-file) from the PHPStan configuration.
     - (see previous) Increased the [PHPStan](https://phpstan.org) level for HTML Builder to 10.
@@ -21,7 +21,7 @@ Otherwise, this is a quality of life improvement release.
 
 The first quality of life improvement is introducing an explicit way to create empty elements.
 
-The examples in the `EmptyElement` section in the [README](../README.md#emptyelement) demonstrates the improvement.
+The examples in the `EmptyElement` section in the [README](https://github.com/8fold/php-html-builder#emptyelement) demonstrates the improvement.
 
 In short:
 
@@ -29,10 +29,19 @@ In short:
 use Eightfold\HtmlBuilder\Element;
 use Eightfold\HtmlBuilder\EmptyElement;
 
-Element::img()->omitEndTag()->prop('id cat-picture', 'src /path/to/image.png');
+// line breaks added for emphasis
+Element::img()
+    ->omitEndTag()
+    ->prop(
+        'id cat-picture',
+        'src /path/to/image.png'
+    );
 
 // becomes
-EmptyElement::img('id cat-picture', 'src /path/to/image.png');
+EmptyElement::img(
+    'id cat-picture',
+    'src /path/to/image.png'
+);
 ```
 
 Outputs:
@@ -54,7 +63,7 @@ ignoreErrors:
     - '#Call to an undefined static method Eightfold\\HtmlBuilder\\Element::(.*)#'
 ```
 
-We introduced the ‘create()’ named constructor, which gave a specific pattern for creating custom components and allowed users to avoid ignoring the static analysis error (the second workaround):
+We introduced the `create()` named constructor, which gave a specific pattern for creating custom components and allowed users to avoid ignoring the static analysis error (the second workaround):
 
 ```php
 Element::create('p', 'Hello, World!');

@@ -14,8 +14,8 @@ Warning: Users of this library are responsible for sanitizing content.
 - [Extending](#extending)⁣
 - [Performance](#performance)⁣
 - Migrating (`docs/`)
-  - [5.0 to 5.1](./docs/migrating-from-050000-050100.md)
-  - [4.x to 5.0](#migrating-from-4x-to-50)⁣
+  - [5.0 to 5.1](https://github.com/8fold/php-html-builder/blob/main/docs/migrating-from-050000-050100.md)
+  - [4.x to 5.0](https://github.com/8fold/php-html-builder/blob/main/docs/migrating-from-04x-050000.md)⁣
 - [Details](#details)
 - [Other](#other)⁣
 

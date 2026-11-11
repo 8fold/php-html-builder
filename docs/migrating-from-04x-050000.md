@@ -7,13 +7,12 @@
     - [Text controls](#text-controls-containing-div) add a containing `div` element
     - [All form controls have](#normalized-form-control-property-methods) `containerProps()`, `labelProps()`, and `inputProps()`; `FieldSet::labelProps()` targets the `legend` element
     - `id()` is available on `TextInput`, `EmailInput`, `Password`, `TextArea`, and `Select`; allowing you to override the default `id` based on `name`
-
 - Updated or fixed:
     - [`PropertyInterface`](https://github.com/8fold/php-html-builder/blob/main/src/PropertyInterface.php) extends PHP's `Stringable`; add `public function __toString(): string` alongside `prop()` and `props()`.
     - `Select` [`radio()` and `checkbox()` IDs](#radio-and-checkbox-ids) use `<control-id>-option-<zero-based-index>` instead of `<name>-<option-value>`
-    - `warningMessage` accessibility improved for each form control; `Fieldset` renders one warning for the group and [does not inspect child elements](#fieldset-does-not-inspect-children)
+    - `warningMessage` accessibility improved for each form control; `Fieldset` renders one warning for the group and [does not inspect child elements](#fieldset-does-not-inspect-child-elements)
 - Deprecated:
-    - [`wrapperProps()` on form controls](#wrapper-on-form-controls)
+    - [`wrapperProps()` on form controls](#wrapperprops-on-form-controls)
 - Deleted: None
 
 ## New
@@ -56,7 +55,7 @@ Native HTML parsing normalizes CR and CRLF line endings to LF; browsers apply th
 
 `Select` defaults to a single dropdown.
 
-```php
+```html
 <select name="sample">
     <option value="1">1</option>
     <option value="2">2</option>
