@@ -79,7 +79,7 @@ function getSpecsByElement(array $entries): array
 
         if (str_contains($element, '[')) {
             // TODO: convert to pipe when PHP 8.5 required |> 'array_first';
-            $element = array_first(explode('[', $element))
+            $element = array_first(explode('[', $element));
         }
 
         if (array_key_exists($element, $specsByName) === false) {
