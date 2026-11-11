@@ -131,7 +131,7 @@ class TextInput implements Stringable
         $warning         = self::warningMessage();
         $inputProperties = self::inputProperties($warning === '');
 
-        $input = Element::input(...[
+        $input = EmptyElement::input(...[
             ...$inputProperties,
             'type text',
             'id ' . $this->id,
