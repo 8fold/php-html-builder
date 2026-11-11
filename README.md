@@ -41,6 +41,7 @@ Output:
 <p id="intro">Hello, World!</p>
 ```
 
+Non-empty element using magic method:
 ```php
 // non-empty element, magic method
 Element::p('Hello, World!')->props('id intro');
@@ -52,6 +53,7 @@ Output:
 <p id="intro">Hello, World!</p>
 ```
 
+Empty element using magic method:
 ```php
 // empty element
 Element::img()->omitEndTag()->props('src /path/to/image.png');
