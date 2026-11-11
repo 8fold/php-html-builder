@@ -45,7 +45,7 @@
       "@check:analysis",
       "@check:test"
     ],
-    "check:style": "./vendor/bin/phpcs --standard=phpcs.xml -p ./src",
+    "check:style": "./vendor/bin/phpcs --standard=phpcs.xml",
     "check:analysis": "./vendor/bin/phpstan analyze",
     "check:test": "./vendor/bin/phpunit --display-all-issues",
     "build:docblocks": "php ./bin/generate-element-docblock.php elements-generated.txt && php ./bin/generate-empty-element-docblock.php empty-elements-generated.txt"

@@ -10,10 +10,11 @@ declare(strict_types=1);
  *
  * Refactored by Josh Bruce, 2026-11-10.
  *
- * Usage: php generate-element-docblock.php [elements.json] [output.php]
+ * Usage: php generate-element-docblock.php [output.php] [elements.json]
+ *   output.php     Where to write the docblock (default: stdout)
+ *
  *   elements.json  Path or URL to the elements reference
  *                  (default: https://raw.githubusercontent.com/w3c/elements-of-html/master/elements.json)
- *   output.php     Where to write the docblock (default: stdout)
  */
 
 use stdClass;
