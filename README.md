@@ -15,9 +15,9 @@ Warning: Users of this library are responsible for sanitizing content.
 - [Performance](#performance)⁣
 - Migrating (`docs/`)
   - [5.0 to 5.1](./docs/migrating-from-050000-050100.md)
-    - [`EmptyElement`](./docs/migrating-from-050000-050100.md#emptyelement)
-    - [Static analysis](./docs/migrating-from-050000-050100.md#static-analysis)⁣
   - [4.x to 5.0](#migrating-from-4x-to-50)⁣
+- [Details](#details)
+- [Other](#other)⁣
 
 ## Installation
 
