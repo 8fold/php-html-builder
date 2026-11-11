@@ -3,6 +3,8 @@
 	<description>PHP-FIG PSR-12 standards with modifications to: control structure (empty space before closing brace).</description>
 
 	<file>src</file>
+	<file>tests</file>
+	<file>bin</file>
 
 	<arg name="colors" />
 
@@ -13,6 +15,12 @@
  		<!-- We separate `use` clauses, all other PSR12 whitespace rules should apply -->
  		<exclude name="PSR12.Files.FileHeader"/>
  	</rule>
+
+    <!-- snake_case test method names -->
+    <rule ref="PSR1.Methods.CamelCapsMethodName">
+        <exclude-pattern>*/tests/*</exclude-pattern>
+    </rule>
+
 	<rule ref="Generic.Files.LineLength">
 		<properties>
 			<property phpcs-only="true" name="lineLimit" value="100"/>

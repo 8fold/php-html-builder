@@ -12,12 +12,26 @@ use Eightfold\HtmlBuilder\Element;
 
 class TextInputTest extends TestCase
 {
+    private static function collapsedHtml(string $html): string
+    {
+        return preg_replace('/>\s+</', '><', $html) ?? '';
+    }
+
     #[Test]
     public function can_set_custom_id(): void // phpcs:ignore
     {
-        $expected = <<<html
-        <div is="form-control"><label for="text-input-id">Text</label><input id="text-input-id" name="text" type="text" aria-describedby="text-input-id-warning" aria-invalid="true"><p id="text-input-id-help">Helpful text</p><p id="text-input-id-warning">Invalid value</p></div>
+        // phpcs:disable
+        $html = <<<html
+        <div is="form-control">
+            <label for="text-input-id">Text</label>
+            <input id="text-input-id" name="text" type="text" aria-describedby="text-input-id-warning" aria-invalid="true">
+            <p id="text-input-id-help">Helpful text</p>
+            <p id="text-input-id-warning">Invalid value</p>
+        </div>
         html;
+        // phpcs:enable
+
+        $expected = self::collapsedHtml($html);
 
         $result = (string) TextInput::create(
             label: 'Text',
@@ -33,9 +47,14 @@ class TextInputTest extends TestCase
     #[Test]
     public function can_set_value(): void // phpcs:ignore
     {
-        $expected = <<<html
-        <div><label for="text">Text</label><input id="text" name="text" type="text" value="Posted value"></div>
+        $html = <<<html
+        <div>
+            <label for="text">Text</label>
+            <input id="text" name="text" type="text" value="Posted value">
+        </div>
         html;
+
+        $expected = self::collapsedHtml($html);
 
         $result = (string) TextInput::create(
             'Text',
@@ -49,9 +68,17 @@ class TextInputTest extends TestCase
     #[Test]
     public function can_set_warning_message(): void // phpcs:ignore
     {
-        $expected = <<<html
-        <div><label for="text">Text</label><input id="text" name="text" type="text" aria-describedby="text-warning" aria-invalid="true"><p id="text-warning">Invalid value</p></div>
+        // phpcs:disable
+        $html = <<<html
+        <div>
+            <label for="text">Text</label>
+            <input id="text" name="text" type="text" aria-describedby="text-warning" aria-invalid="true">
+            <p id="text-warning">Invalid value</p>
+        </div>
         html;
+        // phpcs:enable
+
+        $expected = self::collapsedHtml($html);
 
         $result = (string) TextInput::create(
             label: 'Text',

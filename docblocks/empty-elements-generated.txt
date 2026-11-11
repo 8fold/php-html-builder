@@ -1,0 +1,20 @@
+/**
+ * Magic static void-element factories. Generated from the WHATWG HTML
+ * living standard (https://html.spec.whatwg.org/, retrieved 2026-11-10):
+ * 13 void elements, derived from each element's "Tag omission in
+ * text/html: No end tag." entry. Alphabetical.
+ *
+ * @method static static area(string ...$properties)
+ * @method static static base(string ...$properties)
+ * @method static static br(string ...$properties)
+ * @method static static col(string ...$properties)
+ * @method static static embed(string ...$properties)
+ * @method static static hr(string ...$properties)
+ * @method static static img(string ...$properties)
+ * @method static static input(string ...$properties)
+ * @method static static link(string ...$properties)
+ * @method static static meta(string ...$properties)
+ * @method static static source(string ...$properties)
+ * @method static static track(string ...$properties)
+ * @method static static wbr(string ...$properties)
+ */

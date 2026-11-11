@@ -13,8 +13,11 @@
     "php": "^8.4"
   },
   "require-dev": {
-    "phpstan/phpstan": "^2.2",
-    "phpunit/phpunit": "^13.2",
+    "phpstan/extension-installer": "*",
+    "phpstan/phpstan": "^2.3",
+    "phpstan/phpstan-strict-rules": "^2.1",
+    "phpunit/phpunit": "^13.4",
+    "spaze/phpstan-disallowed-calls": "^4.15",
     "squizlabs/php_codesniffer": "^4.0"
   },
   "autoload": {
@@ -28,14 +31,23 @@
     }
   },
   "config": {
-    "preferred-install": "dist"
+    "preferred-install": "dist",
+    "allow-plugins": {
+      "phpstan/extension-installer": true
+    }
   },
   "prefer-stable": true,
   "scripts": {
-    "prod": "@production",
-    "production": ["@style", "@stan", "@test"],
-    "style": "./vendor/bin/phpcs --standard=phpcs.xml -p ./src",
-    "stan": "./vendor/bin/phpstan analyze",
-    "test": "./vendor/bin/phpunit --display-all-issues"
+    "prod": "@check",
+    "production": "@check",
+    "check": [
+      "@check:style",
+      "@check:analysis",
+      "@check:test"
+    ],
+    "check:style": "./vendor/bin/phpcs --standard=phpcs.xml",
+    "check:analysis": "./vendor/bin/phpstan analyze",
+    "check:test": "./vendor/bin/phpunit --display-all-issues",
+    "build:docblocks": "php ./bin/generate-element-docblock.php elements-generated.txt && php ./bin/generate-empty-element-docblock.php empty-elements-generated.txt"
   }
 }

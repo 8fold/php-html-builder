@@ -11,10 +11,10 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - name: Checkout
-        uses: actions/checkout@v4.2.2
+        uses: actions/checkout@v6.0.2
 
       - name: Setup PHP Action
-        uses: shivammathur/setup-php@2.33.0
+        uses: shivammathur/setup-php@2.37.0
         with:
           php-version: '8.4'
 
@@ -25,10 +25,10 @@ jobs:
         run: composer install --prefer-dist --no-progress
 
       - name: Run style check
-        run: composer run style
+        run: composer run check:style
 
       - name: Run static analyzer
-        run: composer run stan
+        run: composer run check:analysis
 
       - name: Run tests
-        run: composer run test
+        run: composer run check:test

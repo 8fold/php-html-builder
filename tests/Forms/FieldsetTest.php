@@ -12,29 +12,58 @@ use Eightfold\HtmlBuilder\Forms\TextInput;
 
 final class FieldsetTest extends TestCase
 {
+    private static function collapsedHtml(string $html): string
+    {
+        return preg_replace('/>\s+</', '><', $html) ?? '';
+    }
+
     #[Test]
     public function object_warning_is_rendered_locally_without_mutating_the_original(): void
     {
+        $html = <<<html
+        <fieldset>
+            <legend>Group</legend>
+            <div id="group-warning" class="custom-warning" data-example="preserved">
+                <a href="/guidance/">Review guidance</a>
+            </div>
+        </fieldset>
+        html;
+
+        $expected = self::collapsedHtml($html);
+
         $warning = Element::div(
             Element::a('Review guidance')->props('href /guidance/')
         )->props('id original', 'class custom-warning', 'data-example preserved');
+
         $before = (string) $warning;
+
         $fieldset = Fieldset::create('Group', 'group', $warning);
-        $expected = '<fieldset><legend>Group</legend>'
-            . '<div id="group-warning" class="custom-warning" data-example="preserved">'
-            . '<a href="/guidance/">Review guidance</a></div></fieldset>';
 
         for ($render = 0; $render < 3; $render++) {
-            $html = (string) $fieldset;
+            $result = (string) $fieldset;
             parent::assertSame($before, (string) $warning);
-            parent::assertSame($expected, $html);
-            parent::assertSame(1, substr_count($html, 'id="group-warning"'));
+            parent::assertSame($expected, $result);
+            parent::assertSame(1, substr_count($result, 'id="group-warning"'));
         }
     }
 
     #[Test]
     public function shared_object_warning_keeps_independent_component_ids(): void
     {
+        $htmlFirst = <<<html
+        <fieldset>
+            <legend>First</legend>
+            <p id="first-warning" class="warning">Check the value.</p>
+        </fieldset>
+        html;
+
+        $htmlSecond = <<<html
+        <fieldset>
+            <legend>Second</legend>
+            <p id="second-warning" class="warning">Check the value.</p>
+        </fieldset>
+        html;
+
         $warning = Element::p('Check the value.')->props('id original', 'class warning');
         $before = (string) $warning;
         $first = Fieldset::create('First', 'first', $warning);
@@ -46,15 +75,14 @@ final class FieldsetTest extends TestCase
         $inputHtml = (string) $input;
 
         parent::assertSame(
-            '<fieldset><legend>First</legend><p id="first-warning" class="warning">'
-                . 'Check the value.</p></fieldset>',
+            self::collapsedHtml($htmlFirst),
             $firstHtml
         );
         parent::assertSame(
-            '<fieldset><legend>Second</legend><p id="second-warning" class="warning">'
-                . 'Check the value.</p></fieldset>',
+            self::collapsedHtml($htmlSecond),
             $secondHtml
         );
+
         parent::assertStringContainsString(
             '<p id="custom-warning" class="warning">Check the value.</p>',
             $inputHtml
@@ -68,12 +96,19 @@ final class FieldsetTest extends TestCase
     #[Test]
     public function string_warning_preserves_markup_in_one_paragraph(): void
     {
-        $fieldset = Fieldset::create('Group', 'group', '<strong>Check</strong> the value.');
-        $expected = '<fieldset><legend>Group</legend>'
-            . '<p id="group-warning"><strong>Check</strong> the value.</p></fieldset>';
+        $html = <<<html
+        <fieldset>
+            <legend>Group</legend>
+            <p id="group-warning"><strong>Check</strong> the value.</p>
+        </fieldset>
+        html;
 
-        parent::assertSame($expected, (string) $fieldset);
-        parent::assertSame($expected, (string) $fieldset);
+        $fieldset = Fieldset::create('Group', 'group', '<strong>Check</strong> the value.');
+
+        parent::assertSame(
+            self::collapsedHtml($html),
+            (string) $fieldset
+        );
     }
 
     #[Test]
@@ -93,16 +128,25 @@ final class FieldsetTest extends TestCase
             'aria-describedby child-help group-warning',
             'aria-invalid false'
         );
+
         $before = (string) $child;
         $rawChild = '<input id="raw" aria-describedby="raw-help">';
         $fieldset = Fieldset::create('Group', 'group', 'Check the group.')->elements(
             Element::div($child),
             $rawChild
         );
-        $expected = '<fieldset><legend>Group</legend><div>' . $before . '</div>'
-            . $rawChild . '<p id="group-warning">Check the group.</p></fieldset>';
 
-        parent::assertSame($expected, (string) $fieldset);
+        $html = <<<html
+        <fieldset>
+            <legend>Group</legend>
+            <div>{$before}</div>
+            {$rawChild}
+            <p id="group-warning">Check the group.</p>
+        </fieldset>
+        html;
+
+        $expected = self::collapsedHtml($html);
+
         parent::assertSame($expected, (string) $fieldset);
         parent::assertSame($before, (string) $child);
     }

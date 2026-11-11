@@ -12,12 +12,26 @@ use Eightfold\HtmlBuilder\Element;
 
 class EmailInputTest extends TestCase
 {
+    private static function collapsedHtml(string $html): string
+    {
+        return preg_replace('/>\s+</', '><', $html) ?? '';
+    }
+
     #[Test]
     public function can_set_custom_id(): void // phpcs:ignore
     {
-        $expected = <<<html
-        <div is="form-control"><label for="email-input-id">Email</label><input id="email-input-id" name="email" type="email" aria-describedby="email-input-id-warning" aria-invalid="true" autocapitalize="off" autocorrect="off"><p id="email-input-id-help">Helpful text</p><p id="email-input-id-warning">Invalid value</p></div>
+        // phpcs:disable
+        $html = <<<html
+        <div is="form-control">
+            <label for="email-input-id">Email</label>
+            <input id="email-input-id" name="email" type="email" aria-describedby="email-input-id-warning" aria-invalid="true" autocapitalize="off" autocorrect="off">
+            <p id="email-input-id-help">Helpful text</p>
+            <p id="email-input-id-warning">Invalid value</p>
+        </div>
         html;
+        // phpcs:enable
+
+        $expected = self::collapsedHtml($html);
 
         $result = (string) EmailInput::create(
             label: 'Email',
@@ -33,9 +47,16 @@ class EmailInputTest extends TestCase
     #[Test]
     public function can_set_value(): void // phpcs:ignore
     {
-        $expected = <<<html
-        <div><label for="email">Email</label><input id="email" name="email" type="email" value="support@8fold.pro" autocapitalize="off" autocorrect="off"></div>
+        // phpcs:disable
+        $html = <<<html
+        <div>
+            <label for="email">Email</label>
+            <input id="email" name="email" type="email" value="support@8fold.pro" autocapitalize="off" autocorrect="off">
+        </div>
         html;
+        // phpcs:enable
+
+        $expected = self::collapsedHtml($html);
 
         $result = (string) EmailInput::create(
             'Email',
@@ -49,9 +70,17 @@ class EmailInputTest extends TestCase
     #[Test]
     public function can_set_warning_message(): void // phpcs:ignore
     {
-        $expected = <<<html
-        <div><label for="email">Email</label><input id="email" name="email" type="email" aria-describedby="email-warning" aria-invalid="true" autocapitalize="off" autocorrect="off"><p id="email-warning">Invalid value</p></div>
+        // phpcs:disable
+        $html = <<<html
+        <div>
+            <label for="email">Email</label>
+            <input id="email" name="email" type="email" aria-describedby="email-warning" aria-invalid="true" autocapitalize="off" autocorrect="off">
+            <p id="email-warning">Invalid value</p>
+        </div>
         html;
+        // phpcs:enable
+
+        $expected = self::collapsedHtml($html);
 
         $result = (string) EmailInput::create(
             label: 'Email',
@@ -65,9 +94,14 @@ class EmailInputTest extends TestCase
     #[Test]
     public function is_expected_base(): void // phpcs:ignore
     {
-        $expected = <<<html
-        <div><label for="email">Email</label><input id="email" name="email" type="email" autocapitalize="off" autocorrect="off"></div>
+        $html = <<<html
+        <div>
+            <label for="email">Email</label>
+            <input id="email" name="email" type="email" autocapitalize="off" autocorrect="off">
+        </div>
         html;
+
+        $expected = self::collapsedHtml($html);
 
         $result = (string) EmailInput::create(
             'Email',

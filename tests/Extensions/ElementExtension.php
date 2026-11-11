@@ -13,7 +13,7 @@ class ElementExtension extends HTMLElement
      * element. To change the order, extend the Element class and override
      * this constant.
      */
-    const ORDERED = [
+    public const ORDERED = [
         "is",
         "role",
         "class", // modified from default

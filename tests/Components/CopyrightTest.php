@@ -17,7 +17,7 @@ class CopyrightTest extends TestCase
 
         $result = (string) Copyright::create('Dr. Copyright');
 
-        $this->assertSame(
+        parent::assertSame(
             $expected,
             $result
         );
@@ -30,7 +30,7 @@ class CopyrightTest extends TestCase
 
         $result = (string) Copyright::create('Dr. Copyright')->stringOnly();
 
-        $this->assertSame(
+        parent::assertSame(
             $expected,
             $result
         );
@@ -42,7 +42,7 @@ class CopyrightTest extends TestCase
             wrapInParagraph: false
         );
 
-        $this->assertSame(
+        parent::assertSame(
             $expected,
             $result
         );
@@ -55,7 +55,7 @@ class CopyrightTest extends TestCase
 
         $result = (string) Copyright::create('Dr. Copyright', '2020');
 
-        $this->assertSame(
+        parent::assertSame(
             $expected,
             $result
         );
@@ -69,7 +69,7 @@ class CopyrightTest extends TestCase
         $result = (string) Copyright::create('Dr. Copyright')
             ->spellOutCopyright();
 
-        $this->assertSame(
+        parent::assertSame(
             $expected,
             $result
         );
@@ -79,7 +79,7 @@ class CopyrightTest extends TestCase
         $result = (string) Copyright::create('Dr. Copyright')
             ->expandedCopyright();
 
-        $this->assertSame(
+        parent::assertSame(
             $expected,
             $result
         );
@@ -93,7 +93,7 @@ class CopyrightTest extends TestCase
         $result = (string) Copyright::create('Dr. Copyright')
             ->allRightsReserved();
 
-        $this->assertSame(
+        parent::assertSame(
             $expected,
             $result
         );
@@ -103,7 +103,7 @@ class CopyrightTest extends TestCase
         $result = (string) Copyright::create('Dr. Copyright')
             ->someRightsReserved();
 
-        $this->assertSame(
+        parent::assertSame(
             $expected,
             $result
         );
@@ -113,7 +113,7 @@ class CopyrightTest extends TestCase
         $result = (string) Copyright::create('Dr. Copyright')
             ->noRightsReserved();
 
-        $this->assertSame(
+        parent::assertSame(
             $expected,
             $result
         );

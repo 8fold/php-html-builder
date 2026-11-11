@@ -19,7 +19,7 @@ class FaviconsTest extends TestCase
 
         $result = (string) Favicons::create();
 
-        $this->assertSame(
+        parent::assertSame(
             $expected,
             $result . "\n"
         );
@@ -34,7 +34,7 @@ class FaviconsTest extends TestCase
             themeColor: '#000000'
         );
 
-        $this->assertSame(
+        parent::assertSame(
             $expected,
             $result . "\n"
         );
@@ -47,7 +47,7 @@ class FaviconsTest extends TestCase
 
         $result = (string) Favicons::create('/subfolder');
 
-        $this->assertSame(
+        parent::assertSame(
             $expected,
             $result . "\n"
         );
@@ -60,7 +60,7 @@ class FaviconsTest extends TestCase
 
         $result = (string) Favicons::create()->withAppName('Override page title');
 
-        $this->assertSame(
+        parent::assertSame(
             $expected,
             $result . "\n"
         );
@@ -73,7 +73,7 @@ class FaviconsTest extends TestCase
 
         $result = (string) Favicons::create()->withMetro(useWhite: true);
 
-        $this->assertSame(
+        parent::assertSame(
             $expected,
             $result . "\n"
         );
@@ -86,7 +86,7 @@ class FaviconsTest extends TestCase
             FaviconMetroColors::Teal
         );
 
-        $this->assertSame(
+        parent::assertSame(
             $expected,
             $result . "\n"
         );
@@ -99,7 +99,7 @@ class FaviconsTest extends TestCase
             '#ffffff'
         );
 
-        $this->assertSame(
+        parent::assertSame(
             $expected,
             $result . "\n"
         );

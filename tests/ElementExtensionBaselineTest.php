@@ -13,19 +13,21 @@ class ElementExtensionBaselineTest extends TestCase
     #[Test]
     public function has_ordered_properties(): void // phpcs:ignore
     {
+        // phpcs:disable
         $exptected = <<<html
-            <a is="link" id="unique" class="some-style" href="https://8fold.pro" data-testing="test" required>link</a>
-            html;
+        <a is="link" id="unique" class="some-style" href="https://8fold.pro" data-testing="test" required>link</a>
+        html;
+        // phpcs:enable
 
         $result = (string) ElementExtension::a('link')->props(
-                'required required',
-                'href https://8fold.pro',
-                'class some-style',
-                'id unique',
-                'data-testing test',
-                'is link'
-            );
+            'required required',
+            'href https://8fold.pro',
+            'class some-style',
+            'id unique',
+            'data-testing test',
+            'is link'
+        );
 
-        $this->assertSame($exptected, $result);
+        parent::assertSame($exptected, $result);
     }
 }
