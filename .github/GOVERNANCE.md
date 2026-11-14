@@ -1,3 +1,7 @@
+<!--
+Maintained and synced from 8fold/repo-skeleton, do not update outside of the 8fold/repo-skeleton repository
+-->
+
 # Overview
 
 This project is led by a benevolent dictator and managed by the community. That is, the community actively contributes to the day-to-day maintenance of the project, but the general strategic line is drawn by the benevolent dictator. In case of disagreement, they have the last word. It is the benevolent dictator’s job to resolve disputes within the community and to ensure that the project is able to progress in a coordinated way. In turn, it is the community’s job to guide the decisions of the benevolent dictator through active engagement and contribution.
@@ -18,7 +22,7 @@ Committers have no authority over the overall direction of the project. However,
 
 ### Contributors
 
-Contributors are community members who either have no desire to become committers, or have not yet been given the opportunity by the benevolent dictator. They make valuable contributions, such as those outlined in the list below, but generally do not have the authority to make direct changes to the project code. Contributors engage with the project through communication tools, such as email lists, and via reports and patches attached to issues in the issue tracker, as detailed in our community tools document.
+Contributors are community members who either have no desire to become committers, or have not yet been given the opportunity by the benevolent dictator. They make valuable contributions, such as those outlined in the list below, but generally do not have the authority to make direct changes to the project code. Contributors engage with the project through communication tools, such as email lists, and via reports and patches attached to issues in the issue tracker.
 
 Anyone can become a contributor. There is no expectation of commitment to the project, no specific skill requirements and no selection process. To become a contributor, a community member simply has to perform one or more actions that are beneficial to the project.
 
@@ -54,10 +58,9 @@ Users who continue to engage with the project and its community will often find 
 All participants in the community are encouraged to provide support for new users within the project management infrastructure. This support is provided as a way of growing the community. Those seeking support should recognise that all support activity within the project is voluntary and is therefore provided as and when time allows. A user requiring guaranteed response times or results should therefore seek to purchase a support contract from a vendor. (Of course, that vendor should be an active member of the community.) However, for those willing to engage with the project on its own terms, and willing to help support other users, the community support channels are ideal.
 
 ## Contribution Process
-Anyone can contribute to the project, regardless of their skills, as there are many ways to contribute. For instance, a contributor might be active on the project mailing list and issue tracker, or might supply patches. The various ways of contributing are described in more detail in our roles in open source document.
 
-The developer mailing list is the most appropriate place for a contributor to ask for help when making their first contribution.
+Anyone can contribute to the project, regardless of their skills, as there are many ways to contribute. For instance, a contributor might be active on the project mailing list and issue tracker, or might supply patches.
 
 ## Decision-Making Process
 
-The benevolent dictatorship model does not need a formal conflict resolution process, since the project lead’s word is final. If the community chooses to question the wisdom of the actions of a committer, the project lead can review their decisions by checking the email archives, and either uphold or reverse them.
+The benevolent dictatorship model does not need a formal conflict resolution process, since the project lead’s word is final. If the community chooses to question the wisdom of the actions of a committer, the project lead can review their decisions by checking various communications related to the interaction.
