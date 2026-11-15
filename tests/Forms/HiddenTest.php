@@ -19,7 +19,7 @@ class HiddenTest extends TestCase
         <input name="test" type="hidden" value="something important">
         html;
 
-        $result = (string) Hidden::create('test','something important');
+        $result = (string) Hidden::create('test', 'something important');
 
         parent::assertSame($expected, $result);
     }

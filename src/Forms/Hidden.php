@@ -16,11 +16,6 @@ class Hidden implements PropertyInterface
      */
     private array $inputProperties = [];
 
-    /**
-     * @var list<string|Stringable>
-     */
-    private array $content = [];
-
     public static function create(
         string|Stringable $name,
         string $value = '',
@@ -43,12 +38,6 @@ class Hidden implements PropertyInterface
     public function prop(string $prop): static
     {
         $this->inputProperties[] = $prop;
-        return $this;
-    }
-
-    public function content(string|Stringable ...$content): self
-    {
-        $this->content = array_values($content);
         return $this;
     }
 
