@@ -1,4 +1,6 @@
 name: PHP 8.5
+permissions:
+contents: read
 
 on:
   push:
@@ -14,7 +16,8 @@ jobs:
         uses: actions/checkout@v6.0.2
 
       - name: Setup PHP Action
-        uses: shivammathur/setup-php@2.37.1
+        # Pin to 2.4.0
+        uses: shivammathur/setup-php@eb7c497e18156a6bbabfef1d3a82760b9eda3962
         with:
           php-version: '8.5'
 
