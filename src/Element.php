@@ -6,7 +6,7 @@ namespace Eightfold\HtmlBuilder;
 use Eightfold\HtmlBuilder\PropertyInterface;
 
 use Stringable;
-use Stringable;
+use Deprecated;
 
 use Eightfold\HtmlBuilder\Properties;
 
