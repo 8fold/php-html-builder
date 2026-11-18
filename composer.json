@@ -3,22 +3,17 @@
   "description": "A library for building HTML document and element strings.",
   "type": "library",
   "license": "MIT",
+  "minimum-stability": "dev",
+  "prefer-stable": true,
   "authors": [
     {
       "name": "Josh Bruce",
-      "email": "josh@8fold.pro"
+      "email": "josh@8fold.pro",
+      "homepage": "https://joshbruce.com",
+      "role": "Lead Developer"
     }
   ],
-  "require": {
-    "php": "^8.4"
-  },
-  "require-dev": {
-    "phpstan/extension-installer": "*",
-    "phpstan/phpstan": "^2.3",
-    "phpstan/phpstan-strict-rules": "^2.1",
-    "phpunit/phpunit": "^13.4",
-    "spaze/phpstan-disallowed-calls": "^4.15",
-    "squizlabs/php_codesniffer": "^4.0"
+  "support": {
   },
   "autoload": {
     "psr-4": {
@@ -30,24 +25,60 @@
       "Eightfold\\HtmlBuilder\\Tests\\": "./tests"
     }
   },
-  "config": {
-    "preferred-install": "dist",
-    "allow-plugins": {
-      "phpstan/extension-installer": true
-    }
+  "repositories": [],
+  "require": {
+    "php": "^8.0"
   },
-  "prefer-stable": true,
+  "require-dev": {
+    "symfony/process": "^5.4 || ^6.0 || ^7.4 || ^8.0",
+
+    "squizlabs/php_codesniffer": "^4.0",
+    "dealerdirect/phpcodesniffer-composer-installer": "^1.2",
+
+    "phpstan/phpstan": "^2.0.0",
+    "phpstan/phpstan-strict-rules": "^2.1",
+    "spaze/phpstan-disallowed-calls": "^4.15",
+    "phpstan/extension-installer": "*",
+
+    "phpunit/phpunit": "^9.6 || ^10.0 || ^11.0 || ^12.0 || ^13.0"
+  },
   "scripts": {
-    "prod": "@check",
-    "production": "@check",
+    "prod": "@production",
+    "production": [
+      "@autoload:prod",
+      "@check"
+    ],
+
+    "local": [
+      "@autoload:local",
+      "@check"
+    ],
+
     "check": [
+      "@check:dependencies",
+      "@check:tabs",
       "@check:style",
       "@check:analysis",
       "@check:test"
     ],
+    "check:dependencies": "composer validate --no-check-publish",
+    "check:tabs": "php ./bin/check-tabs.php",
     "check:style": "./vendor/bin/phpcs --standard=phpcs.xml",
     "check:analysis": "./vendor/bin/phpstan analyze",
-    "check:test": "./vendor/bin/phpunit --display-all-issues",
+    "check:test": "./vendor/bin/phpunit",
+    "check:test:ci": "./vendor/bin/phpunit --no-coverage --no-configuration --bootstrap vendor/autoload.php tests/",
+
+    "fix:style": "./vendor/bin/phpcbf --standard=phpcs.xml",
+
+    "autoload:prod": "composer dumpautoload --no-dev --classmap-authoritative",
+    "autoload:local": "composer dumpautoload -o",
+
     "build:docblocks": "php ./bin/generate-element-docblock.php elements-generated.txt && php ./bin/generate-empty-element-docblock.php empty-elements-generated.txt"
+  },
+  "config": {
+    "allow-plugins": {
+      "phpstan/extension-installer": true,
+      "dealerdirect/phpcodesniffer-composer-installer": true
+    }
   }
 }

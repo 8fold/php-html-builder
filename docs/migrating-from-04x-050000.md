@@ -187,14 +187,6 @@ member controls, including references to the group warning when appropriate.
 
 ### `wrapperProps()` on form controls
 
-`wrapperProps()` remains callable as a forwarding alias throughout 5.x. It
-continues to set the same container properties, but is deprecated in favor of
-`containerProps()` and emits `E_USER_DEPRECATED`. The native `#[Deprecated]`
-attribute is supported by PHP 8.4 and later; removal is deferred until at
-least 6.0. See [Migrating from wrapperProps](#migrating-from-wrapperprops).
+`wrapperProps()` remains callable as a forwarding alias throughout 5.x. It continues to set the same container properties, but is deprecated in favor of `containerProps()` and emits `E_USER_DEPRECATED`. The native `#[Deprecated]` attribute is supported by PHP 8.4 and later; removal is deferred until at least 6.0. See [Migrating from wrapperProps](#migrating-from-wrapperprops).
 
-In 5.0, use `containerProps()` instead of `wrapperProps()` on all form
-components. This is a rename, not a change in property handling or target
-elements. `wrapperProps()` remains a forwarding alias throughout 5.x and is
-marked with PHP's native `#[Deprecated]` attribute (supported since PHP 8.4).
-Calling it emits `E_USER_DEPRECATED`; removal is deferred until at least 6.0.
+In 5.0, use `containerProps()` instead of `wrapperProps()` on all form components. This is a rename, not a change in property handling or target elements. `wrapperProps()` remains a forwarding alias throughout 5.x and is marked with PHP's native `#[Deprecated]` attribute (supported since PHP 8.4). Calling it emits `E_USER_DEPRECATED`; removal is deferred until at least 6.0.
