@@ -213,7 +213,7 @@ class Element implements PropertyInterface
     }
 
     /**
-     * @param  array<string|Stringable>  $content
+     * @param array<string|Stringable>  $content
      */
     public static function __callStatic(string $name, array $content = []): static
     {

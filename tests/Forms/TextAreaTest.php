@@ -91,7 +91,7 @@ final class TextAreaTest extends TestCase
     public function caller_selected_escaping_options_are_preserved(int $flags): void
     {
         $value = '<notes> & "quoted" and \'single\'';
-        $escaped = htmlspecialchars($value, $flags, 'UTF-8');
+        $escaped = htmlspecialchars($value, $flags, 'UTF-8'); // @phpstan-ignore disallowed.function
         $html = (string) TextArea::create('Notes', 'notes', $escaped);
         parent::assertStringContainsString(
             '>' . "\n" . $escaped . '</textarea>',

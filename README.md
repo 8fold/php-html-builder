@@ -12,6 +12,7 @@ Warning: Users of this library are responsible for sanitizing content.
   - [`Comment`](#comment)
   - [Properties](#properties)⁣
 - [Extending](#extending)⁣
+- [Compatibility](#compatibility)⁣
 - [Performance](#performance)⁣
 - Migrating (`docs/`)
   - [5.0 to 5.1](https://github.com/8fold/php-html-builder/blob/main/docs/migrating-from-050000-050100.md)
@@ -25,11 +26,9 @@ Warning: Users of this library are responsible for sanitizing content.
 
 ## Usage
 
-HTML Builder quickly outputs HTML strings with consistent
-ordering of attributes for elements.
+HTML Builder quickly outputs HTML strings with consistent ordering of attributes for elements.
 
-The default order is in the [`Element`](https://github.com/8fold/php-html-builder/blob/main/src/Element.php)
-class. If you prefer a different ordering, you can extend and override the ‘Element’ class and ordering constant.
+The default order is in the [`Element`](https://github.com/8fold/php-html-builder/blob/main/src/Element.php) class. If you prefer a different ordering, you can extend and override the ‘Element’ class and ordering constant.
 
 ### `Element`
 
@@ -80,11 +79,13 @@ Element::img()->omitEndTag()->props('src /path/to/image.png');
 ```
 
 Output:
+
 ```html
 <img src="/path/to/image.php">
 ```
 
 Using `EmptyElement`:
+
 ```php
 EmptyElement::img('src /path/to/image.png');
 
@@ -215,7 +216,7 @@ Output
 
 ## Extending
 
-Each HTML Builder component accepts string literals and classes that implement the PHP-native `Stringable` interface. Further, HTML Build provides the [`PropertyInterface`](https://github.com/8fold/php-html-builder/blob/main/src/PropertyInterface.php), which extends the `Stringable` interface. Therefore, HTML Builder allows developers to create custom components and APIs without extending HTML Builder’s base components.
+Each HTML Builder component accepts string literals and classes that implement the PHP-native `Stringable` interface. Further, HTML Builder provides the [`PropertyInterface`](https://github.com/8fold/php-html-builder/blob/main/src/PropertyInterface.php), which extends the `Stringable` interface. Therefore, HTML Builder allows developers to create custom components and APIs without extending HTML Builder’s base components.
 
 ## Performance
 
@@ -260,8 +261,8 @@ See [8fold XML Builder](https://github.com/8fold/php-xml-builder#readme) for PHP
 
 ## Other
 
-- [Code of Conduct](https://github.com/8fold/php-html-builder/blob/master/.github/CODE_OF_CONDUCT.md)
-- [Contributing](https://github.com/8fold/php-html-builder/blob/master/.github/CONTRIBUTING.md)
-- [Governance](https://github.com/8fold/php-html-builder/blob/master/.github/GOVERNANCE.md)
-- [Versioning](https://github.com/8fold/php-html-builder/blob/master/.github/VERSIONING.md)
-- [Security](https://github.com/8fold/php-html-builder/blob/master/.github/SECURITY.md)
+- [Code of Conduct](https://github.com/8fold/.github/blob/main/CODE_OF_CONDUCT.md)
+- [Contributing](https://github.com/8fold/.github/blob/main/CONTRIBUTING.md)
+- [Governance](https://github.com/8fold/.github/blob/main/GOVERNANCE.md)
+- [Versioning](https://github.com/8fold/.github/blob/main/docs/versioning-base.md)
+- [Security](https://github.com/8fold/.github/blob/main/SECURITY.md)
