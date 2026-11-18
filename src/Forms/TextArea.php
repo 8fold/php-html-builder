@@ -45,10 +45,10 @@ class TextArea implements Stringable
     }
 
     final private function __construct(
-        private readonly string|Stringable $label,
-        private readonly string|Stringable $name,
-        private readonly string $value,
-        private readonly string|PropertyInterface $warningMessage = ''
+        private string|Stringable $label,
+        private string|Stringable $name,
+        private string $value,
+        private string|PropertyInterface $warningMessage = ''
     ) {
         $this->id = (string) $name;
     }

@@ -22,7 +22,7 @@ class PageTitle implements Stringable
      */
     final private function __construct(
         private array $titles,
-        private readonly string $separator
+        private string $separator
     ) {
     }
 

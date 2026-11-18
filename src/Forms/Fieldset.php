@@ -12,11 +12,7 @@ use Eightfold\HtmlBuilder\Forms\SelectType;
 
 class Fieldset implements Stringable
 {
-    // phpcs:disable
-    private string $warningId {
-        get => $this->name . '-warning';
-    }
-    // phpcs:enable
+    private string $warningId;
 
     /**
      * @var string[]
@@ -46,10 +42,11 @@ class Fieldset implements Stringable
     }
 
     final private function __construct(
-        private readonly string|Stringable $label,
-        private readonly string|Stringable $name,
-        private readonly string|PropertyInterface $warningMessage = ''
+        private string|Stringable $label,
+        private string|Stringable $name,
+        private string|PropertyInterface $warningMessage = ''
     ) {
+        $this->warningId = $this->name . '-warning';
     }
 
     public function elements(string|Stringable ...$elements): self
