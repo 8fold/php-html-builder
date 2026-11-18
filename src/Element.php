@@ -228,10 +228,10 @@ class Element implements PropertyInterface
     private function opening(): string
     {
         if ($this->omitEndTag) {
-            return '<' . $this->name . $this->propertiesString() . '>';
+            return '<' . $this->name . Properties::compile($this->properties) . '>';
         }
 
-        return '<' . $this->name . $this->propertiesString() . '>';
+        return '<' . $this->name . Properties::compile($this->properties) . '>';
     }
 
     private function closing(): string
