@@ -75,10 +75,18 @@
 
     "build:docblocks": "php ./bin/generate-element-docblock.php elements-generated.txt && php ./bin/generate-empty-element-docblock.php empty-elements-generated.txt"
   },
+  "extra": {
+    "phpstan/extension-installer": {
+      "ignore": [
+        "spaze/phpstan-disallowed-calls"
+      ]
+    }
+  },
   "config": {
     "allow-plugins": {
-      "phpstan/extension-installer": true,
-      "dealerdirect/phpcodesniffer-composer-installer": true
-    }
+      "dealerdirect/phpcodesniffer-composer-installer": true,
+      "phpstan/extension-installer": true
+    },
+    "sort-packages": true
   }
 }
