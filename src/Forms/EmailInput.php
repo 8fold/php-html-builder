@@ -4,6 +4,7 @@ declare(strict_types=1);
 namespace Eightfold\HtmlBuilder\Forms;
 
 use Stringable;
+use Deprecated;
 
 use Eightfold\HtmlBuilder\Element;
 use Eightfold\HtmlBuilder\EmptyElement;
@@ -66,7 +67,7 @@ class EmailInput implements Stringable
         return $this;
     }
 
-    #[\Deprecated(message: 'Use containerProps() instead.', since: '5.0')]
+    #[Deprecated(message: 'Use containerProps() instead.', since: '5.0')]
     public function wrapperProps(string ...$properties): self
     {
         return $this->containerProps(...$properties);
