@@ -46,9 +46,9 @@ class Password implements Stringable
     }
 
     final private function __construct(
-        private string|Stringable $label,
-        private string|Stringable $name,
-        private string|PropertyInterface $warningMessage = ''
+        private readonly string|Stringable $label,
+        private readonly string|Stringable $name,
+        private readonly string|PropertyInterface $warningMessage = ''
     ) {
         $this->id = (string) $name;
     }

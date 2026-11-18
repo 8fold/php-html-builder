@@ -21,8 +21,8 @@ class PageTitle implements Stringable
      * @param string[] $titles
      */
     final private function __construct(
-        private array $titles,
-        private string $separator
+        private readonly array $titles,
+        private readonly string $separator
     ) {
     }
 

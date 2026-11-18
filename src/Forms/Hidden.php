@@ -24,8 +24,8 @@ class Hidden implements PropertyInterface
     }
 
     final private function __construct(
-        private string|Stringable $name,
-        private string $value,
+        private readonly string|Stringable $name,
+        private readonly string $value,
     ) {
     }
 

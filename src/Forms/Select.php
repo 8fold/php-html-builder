@@ -58,11 +58,11 @@ class Select implements Stringable
      * @param string|string[] $selected
      */
     final private function __construct(
-        private string|Stringable $label,
-        private string|Stringable $name,
-        private array $options,
-        private string|array $selected = [],
-        private string|PropertyInterface $warningMessage = ''
+        private readonly string|Stringable $label,
+        private readonly string|Stringable $name,
+        private readonly array $options,
+        private readonly string|array $selected = [],
+        private readonly string|PropertyInterface $warningMessage = ''
     ) {
         $this->id = (string) $name;
     }
