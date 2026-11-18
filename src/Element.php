@@ -6,6 +6,7 @@ namespace Eightfold\HtmlBuilder;
 use Eightfold\HtmlBuilder\PropertyInterface;
 
 use Stringable;
+use Stringable;
 
 use Eightfold\HtmlBuilder\Properties;
 
@@ -238,6 +239,7 @@ class Element implements PropertyInterface
         return $this->omitEndTag ? '' : '</' . $this->name . '>';
     }
 
+    #[\Deprecated(message: 'Use Properties instead.', since: '5.2')]
     protected function propertiesString(): string
     {
         return Properties::compile($this->properties);
